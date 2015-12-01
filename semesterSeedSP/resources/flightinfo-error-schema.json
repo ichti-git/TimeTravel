@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "type": "object",
+  "properties": {
+    "httpError": {
+      "id": "/httpError",
+      "type": "integer"
+    },
+    "errorCode": {
+      "id": "/errorCode",
+      "type": "integer"
+    },
+    "message": {
+      "id": "/message",
+      "type": "string"
+    }
+  },
+  "required": [
+    "httpError",
+    "errorCode",
+    "message"
+  ]
+}
