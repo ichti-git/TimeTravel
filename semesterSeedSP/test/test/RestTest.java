@@ -29,7 +29,7 @@ import static test.BackendTest.server;
 
 /**
  *
- * @author ichti
+ * @author ichti (Simon T)
  */
 public class RestTest {
     File fiSchemaFile = new File("resources/flightinfo-schema.json");
@@ -39,10 +39,6 @@ public class RestTest {
 
     public RestTest() {
         baseURI = "http://localhost:8082";
-        defaultParser = Parser.JSON;
-        basePath = "/api";
-        //TODO remove this below for real tests
-        baseURI = "http://angularairline-plaul.rhcloud.com/";
         defaultParser = Parser.JSON;
         basePath = "/api";
     }
