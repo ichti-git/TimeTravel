@@ -1,26 +1,171 @@
-<style>h2 {color: darkblue;}</style>
-<p style="margin-top: 10px;color:#105cb6;font-style: italic; font-size: large">This seed shows a "typical" layout for an application that requires authentication and uses
-  <b>ROLES</b> to distinguish between what authenticated users can do.</p>
-<ul>
-  <li><b style="display: inline-block;width:14em;">Home and 'Using the Seed'</b>Can be seen by all</li>
-  <li><b style="display: inline-block;width:14em;">Page for Users</b> Access to data (REST) requires user to be authenticated as a <em>User</em></li>
-  <li><b style="display: inline-block;width:14em;">Page for Admins</b> Access to data (REST) requires user to be authenticated as an <em>Admin</em></li>
-</ul>
+<div class="container"  >
+            
+            <div id="header">
+		<div class="intro container">
+			<div class="inner-intro">
+				<h1 class="header-title">
+		             <span>traveling</span>is always a "good idea"
+		         </h1>
+			</div>
+		</div>
 
-<div>
-  <h2>Filter Demo</h2>
-  <ul>
-    <li>Using the checkmark filter with True: {{true | checkmark}} </li>
-    <li>Using the checkmark filter with False: {{false | checkmark}} </li>
-  </ul>
-  <p><span style="font-weight: bold">TESTING: </span><em>See testFilters.js</em> in the Unit Test Folder for an example of how to test a filter</p>
-</div>
-<div>
-  <h2>Factory + Service Demo</h2>
-  <p>This message is fetched from a factory: <span style="font-weight: bold"> {{ctrl.msgFromFactory}}</span></p>
-  <p>This message is fetched from a Service: <span style="font-weight: bold"> {{ctrl.msgFromService}}</span></p>
-  <p><span style="font-weight: bold">TESTING: </span>See <em>testFactories.js</em> and <em>testServices.js</em> in the Unit Test Folder for examples of how to test Factories and Services</p>
-</div>
+		<!-- FORM - Find Ticket -->
+		<section class="tour section-wrapper container">
+			<h2 class="section-title">
+					Find a Tour
+				</h2>
+			<p class="section-subtitle">
+				Where would you like to fly?
+			</p>
+			<form role="form" id="searchForm">
+				<div class="row">
+					<div class="form-group col-md-3">
+						<label for="searchStart">City of origin</label>
+						<select class="form-control border-radius" id="searchStart">
+							<option>Copenhagen</option>
+							<option>London</option>
+							<option>Paris</option>
+							<option>Berlin</option>
+							<option>Barcelona</option>
+							<option>Madrid</option>
+							<option>Lisabon</option>
+							<option>Stockholm</option>
+						</select>
+					</div>
 
+					<div class="form-group col-md-3">
+						<label for="searchDestination">Destination</label>
+						<select class="form-control border-radius" id="searchDestination">
+							<option>Copenhagen</option>
+							<option>London</option>
+							<option>Paris</option>
+							<option>Berlin</option>
+							<option>Barcelona</option>
+							<option>Madrid</option>
+							<option>Lisabon</option>
+							<option>Stockholm</option>
+						</select>
+					</div>
 
-<h3 style="color: darkred;"><em>Important: This seed is NOT meant for Real Life Projects.</em></h3>
+					<div class="form-group col-md-2">
+						<label for="searchDate">Date</label>
+						<div class="input-group date" id="searchDate">
+							<input type="text" class="form-control border-radius border-right" />
+							<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+
+					<div class="form-group col-md-2">
+						<label for="searchSeats">Number of Seats</label>
+						<input type="number" class="form-control border-radius border-right" id="searchSeats" />
+					</div>
+
+					<div class="form-group col-md-2">
+						<label>&nbsp;</label>
+						<button type="button" id="searchButton" class="btn btn-default border-radius custom-button pull-right">
+							Search
+						</button>
+					</div>
+				</div>
+			</form>
+		</section>
+		<!-- /.find ticket END FORM -->
+
+	</div>
+	<!-- /#header -->
+
+	<!-- Results panel -->
+	<div class="vertical-center" id="searchResultsPanel">
+		<div class="col-md-3 col-sm-2 col-xs-1"></div>
+		<div class="col-md-6 col-sm-8 col-xs-12">
+			<div id="menu" class="panel panel-default vertical-center">
+				<div class="panel-heading">
+					<h4>Search results</h4>
+					<span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>
+				</div>
+				<div class="panel list-group panel-group" id="accordion">
+
+					<!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
+					<span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-1" data-parent="#menu">				
+							<div class="row">
+								<div class="col-md-4 col-sm-12">{{Airline}}</div>
+								<div class="col-md-4 col-sm-12 results text-center">Number of seats</div>
+								<div class="col-md-4 col-sm-12 text-right"><strong>27. 11. 2015</strong></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-sm-12 results">Destination</div>
+								<div class="col-md-4 col-sm-12 text-center"><strong>1</strong></div>
+								<div class="col-md-4 col-sm-12 text-right"><strong>1hr 30m</strong></div>
+							</div>
+							<div class="row">
+								<div class="col-md-4 col-sm-12"><strong>Copenhagen</strong></div>
+								<div class="col-md-4 col-sm-12 text-center"></div>
+								<div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: 55 EUR</strong></div>
+							</div>
+					</span>
+					<!-- End of main info section -->
+
+					<!-- Search result - detail section. id of next DIV element must be the same as data-target name from main info -->
+					<div id="result-1" class="collapse searchDetail">
+						<div class="fluid-row">
+							<div class="row">
+								<div class="col-md-6">Airline</div>
+								<div class="col-md-6 text-right results">Date</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 results">City of Origin</div>
+								<div class="col-md-6 text-right results"><strong>27. 11. 2015</strong></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6"><strong>Paris</strong></div>
+								<div class="col-md-6 results text-right results">Travel time</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 results">Destination</div>
+								<div class="col-md-6 text-right"><strong>1hr 30min</strong></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12"><strong>Copenhagen</strong></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 results">Number of Seats</div>
+								<div class="col-md-6 results text-right results">Price per Seat</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-6 results"><strong>1</strong></div>
+								<div class="col-md-6 results text-right results"><strong>55 EUR</strong></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">&nbsp;</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-4 results"></div>
+								<div class="col-md-8 results text-right results"><strong>TOTAL PRICE: 55 EUR</strong></div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-8 results"></div>
+								<div class="col-md-4 results text-right results">
+									<button id="reservationButton" type="button" class="btn btn-default border-radius button-modal">Reserve</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Search result - detail section END -->
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3 col-sm-2 col-xs-1"></div>
+	</div>
