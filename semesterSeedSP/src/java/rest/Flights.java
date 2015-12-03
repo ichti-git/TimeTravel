@@ -6,17 +6,25 @@
 package rest;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import exception.ApiException;
+import exception.IllegalInputException;
+import exception.NoFlightsFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -44,7 +52,7 @@ import javax.ws.rs.Produces;
 @Path("flights")
 public class Flights {
     private ArrayList<String> apiUrls = new ArrayList();
-    
+    private String apiBase = "api/flightinfo/";
     
     @Context
     private UriInfo context;
@@ -53,15 +61,22 @@ public class Flights {
      * Creates a new instance of Flights
      */
     public Flights() {
-        apiUrls.add("http://angularairline-plaul.rhcloud.com/api/flightinfo/");
-        apiUrls.add("http://wildfly-x.cloudapp.net/");
+        apiUrls.add("http://angularairline-plaul.rhcloud.com/");
+        apiUrls.add("http://wildfly-x.cloudapp.net/airline/");
     }
 
     //api/flightinfo/:from/:date/:numTickets
     //api/flightinfo/:from/:to/date/:numTickets
+    /*
+     * If url does not respond with a http code 200, it will return null
+     * 
+     */
     private JsonObject getFlightsFromAirline(URL url) throws IOException {
         HttpURLConnection request = (HttpURLConnection) url.openConnection();
-        request.connect();  
+        request.connect();
+        if (request.getResponseCode() != 200) {
+            return null;
+        }
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
         JsonObject object = element.getAsJsonObject();
@@ -82,7 +97,9 @@ public class Flights {
                 @Override
                 public JsonArray call() throws MalformedURLException {
                     JsonArray flights = new JsonArray();
+                    //Build the urlString
                     StringBuilder urlString = new StringBuilder(next);
+                    urlString.append(apiBase);
                     urlString.append(from);
                     urlString.append("/");
                     if (to != null) {
@@ -94,17 +111,21 @@ public class Flights {
                     urlString.append(numTickets);
                     URL url = new URL(urlString.toString());
                     try {
+                        //Get the flights from the airline
                         JsonObject airlineFlights = getFlightsFromAirline(url);
-                        JsonElement jsonAirline = airlineFlights.get("airline");
-                        JsonArray jsonFlights = airlineFlights.get("flights").getAsJsonArray();
-                        Iterator jsonIte = jsonFlights.iterator();
-                        while (jsonIte.hasNext()) {
-                            JsonObject newFlight = ((JsonObject)jsonIte.next());
-                            newFlight.add("airline", jsonAirline);
-                            flights.add(newFlight);
+                        if (airlineFlights != null) {
+                            JsonElement jsonAirline = airlineFlights.get("airline");
+                            JsonArray jsonFlights = airlineFlights.get("flights").getAsJsonArray();
+                            Iterator jsonIte = jsonFlights.iterator();
+                            //Add the flights from the airline to combined flights
+                            while (jsonIte.hasNext()) {
+                                JsonObject newFlight = ((JsonObject)jsonIte.next());
+                                newFlight.add("airline", jsonAirline);
+                                flights.add(newFlight);
+                            }
                         }
                     } catch (IOException ex) {
-                        //URL not found, skip it!
+                        //URL not found or error in response, skip it!
                         Logger.getLogger(Flights.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     return flights;
@@ -117,9 +138,7 @@ public class Flights {
         for (Future<JsonArray> array : list) {
             try {
                 allFlights.addAll(array.get());
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Flights.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ExecutionException ex) {
+            } catch (InterruptedException | ExecutionException ex) {
                 Logger.getLogger(Flights.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -131,31 +150,54 @@ public class Flights {
     @Path("{from}/{date}/{tickets}")
     public String getFlightsFrom(@PathParam("from") String from, 
                                  @PathParam("date") String date, 
-                                 @PathParam("tickets") int numTickets) throws IOException {
+                                 @PathParam("tickets") int numTickets) throws IOException, ApiException {
+        flightInputChecker(from, null, date, numTickets);
         JsonArray flights = getFlights(from, date, numTickets);
-        Gson gson = new Gson();
+        
+        if (flights.size() < 1) {
+            throw new NoFlightsFoundException("No flights found");
+        }
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(flights);
     }
     @GET
     @Produces("application/json")
     @Path("{from}/{to}/{date}/{tickets}")
-    public String getFlightsFrom(@PathParam("from") String from,
-                                 @PathParam("to") String to,
-                                 @PathParam("date") String date, 
-                                 @PathParam("tickets") int numTickets) throws IOException {
+    public String getFlightsFromTo(@PathParam("from") String from,
+                                   @PathParam("to") String to,
+                                   @PathParam("date") String date, 
+                                   @PathParam("tickets") int numTickets) throws IOException, ApiException {
+        flightInputChecker(from, to, date, numTickets);
         JsonArray flights = getFlights(from, to, date, numTickets);
-        Gson gson = new Gson();
+        if (flights.size() < 1) {
+            throw new NoFlightsFoundException("No flights found");
+        }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(flights);
     }
 
-    /**
-     * PUT method for updating or creating an instance of Flights
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    public void putJson(String content) {
+    
+
+    private void flightInputChecker(String from, String to, String date, int numTickets) throws ApiException {
+        if (to != null) {
+            if (to.length() != 3) {
+                throw new IllegalInputException("Origin airport code not valid");
+            }
+        }
+        if (from.length() != 3) {
+            throw new IllegalInputException("Destination airport code not valid");
+        }
+        if (numTickets < 1) {
+            throw new IllegalInputException("Amount of ticket must be at least 1");
+        }
+        
+        DateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            Date date2 = sdfISO.parse(date);
+        } catch (ParseException ex) {
+            throw new IllegalInputException("Date format wrong");
+        }
     }
 }
 

@@ -255,7 +255,7 @@ public class RestTest {
     
     @Test
     public void flightsUnknownFrom() {
-        String from = "CP";
+        String from = "CPÅ";
         String date = "2016-01-07T00:00:00.000Z";
         int tickets = 2;
         given().
@@ -271,7 +271,7 @@ public class RestTest {
     @Test
     public void flightsUnknownTo() {
         String from = "CPH";
-        String to = "LKÅÅ";
+        String to = "LKÅ";
         String date = "2016-01-07T00:00:00.000Z";
         int tickets = 2;
         given().
@@ -282,6 +282,38 @@ public class RestTest {
                 statusCode(400).
                 body("httpError", equalTo(400)).
                 body("errorCode", equalTo(1)).
+                body(matchesJsonSchema(flightsErrorSchemaFile));
+    }
+    @Test
+    public void flightsWrongFrom() {
+        String from = "CPHN";
+        String to = "SXF";
+        String date = "2016-01-07T00:00:00.000Z";
+        int tickets = 2;
+        given().
+                contentType("application/json").
+                when().
+                get("/flights/"+from+"/"+to+"/"+date+"/"+tickets).
+                then().
+                statusCode(400).
+                body("httpError", equalTo(400)).
+                body("errorCode", equalTo(3)).
+                body(matchesJsonSchema(flightsErrorSchemaFile));
+    }
+    @Test
+    public void flightsWrongTo() {
+        String from = "CPH";
+        String to = "SXFS";
+        String date = "2016-01-07T00:00:00.000Z";
+        int tickets = 2;
+        given().
+                contentType("application/json").
+                when().
+                get("/flights/"+from+"/"+to+"/"+date+"/"+tickets).
+                then().
+                statusCode(400).
+                body("httpError", equalTo(400)).
+                body("errorCode", equalTo(3)).
                 body(matchesJsonSchema(flightsErrorSchemaFile));
     }
     @Test
@@ -327,8 +359,8 @@ public class RestTest {
                 when().
                 get("/flights/"+from+"/"+to+"/"+date+"/"+tickets).
                 then().
-                statusCode(400).
-                body("httpError", equalTo(400)).
+                statusCode(404).
+                body("httpError", equalTo(404)).
                 body("errorCode", equalTo(3)).
                 body(matchesJsonSchema(flightsErrorSchemaFile));
     }
@@ -361,7 +393,7 @@ public class RestTest {
                 then().
                 statusCode(400).
                 body("httpError", equalTo(400)).
-                body("errorCode", equalTo(2)).
+                body("errorCode", equalTo(1)).
                 body(matchesJsonSchema(flightsErrorSchemaFile));
     }
     
