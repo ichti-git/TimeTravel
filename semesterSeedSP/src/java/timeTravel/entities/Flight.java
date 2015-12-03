@@ -16,7 +16,9 @@ public class Flight implements Serializable {
     private int fligthNumber;
     private int numberOfSeats;
 
-    
+/********************************************************************************************
+*                           TROR DENNE KLASSE SKAL SLETTES
+*********************************************************************************************/
     
     public Flight(){}
     
