@@ -20,6 +20,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(exception.ApiExceptionMapper.class);
+        resources.add(exception.NotFoundExceptionMapper.class);
         resources.add(rest.Admin.class);
         resources.add(rest.Flightinfo.class);
         resources.add(rest.Flights.class);
@@ -28,6 +29,7 @@ public class ApplicationConfig extends Application {
         resources.add(security.Login.class);
         resources.add(security.NotAuthorizedExceptionMapper.class);
         resources.add(security.RolesAllowedFilter.class);
+        resources.add(timeTravel.rest.TimeTravelRESTApi.class);
     }
 
 }
