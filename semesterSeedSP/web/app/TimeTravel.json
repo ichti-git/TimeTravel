@@ -1,0 +1,32 @@
+[
+    {
+    "name": "Flight 1",
+    "from": "CPH",
+    "date": "2016-02-25T11:30:00.000Z",
+    "tickets": "2"
+    },
+    {
+    "name": "Flight 2",
+    "from": "PARIS",
+    "date": "2016-02-25T11:30:00.000Z",
+    "tickets": "3"
+    },
+    {
+    "name": "Flight 3",
+    "from": "ROME",
+    "date": "2016-02-25T11:30:00.000Z",
+    "tickets": "1"
+    },
+    {
+    "name": "Flight 4",
+    "from": "VENICE",
+    "date": "2016-02-25T11:30:00.000Z",
+    "tickets": "2"
+    },
+    {
+    "name": "Flight 5",
+    "from": "BERLIN",
+    "date": "2016-02-25T11:30:00.000Z",
+    "tickets": "4"
+    }
+]
