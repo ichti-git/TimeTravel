@@ -4,16 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="a"/>
         <group>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/ApiExceptionMapper.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/test/test/RestTest.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/rest/Flights.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/entity/Role.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/IllegalInputException.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/ApiException.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/conf/persistence.xml</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/deploy/DeploymentConfiguration.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/rest/ApplicationConfig.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/web/index.html</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/NotFoundExceptionMapper.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/web/app/app.js</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/timeTravel/facade/Facade.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/rest/Flightinfo.java</file>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/NoFlightsFoundException.java</file>
-            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/facades/UserFacade.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/timeTravel/entities/FlightInstance.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/timeTravel/rest/TimeTravelRESTApi.java</file>
         </group>
     </open-files>
 </project-private>

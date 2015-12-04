@@ -21,11 +21,11 @@ public class Facade {
     
     
     
-    public List<FlightInstance> getFlightInstances(String from, String date, int numTickets){
+    public void getFlightInstances(String from, String date, int numTickets){
             
     }   
 
-     public List<FlightInstance> getFlightInstances(String from,String to, String date, int numTickets){
+     public void getFlightInstances(String from,String to, String date, int numTickets){
             
     }  
    

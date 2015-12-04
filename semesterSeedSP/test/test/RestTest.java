@@ -361,7 +361,7 @@ public class RestTest {
                 then().
                 statusCode(404).
                 body("httpError", equalTo(404)).
-                body("errorCode", equalTo(3)).
+                body("errorCode", equalTo(11)).
                 body(matchesJsonSchema(flightsErrorSchemaFile));
     }
     @Test

@@ -26,11 +26,12 @@ config(function ($httpProvider) {
 myApp.controller("RestCtrl", ["$scope", "$resource", function($scope, $resource){
         
         // Define flights resource
-        //var Flight = $resource("/api/flights/:from/:date/:tickets", {from: "@from", date: "@date", tickets: "@tickets"}, {});
+        var Flight = $resource("/semesterSeedSP/api/flights/:from/:date/:tickets", 
+                               {from: "@from", date: "@date", tickets: "@tickets"}, {});
         
-        var Flight = $resource("/api/test/:id", {id: "@id"}, {});
+        //var Flight = $resource("/semesterSeedSP/api/test/:id", {id: "@id"}, {});
         
-        $scope.flights = Flight.query();
+        $scope.flights = Flight.query({from: "SXF", date: "2016-01-15T00:00:00.000Z", tickets:2});
         
 //        $scope.selected = null;
 //        
