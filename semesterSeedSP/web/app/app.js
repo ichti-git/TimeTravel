@@ -1,10 +1,11 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+var myApp = angular.module('myApp', [
   'ngRoute',
   'ngAnimate',
   'ui.bootstrap',
+  'ngResource',
   'myApp.security',
   'myApp.view1',
   'myApp.view2',
@@ -21,5 +22,37 @@ config(['$routeProvider', function($routeProvider) {
 config(function ($httpProvider) {
    $httpProvider.interceptors.push('authInterceptor');
 });
+
+myApp.controller("RestCtrl", ["$scope", "$resource", function($scope, $resource){
+        
+        // Define flights resource
+        //var Flight = $resource("/api/flights/:from/:date/:tickets", {from: "@from", date: "@date", tickets: "@tickets"}, {});
+        
+        var Flight = $resource("/api/test/:id", {id: "@id"}, {});
+        
+        $scope.flights = Flight.query();
+        
+//        $scope.selected = null;
+//        
+//        $scope.list = function(){
+//            // Get all flights
+//            Flight.query(function(data){
+//                $scope.flights = data;
+//                }, function(error){
+//                    alert(error.data);
+//                });
+//        };
+//        
+//        $scope.list();
+//        
+//        $scope.get = function(){
+//            Flight.get(function(data){
+//                $scope.selected = data;
+//            }, function(error){
+//                alert(error);
+//            });
+//        }
+}]);
+
 
 
