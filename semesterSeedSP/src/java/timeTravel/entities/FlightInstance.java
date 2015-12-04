@@ -23,18 +23,13 @@ public class FlightInstance implements Serializable {
     private int departuretime;//minuttes
     private int flightTime;
     private int flightNumber;
-    private String destination;
     private int availableSeats;
     private int price;
     
-    
-    
     @ManyToOne
     private Airport fliesTo;
-    
     @ManyToOne
     private Airport fliesFrom;
-   
     @OneToMany
     private List <Reservation> reservations;
     
@@ -44,24 +39,18 @@ public class FlightInstance implements Serializable {
 
     public FlightInstance(){}
     
-    public FlightInstance(Date departureDate, int departuretime, int flightTime, int flightNumber, String destination, int availableSeats, int price) {
+    public FlightInstance(Date departureDate, int departuretime, int flightTime, int flightNumber, int availableSeats, int price,Airport fliesFrom,Airport fliesTo) {
         this.departureDate = departureDate;
         this.departuretime = departuretime;
         this.flightTime = flightTime;
         this.flightNumber = flightNumber;
-        this.destination = destination;
         this.availableSeats = availableSeats;
         this.price = price;
+        this.fliesFrom = fliesFrom;
+        this.fliesTo = fliesTo;
     }
     
     
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
     public Date getDepartureDate() {
         return departureDate;
@@ -95,14 +84,6 @@ public class FlightInstance implements Serializable {
         this.flightNumber = flightNumber;
     }
 
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
     public int getAvailableSeats() {
         return availableSeats;
     }
@@ -118,6 +99,23 @@ public class FlightInstance implements Serializable {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public Airport getFliesTo() {
+        return fliesTo;
+    }
+
+    public void setFliesTo(Airport fliesTo) {
+        this.fliesTo = fliesTo;
+    }
+
+    public Airport getFliesFrom() {
+        return fliesFrom;
+    }
+
+    public void setFliesFrom(Airport fliesFrom) {
+        this.fliesFrom = fliesFrom;
+    }
+    
     
     
 
