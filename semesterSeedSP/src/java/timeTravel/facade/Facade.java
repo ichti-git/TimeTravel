@@ -55,9 +55,9 @@ public class Facade {
         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        List FlightInstances = em.createNativeQuery("select * from FlightInstance f where "
+        List FlightInstances = em.createNativeQuery("select * from FLIGHTINSTANCE f where "
                  + "f.FLIESFROM_IATACODE ='"+origin+"'"
-                 + "and f.departuredate='"+date+"'" 
+                 + "and f.DEPARTUREDATE='"+date+"'" 
                  + "and f.AVAILABLESEATS > '"+numTickets+"'" ,FlightInstance.class).getResultList();
         em.getTransaction().commit();
         em.close();
@@ -68,9 +68,9 @@ public class Facade {
              emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        List FlightInstances = em.createNativeQuery("select * from FlightInstance f where "
+        List FlightInstances = em.createNativeQuery("select * from FLIGHTINSTANCE f where "
                  + "f.FLIESFROM_IATACODE ='"+origin+"'"
-                 + "and f.departuredate='"+date+"'" 
+                 + "and f.DEPARTUREDATE='"+date+"'" 
                 + "and f.FLIESTO_IATACODE ='"+destination+"'" 
                  + "and f.AVAILABLESEATS > '"+numTickets+"'" ,FlightInstance.class).getResultList();
         em.getTransaction().commit();
