@@ -14,18 +14,19 @@ import javax.persistence.Temporal;
 
 @Entity
 public class FlightInstance implements Serializable {
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;//??????????????????????? skal den så fjernes??????????????????????????
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    private int flightNumber;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date departureDate;
     private int departuretime;//minuttes
     private int flightTime;
-    private int flightNumber;
     private int availableSeats;
     private int price;
     
+    @ManyToOne
+    private Flight flight;
     @ManyToOne
     private Airport fliesTo;
     @ManyToOne
@@ -115,33 +116,21 @@ public class FlightInstance implements Serializable {
     public void setFliesFrom(Airport fliesFrom) {
         this.fliesFrom = fliesFrom;
     }
-    
-    
-    
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Flight getFlight() {
+        return flight;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FlightInstance)) {
-            return false;
-        }
-        FlightInstance other = (FlightInstance) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
-    @Override
-    public String toString() {
-        return "entities.FlightInstance[ id=" + id + " ]";
+    public List<Reservation> getReservations() {
+        return reservations;
     }
+
+//    public void setReservations(List<Reservation> reservations) {
+//        this.reservations = reservations;
+//    }
 
 }

@@ -2,23 +2,26 @@
 package timeTravel.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Flight implements Serializable {
-    private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private int fligthNumber;
     private int numberOfSeats;
 
-/********************************************************************************************
-*                           TROR DENNE KLASSE SKAL SLETTES
-*********************************************************************************************/
+    @OneToMany(mappedBy = "flight")
+    private List <FlightInstance> FlightInstances;
+    
+    @ManyToOne
+    private Airline airline;
     
     public Flight(){}
     
@@ -26,15 +29,6 @@ public class Flight implements Serializable {
         this.fligthNumber = fligthNumber;
         this.numberOfSeats = numberOfSeats;
     }
-
-    
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 
     public int getFligthNumber() {
         return fligthNumber;
@@ -51,32 +45,22 @@ public class Flight implements Serializable {
     public void setNumberOfSeats(int numberOfSeats) {
         this.numberOfSeats = numberOfSeats;
     }
+
+    public List<FlightInstance> getFlightInstances() {
+        return FlightInstances;
+    }
+
+    public void setFlightInstances(List<FlightInstance> FlightInstances) {
+        this.FlightInstances = FlightInstances;
+    }
+
+    public Airline getAirline() {
+        return airline;
+    }
+
+    public void setAirline(Airline airline) {
+        this.airline = airline;
+    }
     
     
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Flight)) {
-            return false;
-        }
-        Flight other = (Flight) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Flight[ id=" + id + " ]";
-    }
-
 }

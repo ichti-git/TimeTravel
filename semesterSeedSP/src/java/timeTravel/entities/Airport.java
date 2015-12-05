@@ -11,29 +11,19 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Airport implements Serializable {
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;//??????????????????????? skal den så fjernes??????????????????????????
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String iatacode;
     private String name;
     private String city;
     private int timezone;
 
-    
-    
-    
-    
     @OneToMany(mappedBy = "fliesTo")
     private List<FlightInstance> FlightInstancesTo;
     
     @OneToMany(mappedBy = "fliesFrom")
-    private List<FlightInstance> FlightInstancesFrom;  //her skal der selvfølgelig bare være enten name/city/IATA code..
-    
-    
-    
-    
-    
+    private List<FlightInstance> FlightInstancesFrom;
     
     
     public Airport(){}
@@ -95,29 +85,29 @@ public class Airport implements Serializable {
     
     
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
+//    @Override
+//    public int hashCode() {
+//        int hash = 0;
+//        hash += (id != null ? id.hashCode() : 0);
+//        return hash;
+//    }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Airport)) {
-            return false;
-        }
-        Airport other = (Airport) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean equals(Object object) {
+//        // TODO: Warning - this method won't work in the case the id fields are not set
+//        if (!(object instanceof Airport)) {
+//            return false;
+//        }
+//        Airport other = (Airport) object;
+//        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+//            return false;
+//        }
+//        return true;
+//    }
 
-    @Override
-    public String toString() {
-        return "entities.Airport[ id=" + id + " ]";
-    }
+//    @Override
+//    public String toString() {
+//        return "entities.Airport[ id=" + id + " ]";
+//    }
 
 }
