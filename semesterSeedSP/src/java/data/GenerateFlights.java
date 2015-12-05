@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import timeTravel.facade.Facade;
 
 /**
  *
@@ -45,43 +46,39 @@ public class GenerateFlights {
     private int maxPrice = 5000;
     private int minTravelTime = 60;
     private int maxTravelTime = 360;
+    /*
     private static String[] airports = {"BCN", "CDG", "CPH", "STN", "SXF",
                                         "LAX", "SFO", "JFK", "HND", "PEK",
                                         "AMS", "IST", "GRU", "YYZ", "DXB",
                                         "ICN", "FCO", "MEL", "JNB", "CAI",
                                         "MEX", "BBU", "HEM", "SIN", "DME"};
+                                        * */
+    private static String[] airports = {"BCN", "CDG", "CPH", "STN", "SXF",
+                                        "LAX", "SFO", "AMS", "FCO", "HEM"};
     
-    public List generateFlights(int amount) {
-        ArrayList list = new ArrayList();
+    public void generateFlights(int amount) {
         for (int i = 0; i < amount; i++) {
-            int day = randomInt(maxDay, minDay);
+            int day = randomInt(minDay, maxDay);
             String dayString = ""+day;
             if (day < 10) {
                 dayString = "0"+dayString;
             }
-            int month = randomInt(maxMonth, minMonth);
-            String dateString = "2017-0"+month+"-"+dayString+"T00:00:00.000Z";
-            DateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            Date date;
-            try {
-                date = sdfISO.parse(dateString);
-            } catch (ParseException ex) {
-                //This should never happen!
-                Logger.getLogger(GenerateFlights.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            int seats = randomInt(maxSeats, minSeats);
-            int price = randomInt(maxPrice, minPrice);
-            int travelTime = randomInt(maxTravelTime, minTravelTime);
-            int originRandom = randomInt(0, airports.length);
-            int destinationRandom = randomInt(0, airports.length);
+            int month = randomInt(minMonth, maxMonth);
+            String dateString = "2016-0"+month+"-"+dayString+"T00:00:00.000Z";
+            //DateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            //Date date = sdfISO.parse(dateString);
+            int seats = randomInt(minSeats, maxSeats);
+            int price = randomInt(minPrice, maxPrice);
+            int travelTime = randomInt(minTravelTime, maxTravelTime);
+            int originRandom = randomInt(0, airports.length-1);
+            int destinationRandom = randomInt(0, airports.length-1);
             String origin = airports[originRandom];
             String destination = airports[destinationRandom];
-            String flightId = randomString(10);
-            //Put the data into database via entities
+            String flightId = "TT"+randomString(6)+":"+dateString;
+            Facade facade = new Facade();
+            facade.addFlightInstance(dateString, seats, price, flightId, travelTime, destination, origin);
         }
-        return list;
     }
-    
     private int randomInt(int min, int max) {
         Random random = new Random();
         return random.nextInt(max-min+1)+min;

@@ -1,8 +1,12 @@
 package timeTravel.facade;
 
 import deploy.DeploymentConfiguration;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -15,7 +19,7 @@ import timeTravel.entities.Reservation;
 
 public class Facade {
     
-    private EntityManagerFactory emf;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
     
     
 /*****************************************************************
@@ -80,7 +84,48 @@ public class Facade {
    
     
     //api/flightreservation
-    
+     
+    public void addFlightInstance(String date, int numberOfSeats, int price, 
+                                  String flightId, int travelTime, String destination, String origin) {
+        SimpleDateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            Date date2 = sdfISO.parse(date);        
+            EntityManager em = emf.createEntityManager();
+            try {
+                Airport from = em.find(Airport.class, origin);
+                Airport to = em.find(Airport.class, destination);
+                if (from == null || to == null) {
+                    throw new Exception("Airport not found");
+                }
+                else {
+                    FlightInstance f = new FlightInstance(date2, 0, travelTime, flightId, numberOfSeats, price, from, to);
+                    em.getTransaction().begin();
+                    em.persist(f);
+                    em.getTransaction().commit();
+                }
+            }
+            finally {
+                em.close();
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+/*
+{
+"date": ISO-8601 String,
+"numberOfSeats": Integer,
+"totalPrice": Number (Euro),
+"flightID": String,
+"traveltime": Integer (minutes),
+"destination": IATA-Code (String),
+"origin":"IATA-Code (String)
+}
+* */
+
      
 /*****************************************************************
 *                           facade setters

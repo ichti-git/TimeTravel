@@ -70,7 +70,7 @@ public class RestTest {
     
     //api/flightinfo tests
     @Test
-    public void flightinfoFromHappyPath() throws ParseException {
+    public void flightinfoFromHappyPath() {
         String from = "CPH";
         String date = "2016-01-07T00:00:00.000Z"; 
         //Cannot test for date, since we search for a date, but is given back unknown time of that date
@@ -83,14 +83,14 @@ public class RestTest {
                 statusCode(200).
                 body("flights[0].numberOfSeats", equalTo(2)).
                 body("flights[0].origin", equalTo("CPH")).
-                body(matchesJsonSchemaInClasspath("flightinfo-schema.json"));
+                body(matchesJsonSchema(fiSchemaFile));
     }
     
     @Test
     public void flightinfoFromToHappyPath() throws ParseException {
         String from = "CPH";
         String to = "SXF";
-        String date = "2016-01-07T00:00:00.000Z"; 
+        String date = "2016-01-05T00:00:00.000Z"; 
         //Cannot test for date, since we search for a date, but is given back unknown time of that date
         int tickets = 2;
         given().
@@ -117,7 +117,7 @@ public class RestTest {
                 then().
                 statusCode(400).
                 body("httpError", equalTo(400)).
-                body("errorCode", equalTo(1)).
+                body("errorCode", equalTo(3)).
                 body(matchesJsonSchema(fiErrorSchemaFile));
     }
     @Test
@@ -133,7 +133,7 @@ public class RestTest {
                 then().
                 statusCode(400).
                 body("httpError", equalTo(400)).
-                body("errorCode", equalTo(1)).
+                body("errorCode", equalTo(3)).
                 body(matchesJsonSchema(fiErrorSchemaFile));
     }
     @Test
@@ -179,8 +179,8 @@ public class RestTest {
                 when().
                 get("/flightinfo/"+from+"/"+to+"/"+date+"/"+tickets).
                 then().
-                statusCode(400).
-                body("httpError", equalTo(400)).
+                statusCode(404).
+                body("httpError", equalTo(404)).
                 body("errorCode", equalTo(3)).
                 body(matchesJsonSchema(fiErrorSchemaFile));
     }
@@ -361,7 +361,7 @@ public class RestTest {
                 then().
                 statusCode(404).
                 body("httpError", equalTo(404)).
-                body("errorCode", equalTo(11)).
+                body("errorCode", equalTo(3)).
                 body(matchesJsonSchema(flightsErrorSchemaFile));
     }
     @Test

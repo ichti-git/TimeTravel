@@ -14,13 +14,11 @@ import javax.persistence.Temporal;
 
 @Entity
 public class FlightInstance implements Serializable {
-    //private static final long serialVersionUID = 1L;//??????????????????????? skal den så fjernes??????????????????????????
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int flightNumber;
+    private String flightNumber;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date departureDate;
-    private int departuretime;//minuttes
+    private int departuretime;//minutes
     private int flightTime;
     private int availableSeats;
     private int price;
@@ -40,7 +38,7 @@ public class FlightInstance implements Serializable {
 
     public FlightInstance(){}
     
-    public FlightInstance(Date departureDate, int departuretime, int flightTime, int flightNumber, int availableSeats, int price,Airport fliesFrom,Airport fliesTo) {
+    public FlightInstance(Date departureDate, int departuretime, int flightTime, String flightNumber, int availableSeats, int price,Airport fliesFrom,Airport fliesTo) {
         this.departureDate = departureDate;
         this.departuretime = departuretime;
         this.flightTime = flightTime;
@@ -77,11 +75,11 @@ public class FlightInstance implements Serializable {
         this.flightTime = flightTime;
     }
 
-    public int getFlightNumber() {
+    public String getFlightNumber() {
         return flightNumber;
     }
 
-    public void setFlightNumber(int flightNumber) {
+    public void setFlightNumber(String flightNumber) {
         this.flightNumber = flightNumber;
     }
 

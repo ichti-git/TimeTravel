@@ -3,6 +3,7 @@ package timeTravel.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import data.GenerateFlights;
 import exception.ApiException;
 import exception.NoFlightsFoundException;
 import java.io.IOException;
@@ -26,7 +27,14 @@ import timeTravel.facade.Facade;
  */
 @Path("flightinfo")
 public class TimeTravelRESTApi {
-
+    @GET
+    @Produces("application/json")
+    @Path("generate/{n}")
+    public String generateFlights(@PathParam("n") int n) {
+        GenerateFlights gen = new GenerateFlights();
+        gen.generateFlights(n);
+        return "{\"msg\":\"ok\"}";
+    }
     @Context
     private UriInfo context;
 
@@ -49,9 +57,8 @@ public class TimeTravelRESTApi {
         if (flights.size() < 1) {
             throw new NoFlightsFoundException("No flights found");
         }
-        
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(flights);
+        String jsonFlights = convertFlightInstanceListToJson(flights, numTickets);
+        return jsonFlights;
     }
     
     @GET
@@ -68,9 +75,10 @@ public class TimeTravelRESTApi {
             throw new NoFlightsFoundException("No flights found");
         }
         String jsonFlights = convertFlightInstanceListToJson(flights, numTickets);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.toJson(jsonFlights);
+        return jsonFlights;
         
         //return "";
     }
+    
+
 }

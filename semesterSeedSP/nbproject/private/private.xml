@@ -6,7 +6,10 @@
         <group>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/NotFoundExceptionMapper.java</file>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/data/GenerateFlights.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/testScripts/testScript.sql</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/timeTravel/entities/Airport.java</file>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/rest/Flights.java</file>
+            <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/conf/persistence.xml</file>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/timeTravel/facade/Facade.java</file>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/rest/FlightHelper.java</file>
             <file>file:/home/ichti/NetBeansProjects/SemProj/semesterSeedSP/src/java/exception/NoFlightsFoundException.java</file>

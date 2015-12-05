@@ -1,5 +1,16 @@
 
 -- http://stackoverflow.com/questions/16572207/how-to-save-foreign-key-entity-in-jpa  <--- how to set foreign key in JPA
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('BCN', 'Barcelona', 'Barcelona International', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('CDG', 'Paris', 'Charles de Gualle International', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('CPH', 'Copenhagen', 'Copenhagen Kastrup', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('SXF', 'Berlin', 'Berlin-Schönefeld International', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('STN', 'London', 'London Stansted', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('LAX', 'Los Angeles', 'Los Angeles International', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('SFO', 'San Francisco', 'San Francisco International', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('AMS', 'Amsterdam', 'Amsterdam Schiphol Airport', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('FCO', 'Rome', 'Leonardo da Vinci-Fiumicino Airport', '0');
+INSERT INTO `TimeTravelDB`.`AIRPORT` (`IATACODE`, `CITY`, `NAME`, `TIMEZONE`) VALUES ('HEM', 'Helsinki', 'Helsinki Malmi Airport', '0');
+
 
 insert into Airport(iatacode,name,city,timezone) values ('CPH','copenhagen airport','Copenhagen','+1');
 insert into Airport(iatacode,name,city,timezone) values ('BAR','Barcelona airport','Barcelona','-1');

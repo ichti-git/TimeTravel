@@ -54,7 +54,7 @@ public class FlightHelper {
 * */
     public static JsonObject convertFlightInstanceToJson(final FlightInstance flight, final int numTickets) { 
         JsonObject json = new JsonObject();
-        DateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        DateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         String date = sdfISO.format(flight.getDepartureDate());
         json.addProperty("date", date);
         json.addProperty("numberOfSeats", numTickets);
