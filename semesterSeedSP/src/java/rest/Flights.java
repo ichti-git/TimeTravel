@@ -42,6 +42,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
+import static rest.FlightHelper.flightInputChecker;
 
 /**
  * REST Web Service
@@ -177,27 +178,5 @@ public class Flights {
         return gson.toJson(flights);
     }
 
-    
-
-    private void flightInputChecker(String from, String to, String date, int numTickets) throws ApiException {
-        if (to != null) {
-            if (to.length() != 3) {
-                throw new IllegalInputException("Origin airport code not valid");
-            }
-        }
-        if (from.length() != 3) {
-            throw new IllegalInputException("Destination airport code not valid");
-        }
-        if (numTickets < 1) {
-            throw new IllegalInputException("Amount of ticket must be at least 1");
-        }
-        
-        DateFormat sdfISO = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        try {
-            Date date2 = sdfISO.parse(date);
-        } catch (ParseException ex) {
-            throw new IllegalInputException("Date format wrong");
-        }
-    }
 }
 

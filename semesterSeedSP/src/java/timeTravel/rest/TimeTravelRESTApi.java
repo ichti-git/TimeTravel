@@ -3,9 +3,9 @@ package timeTravel.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.util.Date;
+import exception.ApiException;
+import exception.NoFlightsFoundException;
+import java.io.IOException;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -15,91 +15,62 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import static rest.FlightHelper.*;
 import timeTravel.entities.FlightInstance;
 import timeTravel.facade.Facade;
 
 /**
-  * @author <martinweberhansen at gmail.com>
+ * REST Web Service
+ * 
+ * @author <martinweberhansen at gmail.com>
  */
 @Path("flightinfo")
 public class TimeTravelRESTApi {
 
-    
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    JsonParser parser = new JsonParser();
-    Facade facade = new Facade();
-    
     @Context
     private UriInfo context;
 
+    /**
+     * Creates a new instance of GenericResource
+     */
     public TimeTravelRESTApi() {
     }
-
     
     @GET
-    @Path("flightinfo/{origin}/{date}/{numTickets}")
     @Produces("application/json")
-    public String getFlightInstances(@PathParam("origin")String origin,@PathParam("date")String date,@PathParam("numTickets")String numTickets){ 
+    @Path("{from}/{date}/{tickets}")
+    public String getFlightsFrom(@PathParam("from") String from, 
+                                 @PathParam("date") String date, 
+                                 @PathParam("tickets") int numTickets) throws IOException, ApiException {
+        flightInputChecker(from, null, date, numTickets);
+        Facade facade = new Facade();
+        List<FlightInstance> flights = facade.getFlightInstances(from, date, numTickets);
         
-        int convertedNumTickets = Integer.parseInt(numTickets);
-        JsonArray response = new JsonArray();
-        List<FlightInstance> flightInstances = facade.getFlightInstances(origin,date,convertedNumTickets);
-        
-        for (FlightInstance flightInstance : flightInstances) {
-            
-            JsonObject jsObj = new JsonObject();
-            FlightInstance f = flightInstance;
-            
-            jsObj.addProperty("airline",f.getFlight().getAirline().getName());
-            
-            jsObj.addProperty("date", f.getDepartureDate().toString());
-            jsObj.addProperty("numberOfSeats", f.getAvailableSeats());
-            jsObj.addProperty("totalPrice", f.getPrice());
-            jsObj.addProperty("flightID",f.getFlight().getFligthNumber());
-            jsObj.addProperty("traveltime", f.getFlightTime());
-            jsObj.addProperty("destination",f.getFliesTo().getCity());
-            jsObj.addProperty("origin",f.getFliesFrom().getCity());
-            response.add(jsObj);
+        if (flights.size() < 1) {
+            throw new NoFlightsFoundException("No flights found");
         }
-        return gson.toJson(response);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(flights);
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     @GET
     @Produces("application/json")
-    public String getJson() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of GenericResource
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("application/json")
-    public void putJson(String content) {
+    @Path("{from}/{to}/{date}/{tickets}")
+    public String getFlightsFromTo(@PathParam("from") String from,
+                                   @PathParam("to") String to,
+                                   @PathParam("date") String date, 
+                                   @PathParam("tickets") int numTickets) throws IOException, ApiException {
+        flightInputChecker(from, to, date, numTickets);
+        Facade facade = new Facade();
+        List<FlightInstance> flights = facade.getFlightInstances(from, to, date, numTickets);
+        if (flights.size() < 1) {
+            throw new NoFlightsFoundException("No flights found");
+        }
+        String jsonFlights = convertFlightInstanceListToJson(flights, numTickets);
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(jsonFlights);
+        
+        //return "";
     }
 }
