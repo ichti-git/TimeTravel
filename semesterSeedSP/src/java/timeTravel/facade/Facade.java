@@ -1,8 +1,10 @@
 package timeTravel.facade;
 
 import deploy.DeploymentConfiguration;
+import entity.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -10,6 +12,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import timeTravel.entities.Airline;
 import timeTravel.entities.Airport;
 import timeTravel.entities.Flight;
 import timeTravel.entities.FlightInstance;
@@ -114,18 +117,23 @@ public class Facade {
             Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-/*
-{
-"date": ISO-8601 String,
-"numberOfSeats": Integer,
-"totalPrice": Number (Euro),
-"flightID": String,
-"traveltime": Integer (minutes),
-"destination": IATA-Code (String),
-"origin":"IATA-Code (String)
-}
-* */
-
+    
+    public List<Airline> getAirlinesUrl() {
+        EntityManager em = emf.createEntityManager();
+        List urls = em.createNativeQuery("select * from AIRLINE a", Airline.class).getResultList();
+        em.close();
+        return urls;
+    }
+    
+    public List<Reservation> getReservationsByUser(User user){
+        return getReservationsByUsername(user.getUserName());
+    }
+    public List<Reservation> getReservationsByUsername(String userName){
+        EntityManager em = emf.createEntityManager();
+        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEE='"+userName+"'",Reservation.class).getResultList();
+        em.close();
+        return reservations;
+    }
      
 /*****************************************************************
 *                           facade setters
@@ -180,7 +188,8 @@ public class Facade {
          em.getTransaction().commit();
          em.close();
      }
-     
+
+  
      
      
 

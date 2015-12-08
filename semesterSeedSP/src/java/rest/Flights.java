@@ -43,6 +43,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import static rest.FlightHelper.flightInputChecker;
+import timeTravel.entities.Airline;
+import timeTravel.entities.Reservation;
+import timeTravel.facade.Facade;
 
 /**
  * REST Web Service
@@ -52,7 +55,7 @@ import static rest.FlightHelper.flightInputChecker;
  */
 @Path("flights")
 public class Flights {
-    private ArrayList<String> apiUrls = new ArrayList();
+    private List<Airline> apiUrls = new ArrayList();
     private String apiBase = "api/flightinfo/";
     
     @Context
@@ -62,8 +65,9 @@ public class Flights {
      * Creates a new instance of Flights
      */
     public Flights() {
-        apiUrls.add("http://angularairline-plaul.rhcloud.com/");
-        apiUrls.add("http://wildfly-x.cloudapp.net/airline/");
+        apiUrls = new Facade().getAirlinesUrl();
+        //apiUrls.add("http://angularairline-plaul.rhcloud.com/");
+        //apiUrls.add("http://wildfly-x.cloudapp.net/airline/");
     }
 
     //api/flightinfo/:from/:date/:numTickets
@@ -78,6 +82,7 @@ public class Flights {
         if (request.getResponseCode() != 200) {
             return null;
         }
+        
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
         JsonObject object = element.getAsJsonObject();
@@ -93,13 +98,13 @@ public class Flights {
         ExecutorService executor = Executors.newFixedThreadPool(4);
         Iterator ite = apiUrls.iterator();
         while (ite.hasNext()) {
-            final String next = (String)ite.next();
+            final Airline next = (Airline)ite.next();
             Callable<JsonArray> task = new Callable<JsonArray>() {
                 @Override
                 public JsonArray call() throws MalformedURLException {
                     JsonArray flights = new JsonArray();
                     //Build the urlString
-                    StringBuilder urlString = new StringBuilder(next);
+                    StringBuilder urlString = new StringBuilder(next.getUrl());
                     urlString.append(apiBase);
                     urlString.append(from);
                     urlString.append("/");
@@ -177,6 +182,7 @@ public class Flights {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(flights);
     }
-
+   
+    
 }
 

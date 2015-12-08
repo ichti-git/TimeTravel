@@ -88,4 +88,5 @@ public class FlightHelper {
             throw new IllegalInputException("Date format wrong");
         }
     }
+    
 }

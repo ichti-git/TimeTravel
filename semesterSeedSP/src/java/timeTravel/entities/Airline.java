@@ -13,11 +13,20 @@ public class Airline implements Serializable {
     
     @Id
     private String name;
-    
-    @OneToMany(mappedBy = "airline")
-    private List<Flight> flights;
+    private String url;
+//    
+//    @OneToMany(mappedBy = "airline")
+//    private List<Flight> flights;
 
     public Airline() {
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     
@@ -29,14 +38,14 @@ public class Airline implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public List<Flight> getFlights() {
-        return flights;
-    }
-
-    public void setFlights(List<Flight> flights) {
-        this.flights = flights;
-    }
+//
+//    public List<Flight> getFlights() {
+//        return flights;
+//    }
+//
+//    public void setFlights(List<Flight> flights) {
+//        this.flights = flights;
+//    }
     
     
 }
