@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="form-group col-md-3">
                     <label for="searchStart">City of origin</label>
-                    <select class="form-control border-radius" name="searchFrom" ng-model="fromToLOL.from">
+                    <select class="form-control border-radius" name="searchFrom" ng-model="search.from">
                         <option value="CPH">Copenhagen</option>
                         <option value="STN">London</option>
                         <option value="CDG">Paris</option>
@@ -34,7 +34,7 @@
 
                 <div class="form-group col-md-3">
                     <label for="searchDestination">Destination</label>
-                    <select class="form-control border-radius" name="searchDestination" ng-model="fromToLOL.to">
+                    <select class="form-control border-radius" name="searchDestination" ng-model="search.to">
                         <Option value="NULL">Select your Destination</Option>
                         <option value="CPH">Copenhagen</option>
                         <option value="STN">London</option>
@@ -50,7 +50,7 @@
                 <div class="form-group col-md-2">
                     <label for="searchDate">Date</label>
                     <div class="input-group date" id="searchDate">
-                        <input ng-model="fromToLOL.date" type="text" class="form-control border-radius border-right" />
+                        <input ng-model="search.date" type="text" class="form-control border-radius border-right" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -59,7 +59,7 @@
 
                 <div class="form-group col-md-2">
                     <label for="searchSeats">Number of Seats</label>
-                    <input ng-model="fromToLOL.tickets" type="number" class="form-control border-radius border-right" id="searchSeats" />
+                    <input ng-model="search.tickets" type="number" class="form-control border-radius border-right" id="searchSeats" />
 
                 </div>
 
@@ -79,7 +79,7 @@
 <!-- /#header -->
 
 <!-- Results panel -->
-<div class="vertical-center" id="searchResultsPanel" ng-repeat="f in flights">
+<div class="vertical-center" id="searchResultsPanel">
     <div class="col-md-3 col-sm-2 col-xs-1"></div>
     <div class="col-md-6 col-sm-8 col-xs-12">
         <div id="menu" class="panel panel-default vertical-center">
@@ -87,10 +87,10 @@
                 <h4>Search results</h4>
                 <span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>
             </div>
-            <div class="panel list-group panel-group" id="accordion">
+            <div class="panel list-group panel-group" id="accordion" ng-repeat="f in flights track by $index">
 
                 <!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
-                <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-1" data-parent="#menu">                             
+                <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
                     <div class="row">
                         <div class="col-md-4 col-sm-12">{{f.airline}}</div>
                         <div class="col-md-4 col-sm-12 results text-center">Number of seats</div>
@@ -110,7 +110,7 @@
                 <!-- End of main info section -->
 
                 <!-- Search result - detail section. id of next DIV element must be the same as data-target name from main info -->
-                <div id="result-1" class="collapse searchDetail">
+                <div id="result-{{$index}}" class="collapse searchDetail">
                     <div class="fluid-row">
                         <div class="row">
                             <div class="col-md-6">{{f.airline}}</div>
@@ -165,9 +165,12 @@
 
                 </div>
             </div>
+            
+            
         </div>
         <div class="col-md-3 col-sm-2 col-xs-1"></div>
     </div>
+</div>
     <!-- ./Results Panel -->
 
     <!-- We are the best -->
