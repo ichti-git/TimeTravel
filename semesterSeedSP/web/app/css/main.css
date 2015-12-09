@@ -388,9 +388,9 @@ color: #0998EA;
 }
 #searchResultsPanel {
 	width:100%;
-    position:absolute;
+    position: relative;
     z-index:5;
-    top:550px; /* position of search result panel from top */
+    top:0px; /* position of search result panel from top */
     left:auto; /* change to whatever you want */
     right:auto; /* change to whatever you want */
     bottom:auto; /* change to whatever you want */

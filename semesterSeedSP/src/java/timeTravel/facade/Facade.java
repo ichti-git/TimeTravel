@@ -58,7 +58,7 @@ public class Facade {
 //   select * from person p join person_hobby ph  where p.`ID`=ph.`persons_ID` and  ph.hobbies_id="+hobby.getId()
     
     public List<FlightInstance> getFlightInstances(String origin, String date, int numTickets){
-            
+        date = date.substring(0, 10);
         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
@@ -73,6 +73,7 @@ public class Facade {
 
      public List<FlightInstance> getFlightInstances(String origin,String destination, String date, int numTickets){
              emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+        date = date.substring(0, 10);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         List FlightInstances = em.createNativeQuery("select * from FLIGHTINSTANCE f where "

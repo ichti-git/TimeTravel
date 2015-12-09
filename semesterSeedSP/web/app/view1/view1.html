@@ -87,85 +87,84 @@
                 <h4>Search results</h4>
                 <span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>
             </div>
-            <div class="panel list-group panel-group" id="accordion" ng-repeat="f in flights track by $index">
-
-                <!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
-                <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12">{{f.airline}}</div>
-                        <div class="col-md-4 col-sm-12 results text-center">Number of seats</div>
-                        <div class="col-md-4 col-sm-12 text-right"><strong>{{f.date}}</strong></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12 results">Destination</div>
-                        <div class="col-md-4 col-sm-12 text-center"><strong>{{f.numberOfSeats}}</strong></div>
-                        <div class="col-md-4 col-sm-12 text-right"><strong>1hr 30m</strong></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-sm-12"><strong>Copenhagen</strong></div>
-                        <div class="col-md-4 col-sm-12 text-center"></div>
-                        <div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: {{f.totalPrice}}</strong></div>
-                    </div>
-                </span>
-                <!-- End of main info section -->
-
-                <!-- Search result - detail section. id of next DIV element must be the same as data-target name from main info -->
-                <div id="result-{{$index}}" class="collapse searchDetail">
-                    <div class="fluid-row">
+            <div class="panel list-group panel-group" id="accordion">
+                <div ng-nrepeat="f in flights track by $index">
+                    <!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
+                    <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
                         <div class="row">
-                            <div class="col-md-6">{{f.airline}}</div>
-                            <div class="col-md-6 text-right results">Date</div>
+                            <div class="col-md-4 col-sm-12">{{f.airline}}</div>
+                            <div class="col-md-4 col-sm-12 results text-center">Number of seats</div>
+                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.date}}</strong></div>
                         </div>
-
                         <div class="row">
-                            <div class="col-md-6 results">City of Origin</div>
-                            <div class="col-md-6 text-right results"><strong>{{f.date}}</strong></div>
+                            <div class="col-md-4 col-sm-12 results">Destination</div>
+                            <div class="col-md-4 col-sm-12 text-center"><strong>{{f.numberOfSeats}}</strong></div>
+                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.traveltime}} Minutes</strong></div>
                         </div>
-
                         <div class="row">
-                            <div class="col-md-6"><strong></strong></div>
-                            <div class="col-md-6 results text-right results">Travel time</div>
+                            <div class="col-md-4 col-sm-12"><strong>{{f.destination}}</strong></div>
+                            <div class="col-md-4 col-sm-12 text-center"></div>
+                            <div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: {{f.totalPrice}}</strong></div>
                         </div>
+                    </span>
+                    <!-- End of main info section -->
 
-                        <div class="row">
-                            <div class="col-md-6 results">Destination</div>
-                            <div class="col-md-6 text-right"><strong>1hr 30min</strong></div>
-                        </div>
+                    <!-- Search result - detail section. id of next DIV element must be the same as data-target name from main info -->
+                    <div id="result-{{$index}}" class="collapse searchDetail">
+                        <div class="fluid-row">
+                            <div class="row">
+                                <div class="col-md-6">{{f.airline}}</div>
+                                <div class="col-md-6 text-right results">Date</div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-12"><strong>Copenhagen</strong></div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6 results">City of Origin</div>
+                                <div class="col-md-6 text-right results"><strong>{{f.date}}</strong></div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-6 results">Number of Seats</div>
-                            <div class="col-md-6 results text-right results">Price per Seat</div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6"><strong>{{f.origin}}</strong></div>
+                                <div class="col-md-6 results text-right results">Travel time</div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-6 results"><strong>1</strong></div>
-                            <div class="col-md-6 results text-right results"><strong>55 EUR</strong></div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6 results">Destination</div>
+                                <div class="col-md-6 text-right"><strong>{{f.traveltime}} Minutes</strong></div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-12">&nbsp;</div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-12"><strong>{{f.destination}}</strong></div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-4 results"></div>
-                            <div class="col-md-8 results text-right results"><strong>TOTAL PRICE: 55 EUR</strong></div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6 results">Number of Seats</div>
+                                <div class="col-md-6 results text-right results">Price per Seat</div>
+                            </div>
 
-                        <div class="row">
-                            <div class="col-md-8 results"></div>
-                            <div class="col-md-4 results text-right results">
-                                <button id="reservationButton" type="button" class="btn btn-default border-radius button-modal">Reserve</button>
+                            <div class="row">
+                                <div class="col-md-6 results"><strong>1</strong></div>
+                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice/f.numberOfSeats}} EUR</strong></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">&nbsp;</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 results"></div>
+                                <div class="col-md-8 results text-right results"><strong>TOTAL PRICE: {{f.totalPrice}} EUR</strong></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8 results"></div>
+                                <div class="col-md-4 results text-right results">
+                                    <button id="reservationButton" type="button" class="btn btn-default border-radius button-modal">Reserve</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-            
             
         </div>
         <div class="col-md-3 col-sm-2 col-xs-1"></div>
@@ -176,12 +175,6 @@
     <!-- We are the best -->
     <section class="offer section-wrapper">
         <div class="container">
-            <h2 class="section-title">
-                Why we are the best
-            </h2>
-            <p class="section-subtitle">
-                Lorem Ipsum is simply dummy text of the industry.
-            </p>
             <div class="row">
                 <div class="col-sm-3 col-xs-6">
                     <div class="offer-item">
@@ -250,7 +243,7 @@
 
     <!-- Subscribe section -->
     <div class="subscribe section-wrapper">
-        <a class="brand-logo" href="index.html" title="HOME"><i class="ion-paper-airplane"></i> Fly <span>Travel</span></a>
+        <a class="brand-logo" href="index.html" title="HOME"><i class="ion-paper-airplane"></i> Time<span>Travel</span></a>
         <p class="subscribe-now">
             Subscribe to our Newsletter
         </p>
@@ -281,7 +274,7 @@
             <div class="row">
                 <div class="col-xs-4">
                     <div class="text-left">
-                        &copy; Copyright Fly Travel
+                        &copy; Copyright TimeTravel
                     </div>
                 </div>
                 <div class="col-xs-4">

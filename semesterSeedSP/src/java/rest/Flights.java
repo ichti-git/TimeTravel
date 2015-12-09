@@ -95,7 +95,7 @@ public class Flights {
     private JsonArray getFlights(final String from, final String to, final String date, final int numTickets) {
         
         List<Future<JsonArray>> list = new ArrayList<>();
-        ExecutorService executor = Executors.newFixedThreadPool(4);
+        ExecutorService executor = Executors.newFixedThreadPool(8);
         Iterator ite = apiUrls.iterator();
         while (ite.hasNext()) {
             final Airline next = (Airline)ite.next();
@@ -121,13 +121,16 @@ public class Flights {
                         JsonObject airlineFlights = getFlightsFromAirline(url);
                         if (airlineFlights != null) {
                             JsonElement jsonAirline = airlineFlights.get("airline");
-                            JsonArray jsonFlights = airlineFlights.get("flights").getAsJsonArray();
-                            Iterator jsonIte = jsonFlights.iterator();
-                            //Add the flights from the airline to combined flights
-                            while (jsonIte.hasNext()) {
-                                JsonObject newFlight = ((JsonObject)jsonIte.next());
-                                newFlight.add("airline", jsonAirline);
-                                flights.add(newFlight);
+                            JsonElement jsonFlightsElement = airlineFlights.get("flights");
+                            if (jsonFlightsElement != null) {
+                                JsonArray jsonFlights = jsonFlightsElement.getAsJsonArray();
+                                Iterator jsonIte = jsonFlights.iterator();
+                                //Add the flights from the airline to combined flights
+                                while (jsonIte.hasNext()) {
+                                    JsonObject newFlight = ((JsonObject)jsonIte.next());
+                                    newFlight.add("airline", jsonAirline);
+                                    flights.add(newFlight);
+                                }
                             }
                         }
                     } catch (IOException ex) {
