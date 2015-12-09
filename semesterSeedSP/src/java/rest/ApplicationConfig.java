@@ -22,6 +22,7 @@ public class ApplicationConfig extends Application {
         resources.add(exception.ApiExceptionMapper.class);
         resources.add(exception.NotFoundExceptionMapper.class);
         resources.add(rest.Admin.class);
+        resources.add(rest.CreateUser.class);
         resources.add(rest.Flights.class);
         resources.add(rest.Test.class);
         resources.add(rest.User.class);

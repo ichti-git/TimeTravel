@@ -10,10 +10,12 @@ import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import deploy.DeploymentConfiguration;
 import facades.UserFacade;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotAuthorizedException;
@@ -54,7 +56,7 @@ public class Login {
     }
 
     private List<String> authenticate(String userName, String password) {
-        UserFacade facade = new UserFacade();
+        UserFacade facade = new UserFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
         List<String> roles = facade.authenticateUser(userName, password);
         return roles;
     }

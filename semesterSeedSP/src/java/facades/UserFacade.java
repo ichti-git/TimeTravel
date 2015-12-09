@@ -1,6 +1,7 @@
 package facades;
 
 import deploy.DeploymentConfiguration;
+import entity.Role;
 import entity.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -14,11 +15,16 @@ import security.PasswordHash;
 
 public class UserFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-
-    public UserFacade() {
-
+        private EntityManagerFactory emf;
+    
+    public UserFacade(EntityManagerFactory e) {
+        emf = e;
     }
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
 
     public User getUserByUserId(String id) {
         EntityManager em = emf.createEntityManager();
@@ -52,5 +58,23 @@ public class UserFacade {
         }
 
     }
+    
+    public void createUser(String userName, String pw, String firstName, String lastName, String email, String phone) {
+        Role userRole = new Role("User");
+        EntityManager em = getEntityManager();
+        User user = new User(userName, pw, firstName, lastName, email, phone);
+        user.AddRole(userRole);
+
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(user);
+            em.getTransaction().commit();
+            
+        } finally {
+            em.close();
+        }
+    }
+
 
 }

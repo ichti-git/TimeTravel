@@ -44,9 +44,9 @@ public class DeploymentConfiguration implements ServletContextListener {
             Role userRole = new Role("User");
             Role adminRole = new Role("Admin");
 
-            User user = new User("user", PasswordHash.createHash("test"));
-            User admin = new User("admin", PasswordHash.createHash("test"));
-            User both = new User("user_admin", PasswordHash.createHash("test"));
+            User user = new User("user", PasswordHash.createHash("test"), "testUserFirst", "testUserLast", "testUserEmail", "testUserPhone");
+            User admin = new User("admin", PasswordHash.createHash("test"), "testAdminFirst", "testAdminLast", "testAdminEmail", "testAdminPhone");
+            User both = new User("user_admin", PasswordHash.createHash("test"), "testBothFirst", "testBothLast", "testBothEmail", "testBothPhone");
             user.AddRole(userRole);
             admin.AddRole(adminRole);
             both.AddRole(userRole);
