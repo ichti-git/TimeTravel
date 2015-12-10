@@ -45,6 +45,7 @@
         <script src="app/view2/view2.js"></script>
         <script src="app/view3/view3.js"></script>
         <script src="app/view4/view4.js"></script>
+        <script src="app/loginView/loginView.js"></script>
         <script src="app/components/authentication.js"></script>
         <script src="app/components/filters.js"></script>
         <script src="app/components/directives.js"></script>
@@ -67,7 +68,17 @@
                                 <li><a href="#/view2">about</a></li>
                                 <li><a href="#/view3">how we work</a></li>
                                 <li><a href="#/view4">contact</a></li>
+                                <li><a href="#/loginView">login</a></li>
                         </ul>
+                        
+                        <div class="navbar-right" ng-show="isAuthenticated">
+              
+                            <p class="navbar-text">Logged on as: {{username}}</p>
+
+                            <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
             </nav>
