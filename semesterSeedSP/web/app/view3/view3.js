@@ -10,7 +10,7 @@ angular.module('myApp.view3', ['ngRoute'])
 }])
 
 .controller('View3Ctrl', function($http,$scope) {
-  $http.get('api/demoadmin')
+  $http.get('api/demouser')//api/demoadmin
             .success(function (data, status, headers, config) {
               $scope.data = data;
             })

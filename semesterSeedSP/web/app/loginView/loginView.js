@@ -10,9 +10,9 @@ angular.module('myApp.loginView',['ngRoute'])
                 });
         }])
     
-        .controller('loginCtrl',["InfoFactory","InfoService",function(InfoFactory,InfoService,$scope,$http){
+        .controller('loginCtrl',["InfoFactory","InfoService","$scope","$http",function(InfoFactory,InfoService,$scope,$http){
                 
-                        $scope.gg = 1122;
+                        $scope.data;
                         
 ////                        $scope.blaa = "blaaaaaa";
         

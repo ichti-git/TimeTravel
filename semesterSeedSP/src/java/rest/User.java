@@ -17,13 +17,13 @@ import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
 
 @Path("demouser")
-@RolesAllowed("User")
+//@RolesAllowed("User")
 public class User {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
 //    @RolesAllowed("user")
-//    @Path("test")
+    @Path("test")
     public String getSomething() {
         return "{\"message\" : \"This message was delivered via a REST call accesible by only authenticated USERS\"}";
     }
