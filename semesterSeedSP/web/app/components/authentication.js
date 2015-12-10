@@ -37,8 +37,9 @@ angular.module('myApp.security', [])
           $scope.error = null;
 
           $scope.login = function () {
+              console.log($scope.user+" this was user!!");//!!!!!!!!!!!!!!!!!!!!!!!!!!! FJERN MIG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             $http
-                    .post('api/login', $scope.user)
+                    .post('api/login', $scope.user) 
                     .success(function (data, status, headers, config) {
                       $window.sessionStorage.token = data.token;
                       $scope.isAuthenticated = true;

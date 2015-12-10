@@ -14,6 +14,7 @@ public class Admin {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @RolesAllowed("admin")
     public String getSomething() {
         String now = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(new Date());
         return "{\"message\" : \"This message was delivered via a REST call accesible by only authenticated ADMINS\",\n"
