@@ -17,17 +17,20 @@ import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
 
 @Path("demouser")
-//@RolesAllowed("User")
+@RolesAllowed("User")
 public class User {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+//    @RolesAllowed("user")
+//    @Path("test")
     public String getSomething() {
         return "{\"message\" : \"This message was delivered via a REST call accesible by only authenticated USERS\"}";
     }
     @GET
     @Produces("application/json")
     @Path("reservationlist")
+    @RolesAllowed("user")
     public String getReservations(@HeaderParam("Authorization") String token) throws ParseException, JOSEException {
         token = token.substring("Bearer ".length());
         String userName = getUsernameFromToken(token);

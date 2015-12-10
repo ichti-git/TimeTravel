@@ -10,3 +10,13 @@
               </div>
               <button type="submit" class="btn btn-success">Sign in</button>
 </form>
+ 
+<p>HAHAHA {{gg}}</p>
+
+<div class="navbar-right" ng-show="!isAuthenticated">
+              
+                            <p class="navbar-text">Logged on as: {{username}}</p>
+
+                            <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout
+                            </button>
+                        </div>

@@ -12,11 +12,26 @@ angular.module('myApp.loginView',['ngRoute'])
     
         .controller('loginCtrl',["InfoFactory","InfoService",function(InfoFactory,InfoService,$scope,$http){
                 
-                  $http.get('api/demoadmin')
+                        $scope.gg = 1122;
+                        
+////                        $scope.blaa = "blaaaaaa";
+        
+                  $http.get('api/demouser/test')
             .success(function (data, status, headers, config) {
-              $scope.data = data;
+              $scope.data = data.message;
             })
             .error(function (data, status, headers, config) {
               
              });
+     
+     
+     
+//      $http({
+//            method: 'GET',
+//            url: 'api/demouser/test'
+//          }).then(function successCallback(res) {
+//            $scope.data = res.data;
+//          }, function errorCallback(res) {
+//            $scope.error = res.status + ": "+ res.data.statusText;
+//          });
         }]);
