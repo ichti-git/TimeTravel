@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="form-group col-md-3">
                     <label for="searchStart">City of origin</label>
-                    <select class="form-control border-radius" name="searchFrom" ng-model="search.from">
+                    <select class="form-control border-radius" name="searchFrom" ng-model="searchForm.from">
                         <option value="CPH">Copenhagen</option>
                         <option value="STN">London</option>
                         <option value="CDG">Paris</option>
@@ -34,7 +34,7 @@
 
                 <div class="form-group col-md-3">
                     <label for="searchDestination">Destination</label>
-                    <select class="form-control border-radius" name="searchDestination" ng-model="search.to">
+                    <select class="form-control border-radius" name="searchDestination" ng-model="searchForm.to">
                         <Option value="NULL">Select your Destination</Option>
                         <option value="CPH">Copenhagen</option>
                         <option value="STN">London</option>
@@ -50,7 +50,7 @@
                 <div class="form-group col-md-2">
                     <label for="searchDate">Date</label>
                     <div class="input-group date" id="searchDate">
-                        <input ng-model="search.date" type="text" class="form-control border-radius border-right" />
+                        <input ng-model="searchForm.date" type="text" class="form-control border-radius border-right" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -59,13 +59,13 @@
 
                 <div class="form-group col-md-2">
                     <label for="searchSeats">Number of Seats</label>
-                    <input ng-model="search.tickets" type="number" class="form-control border-radius border-right" id="searchSeats" />
+                    <input ng-model="searchForm.tickets" type="number" class="form-control border-radius border-right" id="searchSeats" />
 
                 </div>
 
                 <div class="form-group col-md-2">
                     <label>&nbsp;</label>
-                    <button ng-click="click()" type="button" id="searchButton" class="btn btn-default border-radius custom-button pull-right">
+                    <button ng-click="search()" type="button" id="searchButton" class="btn btn-default border-radius custom-button pull-right">
                         Search
                     </button>
                 </div>
@@ -85,10 +85,10 @@
         <div id="menu" class="panel panel-default vertical-center">
             <div class="panel-heading">
                 <h4>Search results</h4>
-                <span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>
+                <!--<span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>-->
             </div>
             <div class="panel list-group panel-group" id="accordion">
-                <div ng-nrepeat="f in flights track by $index">
+               <div class="panel list-group panel-group" ng-repeat="f in flights track by $index"> 
                     <!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
                     <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
                         <div class="row">
@@ -158,7 +158,7 @@
                             <div class="row">
                                 <div class="col-md-8 results"></div>
                                 <div class="col-md-4 results text-right results">
-                                    <button id="reservationButton" type="button" class="btn btn-default border-radius button-modal">Reserve</button>
+                                    <button ng-click="reserve($index)" id="reservationButton" type="button" class="btn btn-default border-radius button-modal">Reserve</button>
                                 </div>
                             </div>
                         </div>
@@ -311,7 +311,7 @@
                                 <div class="stepwizard-row setup-panel">
                                     <div class="stepwizard-step">
                                         <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-                                        <p><strong>User registration</strong></p>
+                                        <p><strong>Registration</strong></p>
                                     </div>
                                     <div class="stepwizard-step">
                                         <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
@@ -327,148 +327,98 @@
                             <form role="form">
                                 <div class="row setup-content col-md-12" id="step-1">
                                     <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label class="control-label" for="user-name">First Name</label>
-                                            <input maxlength="100" id="user-name" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
+                                        <div class="col-md-5" id="reservationRegisterForm">
+                                            New user? Register here.<br>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationUsername">Username</label>
+                                                <input maxlength="100" ng-model="reservationUsername" type="text" required="required" class="form-control" placeholder="Username"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationPassword">Password</label>
+                                                <input maxlength="100" ng-model="reservationPassword" type="password" required="required" class="form-control" placeholder="*****"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationFirstname">First Name</label>
+                                                <input maxlength="100" ng-model="reservationFirstname" type="text" required="required" class="form-control" placeholder="First Name"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationLastname">Last Name</label>
+                                                <input maxlength="100" ng-model="reservationLastname" type="text" required="required" class="form-control" placeholder="Last Name"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationEmail">Email</label>
+                                                <input maxlength="100" ng-model="reservationEmail" type="text" required="required" class="form-control" placeholder="Email"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationPhone">Phonenumber</label>
+                                                <input maxlength="100" ng-model="reservationPhone" type="text" required="required" class="form-control" placeholder="Phonenumber"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <button ng-click="reservationRegister()" class="btn btn-primary" type="button">Register</button>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="user-lastname">Last Name</label>
-                                            <input maxlength="100" id="user-lastname" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
+                                        <div class="col-md-2"></div>
+                                        
+                                        <div class="col-md-5" id="reservationLoginForm">
+                                            Already registered? Login here.<br>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationUsernameLogin">Username</label>
+                                                <input maxlength="100" ng-model="reservationUsernameLogin" id="reservationUsernameLogin" type="text" required="required" class="form-control" placeholder="Username"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="reservationPasswordLogin">Password</label>
+                                                <input maxlength="100" ng-model="reservationPasswordLogin" id="reservationPasswordLogin" type="password" required="required" class="form-control" placeholder="*****"
+                                                       />
+                                            </div>
+                                            <div class="form-group">
+                                                <button ng-click="reservationLogin()" class="btn btn-primary" type="button">Login</button>
+                                            </div>
+                                            <br><br><br>
+                                            <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
+                                            <div class="alert alert-success" role="alert" ng-show="reservationSucces">{{reservationSucces}}</div>
                                         </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input id="user-is-passenger" type="checkbox"> I'm passenger!
-                                            </label>
+                                        <div class="col-md-12"><hr /></div>
+                                        <div class="col-md-12">
+                                            <div class="pull-right">
+                                                <div class="col-md-10">
+                                                <input id="resevartionIsPassenger" type="checkbox"> I'm a passenger!
+                                                </div>
+                                                <div class="col-md-2">
+                                                <button class="btn btn-primary" ng-click="nextStep()" type="button">Next</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <hr />
-                                        <button class="btn btn-primary nextBtn pull-right" type="button">Next</button>
                                     </div>
                                 </div>
+                                
+                                
+                                
                                 <div class="row setup-content col-md-12" id="step-2">
                                     <div class="col-md-12">
-                                        <h4 class="pull-right"> Number of seats: 2</h4>
+                                        <h4 class="pull-right"> Number of seats: {{passengerAmount}}</h4>
                                         <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #1</h5>
+                                        <div ng-repeat="n in getNumber(passengerAmount) track by $index">
+                                        <h5>Passenger #{{$index+1}}</h5>
                                         <div class="form-group">
-                                            <label class="control-label" for="passanger-name-1">First Name</label>
-                                            <input maxlength="200" id="passanger-name-1" type="text" required="required" class="form-control" placeholder="Enter First Name"
+                                            <label class="control-label" for="passenger-name-{{$index+1}}">First Name</label>
+                                            <input maxlength="200" id="passenger-name-{{$index+1}}" type="text" required="required" class="form-control" placeholder="Enter First Name"
                                                    />
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-1">Last Name</label>
-                                            <input maxlength="200" id="passanger-lastname-1" type="text" required="required" class="form-control" placeholder="Enter Last Name"
+                                            <label class="control-label" for="passenger-lastname-{{$index+1}}">Last Name</label>
+                                            <input maxlength="200" id="passenger-lastname-{{$index+1}}" type="text" required="required" class="form-control" placeholder="Enter Last Name"
                                                    />
                                         </div>
                                         <hr />
+                                        </div>
                                         <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #2</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-2">First Name</label>
-                                            <input maxlength="200" id="passanger-name-2" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-2">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-2" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #3</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-3">First Name</label>
-                                            <input maxlength="200" id="passanger-name-3" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-3">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-3" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #4</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-4">First Name</label>
-                                            <input maxlength="200" id="passanger-name-4" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-4">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-4" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #5</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-5">First Name</label>
-                                            <input maxlength="200" id="passanger-name-5" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-5">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-5" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #6</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-6">First Name</label>
-                                            <input maxlength="200" id="passanger-name-6" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-6">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-6" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #7</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-7">First Name</label>
-                                            <input maxlength="200" id="passanger-name-7" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-7">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-7" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <h5>Passenger #8</h5>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-name-8">First Name</label>
-                                            <input maxlength="200" id="passanger-name-8" type="text" required="required" class="form-control" placeholder="Enter First Name"
-                                                   />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label" for="passanger-lastname-8">Last Name</label>
-                                            <input maxlength="200" id="passangerlastname-8" type="text" required="required" class="form-control" placeholder="Enter Last Name"
-                                                   />
-                                        </div>
-                                        <hr />
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-
                                         <button class="btn btn-success pull-right" type="submit">Finish!</button>
                                     </div>
                             </form>
@@ -477,5 +427,6 @@
                 </div>
             </div>
             <div class="col-md-2"></div>
-            <div>
-            </div>
+        </div>
+    </div>
+</div>

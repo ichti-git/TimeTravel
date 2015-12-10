@@ -48,6 +48,7 @@ $('#searchDate').datepicker({
 // Modal window
 $(function() {
             $('#reservationButton').on('click', function(e) {
+                console.log("Test script");
                 e.preventDefault();
                 $('#reservationWizard').bPopup(
 				{
@@ -60,8 +61,8 @@ $(function() {
 $(document).ready(function () {
 
     var navListItems = $('div.setup-panel div a'),
-            allWells = $('.setup-content'),
-            allNextBtn = $('.nextBtn');
+            allWells = $('.setup-content');
+            //allNextBtn = $('.nextBtn');
 
     allWells.hide();
 
@@ -78,14 +79,15 @@ $(document).ready(function () {
             $target.find('input:eq(0)').focus();
         }
     });
-
+/*
     allNextBtn.click(function(){
         var curStep = $(this).closest(".setup-content"),
             curStepBtn = curStep.attr("id"),
             nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
             curInputs = curStep.find("input[type='text'],input[type='url']"),
-            isValid = true;
+            isValid = $scope.acceptUser;
 
+        
         $(".form-group").removeClass("has-error");
         for(var i=0; i<curInputs.length; i++){
             if (!curInputs[i].validity.valid){
@@ -93,11 +95,12 @@ $(document).ready(function () {
                 $(curInputs[i]).closest(".form-group").addClass("has-error");
             }
         }
-
+        
+       
         if (isValid)
             nextStepWizard.removeAttr('disabled').trigger('click');
     });
-
+*/
     $('div.setup-panel div a.btn-primary').trigger('click');
 });		
 
