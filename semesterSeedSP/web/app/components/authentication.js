@@ -35,6 +35,7 @@ angular.module('myApp.security', [])
           $scope.isUser = false;
           $scope.message = '';
           $scope.error = null;
+          $scope.user = {username: "", password: ""};
 
           $scope.login = function () {
               console.log($scope.user+" this was user!!");//!!!!!!!!!!!!!!!!!!!!!!!!!!! FJERN MIG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
