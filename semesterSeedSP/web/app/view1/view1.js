@@ -40,6 +40,9 @@ angular.module('myApp.view1', ['ngRoute', ])
                 $scope.reservationUsernameLogin = "";
                 $scope.reservationPasswordLogin = "";
                 
+                //Reservation passengers
+                $scope.reservationPassenger = [];
+                
                 $scope.search = function () {
                     var dateNums = $scope.searchForm.date.split(".");
                     var isodate = new Date(dateNums[2], dateNums[1]-1, dateNums[0], 1);
@@ -79,16 +82,16 @@ angular.module('myApp.view1', ['ngRoute', ])
                         }
                     }
                     if (loginIsValid) {
-                        $scope.user.username = $scope.reservationUsernameLogin;
-                        $scope.user.password = $scope.reservationPasswordLogin;
                         //$scope.isAuthenticated = true;
                         var reservationLogin = new Login({});
                         reservationLogin.username = $scope.reservationUsernameLogin;
                         reservationLogin.password =  $scope.reservationPasswordLogin;
                         reservationLogin.$save(function(response) {
-                            $scope.acceptUser = true;
-                            $scope.reservationSucces = "Welcome back. Go to next step to continue your reservation";
+                            $scope.user.username = $scope.reservationUsernameLogin;
+                            $scope.user.password = $scope.reservationPasswordLogin;
                             $scope.login();
+                            $scope.reservationSucces = "Welcome back. Go to next step to continue your reservation";
+                            
                         },
                         function() {
                             $scope.reservationError = "Wrong username or password";
@@ -117,7 +120,9 @@ angular.module('myApp.view1', ['ngRoute', ])
                         rs.email = $scope.reservationEmail;
                         rs.$save(function(response) {
                             if (response.userName) {
-                                $scope.acceptUser = true;
+                                $scope.user.username = $scope.reservationUsername;
+                                $scope.user.password = $scope.reservationPassword;
+                                $scope.login();
                                 $scope.reservationSucces = "User succesfully created. Go to next step to continue your reservation";
                             }
                             else {
@@ -135,7 +140,12 @@ angular.module('myApp.view1', ['ngRoute', ])
                         curStepBtn = curStep.attr("id"),
                         nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a");
 
-                    if ($scope.acceptUser) nextStepWizard.removeAttr('disabled').trigger('click');
+                    if ($scope.isAuthenticated) {
+                        if ($scope.reservationIsPassenger) {
+                            
+                        }
+                        nextStepWizard.removeAttr('disabled').trigger('click');
+                    }
                 };
                 
                 $scope.getNumber = function(num) {
