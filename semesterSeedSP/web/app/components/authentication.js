@@ -28,7 +28,17 @@ angular.module('myApp.security', [])
             return viewLocation === $location.path();
           };
 
-
+          $scope.amIauthenticated = function(){
+              
+              if (isAuthenticated === false){
+                  return "login";
+              }else{
+                  return "logout";
+              }
+              
+              
+          };
+          
           $scope.username = "";
           $scope.isAuthenticated = false;
           $scope.isAdmin = false;
@@ -42,6 +52,7 @@ angular.module('myApp.security', [])
             $http
                     .post('api/login', $scope.user) 
                     .success(function (data, status, headers, config) {
+                        
                       $window.sessionStorage.token = data.token;
                       $scope.isAuthenticated = true;
                       var encodedProfile = data.token.split('.')[1];
@@ -58,6 +69,7 @@ angular.module('myApp.security', [])
                       });
                       $scope.error = null;
                       $location.path("#/view1");
+                      $window.location.reload();
                     })
                     .error(function (data, status, headers, config) {
                       // Erase the token if the user fails to log in
