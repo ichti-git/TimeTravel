@@ -15,7 +15,7 @@ import security.PasswordHash;
 
 public class UserFacade {
 
-        private EntityManagerFactory emf;
+    private EntityManagerFactory emf;
     
     public UserFacade(EntityManagerFactory e) {
         emf = e;
@@ -71,7 +71,8 @@ public class UserFacade {
             User user = new User(userName, PasswordHash.createHash(password), firstName, lastName, email, phone);
             EntityManager em = getEntityManager();
             em = emf.createEntityManager();
-            Role role = new Role("User");
+            Role role = em.find(Role.class, "User");
+            //Role role = new Role("User");
             
             
             user.AddRole(role);

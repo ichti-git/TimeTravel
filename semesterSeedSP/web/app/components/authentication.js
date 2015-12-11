@@ -1,6 +1,5 @@
 angular.module('myApp.security', [])
-        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location) {
-
+        .controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, InfoFactory) {
           function url_base64_decode(str) {
             var output = str.replace('-', '+').replace('_', '/');
             switch (output.length % 4) {
@@ -48,7 +47,6 @@ angular.module('myApp.security', [])
           $scope.user = {username: "", password: ""};
 
           $scope.login = function () {
-              console.log($scope.user+" this was user!!");//!!!!!!!!!!!!!!!!!!!!!!!!!!! FJERN MIG !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             $http
                     .post('api/login', $scope.user) 
                     .success(function (data, status, headers, config) {
@@ -68,8 +66,8 @@ angular.module('myApp.security', [])
                         }
                       });
                       $scope.error = null;
-                      $location.path("#/view1");
-                      $window.location.reload();
+                      //$location.path("#/view1");
+                      //$window.location.reload();
                     })
                     .error(function (data, status, headers, config) {
                       // Erase the token if the user fails to log in
@@ -88,7 +86,7 @@ angular.module('myApp.security', [])
             $scope.isAdmin = false;
             $scope.isUser = false;
             delete $window.sessionStorage.token;
-            $location.path("#/view1");
+            //$location.path("#/view1");
           };
 
           //This sets the login data from session store if user pressed F5 (You are still logged in)
