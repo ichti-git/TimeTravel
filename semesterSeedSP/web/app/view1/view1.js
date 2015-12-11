@@ -1,6 +1,6 @@
 'use strict';
 var test;
-angular.module('myApp.view1', ['ngRoute'])
+angular.module('myApp.view1', ['ngRoute', ])
 
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/view1', {
@@ -15,7 +15,8 @@ angular.module('myApp.view1', ['ngRoute'])
                 var apiBase = "/semesterSeedSP/api";
                 var From = $resource(apiBase+"/flights/:from/:date/:tickets", {from: "@from", date: "@date", tickets: "@tickets"}, {});
                 var FromTo = $resource(apiBase+"/flights/:from/:to/:date/:tickets", {from: "@from", to: "@to", date: "@date", tickets: "@tickets"}, {});
-                var RegisterUser = $resource(apiBase+"/createUser", {});
+                var RegisterUser = $resource(apiBase+"/createUser", {}, {save: {method: 'POST',
+                                                                              responseType: 'json'}});
                 var Login = $resource(apiBase+"/login", {});
                 
                 $scope.searchForm = {from: "CPH", to: "NULL", date: "01.01.2016", tickets: 1};
@@ -25,6 +26,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 $scope.reservationSucces = "";
                 $scope.acceptUser = false;
                 $scope.curStepCounter = 1;
+                $scope.reservationShowReg = true;
                 
                 //Reservation register form
                 $scope.reservationUsername = "";
@@ -77,12 +79,16 @@ angular.module('myApp.view1', ['ngRoute'])
                         }
                     }
                     if (loginIsValid) {
-                        var login = new Login({});
-                        login.username = $scope.reservationUsernameLogin;
-                        login.password =  $scope.reservationPasswordLogin;
-                        login.$save(function(response) {
+                        $scope.user.username = $scope.reservationUsernameLogin;
+                        $scope.user.password = $scope.reservationPasswordLogin;
+                        //$scope.isAuthenticated = true;
+                        var reservationLogin = new Login({});
+                        reservationLogin.username = $scope.reservationUsernameLogin;
+                        reservationLogin.password =  $scope.reservationPasswordLogin;
+                        reservationLogin.$save(function(response) {
                             $scope.acceptUser = true;
                             $scope.reservationSucces = "Welcome back. Go to next step to continue your reservation";
+                            $scope.login();
                         },
                         function() {
                             $scope.reservationError = "Wrong username or password";
@@ -104,13 +110,13 @@ angular.module('myApp.view1', ['ngRoute'])
                     if (registerIsValid) {
                         var rs = new RegisterUser({});
                         rs.userName = $scope.reservationUsername;
-                        rs.pw =  $scope.reservationPassword;
+                        rs.password =  $scope.reservationPassword;
                         rs.first = $scope.reservationFirstname; 
                         rs.last = $scope.reservationLastname;
                         rs.phone = $scope.reservationPhone;
                         rs.email = $scope.reservationEmail;
                         rs.$save(function(response) {
-                            if (response.username) {
+                            if (response.userName) {
                                 $scope.acceptUser = true;
                                 $scope.reservationSucces = "User succesfully created. Go to next step to continue your reservation";
                             }
