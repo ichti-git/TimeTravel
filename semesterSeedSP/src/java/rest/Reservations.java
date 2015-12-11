@@ -72,7 +72,7 @@ public class Reservations {
  ]
 }
      */
-    
+    /*
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String setReservation(String content) throws ParseException{
@@ -116,7 +116,7 @@ public class Reservations {
         
         return gson.toJson(jsonString);
     }
-    
+    */
     @GET
     @Produces("text/plain")
     public String getText() {

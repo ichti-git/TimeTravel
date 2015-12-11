@@ -17,10 +17,10 @@ import javax.persistence.Table;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private String password;  //Pleeeeease dont store me in plain text
 
     @Id
     private String userName;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
@@ -35,14 +35,9 @@ public class User implements Serializable {
     public User() {
     }
 
-//    public User(String userName, String password) {
-//        this.userName = userName;
-//        this.password = password;
-//    }
-
-    public User(String password, String userName, String firstName, String lastName, String email, String phone) {
-        this.password = password;
+    public User(String userName, String password, String firstName, String lastName, String email, String phone) {
         this.userName = userName;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

@@ -58,22 +58,44 @@ public class UserFacade {
         }
 
     }
-    
-    public void createUser(String userName, String pw, String firstName, String lastName, String email, String phone) {
-        Role userRole = new Role("User");
+    public Role roles(String roleName){
         EntityManager em = getEntityManager();
-        User user = new User(userName, pw, firstName, lastName, email, phone);
-        user.AddRole(userRole);
-
+        em = emf.createEntityManager();
+        Role userRole = em.find(Role.class, roleName);
+        return userRole;
+        
+    }
+    
+    public void createUser(String userName, String password, String firstName, String lastName, String email, String phone) {
         try {
+            User user = new User(userName, PasswordHash.createHash(password), firstName, lastName, email, phone);
+            EntityManager em = getEntityManager();
             em = emf.createEntityManager();
-            em.getTransaction().begin();
-            em.persist(user);
-            em.getTransaction().commit();
+            Role role = new Role("User");
             
-        } finally {
-            em.close();
-        }
+            
+            user.AddRole(role);
+            
+            try {
+                
+                em.getTransaction().begin();
+                em.persist(user);
+                em.getTransaction().commit();
+                
+            } finally {
+                em.close();
+            }
+            
+            
+            
+        }       catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidKeySpecException ex) {
+                Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+    
+       
     }
 
 
