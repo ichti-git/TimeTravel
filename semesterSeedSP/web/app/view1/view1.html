@@ -327,7 +327,7 @@
                             <form role="form">
                                 <div class="row setup-content col-md-12" id="step-1">
                                     <div class="col-md-12">
-                                        <div class="col-md-5" id="reservationRegisterForm">
+                                        <div class="col-md-5" id="reservationRegisterForm" ng-show="!acceptUser">
                                             New user? Register here.<br>
                                             <div class="form-group">
                                                 <label class="control-label" for="reservationUsername">Username</label>
@@ -365,7 +365,7 @@
                                         </div>
                                         <div class="col-md-2"></div>
                                         
-                                        <div class="col-md-5" id="reservationLoginForm">
+                                        <div class="col-md-5" id="reservationLoginForm" ng-show="!acceptUser">
                                             Already registered? Login here.<br>
                                             <div class="form-group">
                                                 <label class="control-label" for="reservationUsernameLogin">Username</label>
@@ -382,8 +382,9 @@
                                             </div>
                                             <br><br><br>
                                             <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
-                                            <div class="alert alert-success" role="alert" ng-show="reservationSucces">{{reservationSucces}}</div>
                                         </div>
+                                        <div class="alert alert-success" role="alert" ng-show="reservationSucces">{{reservationSucces}}</div>
+
                                         <div class="col-md-12"><hr /></div>
                                         <div class="col-md-12">
                                             <div class="pull-right">
