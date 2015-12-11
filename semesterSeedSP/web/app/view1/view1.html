@@ -327,7 +327,7 @@
                             <form role="form">
                                 <div class="row setup-content col-md-12" id="step-1">
                                     <div class="col-md-12">
-                                        <div class="col-md-5" id="reservationRegisterForm" ng-show="!acceptUser">
+                                        <div class="col-md-5" id="reservationRegisterForm" ng-show="!isAuthenticated">
                                             New user? Register here.<br>
                                             <div class="form-group">
                                                 <label class="control-label" for="reservationUsername">Username</label>
@@ -365,7 +365,7 @@
                                         </div>
                                         <div class="col-md-2"></div>
                                         
-                                        <div class="col-md-5" id="reservationLoginForm" ng-show="!acceptUser">
+                                        <div class="col-md-5" id="reservationLoginForm" ng-show="!isAuthenticated">
                                             Already registered? Login here.<br>
                                             <div class="form-group">
                                                 <label class="control-label" for="reservationUsernameLogin">Username</label>
@@ -383,16 +383,21 @@
                                             <br><br><br>
                                             <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
                                         </div>
-                                        <div class="alert alert-success" role="alert" ng-show="reservationSucces">{{reservationSucces}}</div>
+                                        
 
-                                        <div class="col-md-12"><hr /></div>
+                                        <div class="col-md-12">
+                                            <!--<div class="alert alert-success" role="alert" ng-show="reservationSucces">{{reservationSucces}}</div>
+                                            -->
+                                            <hr />
+                                        </div>
+                                        
                                         <div class="col-md-12">
                                             <div class="pull-right">
                                                 <div class="col-md-10">
-                                                <input id="resevartionIsPassenger" type="checkbox"> I'm a passenger!
+                                                <input id="reservationIsPassenger" type="checkbox" ng-model="reservationIsPassenger"> I'm a passenger!
                                                 </div>
                                                 <div class="col-md-2">
-                                                <button class="btn btn-primary" ng-click="nextStep()" type="button">Next</button>
+                                                <button class="btn btn-primary" disabled="{{!isAuthenticated}}" ng-click="nextStep()" type="button">Next</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -408,13 +413,13 @@
                                         <div ng-repeat="n in getNumber(passengerAmount) track by $index">
                                         <h5>Passenger #{{$index+1}}</h5>
                                         <div class="form-group">
-                                            <label class="control-label" for="passenger-name-{{$index+1}}">First Name</label>
-                                            <input maxlength="200" id="passenger-name-{{$index+1}}" type="text" required="required" class="form-control" placeholder="Enter First Name"
+                                            <label class="control-label" for="reservationPassengerFirstname[{{$index}}]">First Name</label>
+                                            <input maxlength="200" ng-model="reservationPassenger[$index].firstname" type="text" required="required" class="form-control" placeholder="Enter First Name"
                                                    />
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label" for="passenger-lastname-{{$index+1}}">Last Name</label>
-                                            <input maxlength="200" id="passenger-lastname-{{$index+1}}" type="text" required="required" class="form-control" placeholder="Enter Last Name"
+                                            <label class="control-label" for="passengerLastname{{$index}}">Last Name</label>
+                                            <input maxlength="200" ng-model="reservationPassenger[$index].lastname" type="text" required="required" class="form-control" placeholder="Enter Last Name"
                                                    />
                                         </div>
                                         <hr />
