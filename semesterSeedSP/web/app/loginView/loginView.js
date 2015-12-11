@@ -13,8 +13,6 @@ angular.module('myApp.loginView',['ngRoute'])
         .controller('loginCtrl',["InfoFactory","InfoService","$scope","$http",function(InfoFactory,InfoService,$scope,$http){
                 
                         $scope.data;
-                        
-////                        $scope.blaa = "blaaaaaa";
         
                   $http.get('api/demouser/test')
             .success(function (data, status, headers, config) {

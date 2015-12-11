@@ -64,21 +64,27 @@
                         <a class="navbar-brand" href="index.html" title="HOME"><i class="ion-paper-airplane"></i> Time<span>Travel</span></a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        
+                        
                         <ul class="nav navbar-nav navbar-right">
                                 <li class="active"><a href="#/view1">Home</a></li>
                                 <li><a href="#/view2">about</a></li>
                                 <li><a href="#/view3">how we work</a></li>
                                 <li><a href="#/view4">contact</a></li>
-                                <li ng-show="!isAuthenticated"><a href="#/loginView">login</a></li>   <!--ng-show="!isAuthenticated"-->
+                                <li type="button" ng-show="!isAuthenticated"><a href="#/loginView">login</a></li><!--login -->
+                                <li type="button" ng-show="isAuthenticated"><a href="#/view1" ng-click="logout()">logout</a></li><!--logout -->
+                                
                         </ul>
                         
-                        <div class="navbar-right" ng-show="isAuthenticated">
+                       
+<!--                        <div class="navbar-right" ng-show="isAuthenticated">
               
                             <p class="navbar-text">Logged on as: {{username}}</p>
 
-                            <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout
-                            </button>
-                        </div>
+                            <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout </button>
+                            
+                        </div>-->
+                        
                         
                     </div>
                 </div>
