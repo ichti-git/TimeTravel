@@ -7,10 +7,13 @@ $('.clickable').on('click',function(){
 })
 
 //Show/hide panel button 
+
 $('#searchResultsPanel').hide();
+/*
 $('#searchButton').click(function(){
 	$('#searchResultsPanel').show();
 });
+*/
 
 // One page Smooth Scrolling
 $('a[href*=#]:not([href=#])').click(function() {
@@ -41,8 +44,9 @@ $(document).ready(function(){
 });
 
 $('#searchDate').datepicker({
-     orientation: 'auto',
-	 format: 'dd.mm.yyyy'
+    orientation: 'auto',
+    autoclose: true,
+    format: 'dd.mm.yyyy'
 });				
 	
 // Modal window
@@ -108,9 +112,11 @@ $(function() {
 */
 
 //Move to result detail
+/*
 $('#accordion').on('shown.bs.collapse', function () {
   var panel = $(this).find('.in'); 
   $('html, body').animate({
-        scrollTop: panel.offset().top -165
+        scrollTop: panel.offset().top -190
   }, 500);
 });
+*/

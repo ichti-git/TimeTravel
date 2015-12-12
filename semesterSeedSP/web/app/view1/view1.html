@@ -21,29 +21,15 @@
                 <div class="form-group col-md-3">
                     <label for="searchStart">City of origin</label>
                     <select class="form-control border-radius" name="searchFrom" ng-model="searchForm.from">
-                        <option value="CPH">Copenhagen</option>
-                        <option value="STN">London</option>
-                        <option value="CDG">Paris</option>
-                        <option value="SXF">Berlin</option>
-                        <option value="BCN">Barcelona</option>
-                        <option value="MAD">Madrid</option>
-                        <option value="LIS">Lisabon</option>
-                        <option value="STO">Stockholm</option>
+                        <option ng-repeat="a in airports" value="{{a.iatacode}}">{{a.city}}</option>
                     </select>
                 </div>
 
                 <div class="form-group col-md-3">
                     <label for="searchDestination">Destination</label>
                     <select class="form-control border-radius" name="searchDestination" ng-model="searchForm.to">
-                        <Option value="NULL">Select your Destination</Option>
-                        <option value="CPH">Copenhagen</option>
-                        <option value="STN">London</option>
-                        <option value="CDG">Paris</option>
-                        <option value="SXF">Berlin</option>
-                        <option value="BCN">Barcelona</option>
-                        <option value="MAD">Madrid</option>
-                        <option value="LIS">Lisabon</option>
-                        <option value="STO">Stockholm</option>
+                        <option value="NULL">Select your Destination</option>
+                        <option ng-repeat="a in airports" value="{{a.iatacode}}">{{a.city}}</option>
                     </select>
                 </div>
 
@@ -94,21 +80,21 @@
                 </div>
                 <div class="panel list-group panel-group" ng-repeat="f in flights track by $index"> 
                     <!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
-                    <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
+                    <span ng-click="gotoResult($event)" href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
                         <div class="row">
                             <div class="col-md-4 col-sm-12">{{f.airline}}</div>
                             <div class="col-md-4 col-sm-12 results text-center">Number of seats</div>
-                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.date}}</strong></div>
+                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.date | date: 'dd-MM-yyyy'}}</strong></div>
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-sm-12 results">Destination</div>
                             <div class="col-md-4 col-sm-12 text-center"><strong>{{f.numberOfSeats}}</strong></div>
-                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.traveltime}} Minutes</strong></div>
+                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.traveltime | traveltime}}</strong></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 col-sm-12"><strong>{{f.destination}}</strong></div>
+                            <div class="col-md-4 col-sm-12"><strong>{{f.destination | airport:airports}}</strong></div>
                             <div class="col-md-4 col-sm-12 text-center"></div>
-                            <div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: {{f.totalPrice}}</strong></div>
+                            <div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: {{f.totalPrice | currency}}</strong></div>
                         </div>
                     </span>
                     <!-- End of main info section -->
@@ -123,21 +109,21 @@
 
                             <div class="row">
                                 <div class="col-md-6 results">City of Origin</div>
-                                <div class="col-md-6 text-right results"><strong>{{f.date}}</strong></div>
+                                <div class="col-md-6 text-right results"><strong>{{f.date | date: 'dd-MM-yyyy'}}</strong></div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6"><strong>{{f.origin}}</strong></div>
+                                <div class="col-md-6"><strong>{{f.origin | airport:airports}}</strong></div>
                                 <div class="col-md-6 results text-right results">Travel time</div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 results">Destination</div>
-                                <div class="col-md-6 text-right"><strong>{{f.traveltime}} Minutes</strong></div>
+                                <div class="col-md-6 text-right"><strong>{{f.traveltime | traveltime}}</strong></div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12"><strong>{{f.destination}}</strong></div>
+                                <div class="col-md-12"><strong>{{f.destination | airport:airports}}</strong></div>
                             </div>
 
                             <div class="row">
@@ -147,7 +133,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 results"><strong>1</strong></div>
-                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice / f.numberOfSeats}} EUR</strong></div>
+                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice / f.numberOfSeats | currency}}</strong></div>
                             </div>
 
                             <div class="row">
@@ -156,7 +142,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 results"></div>
-                                <div class="col-md-8 results text-right results"><strong>TOTAL PRICE: {{f.totalPrice}} EUR</strong></div>
+                                <div class="col-md-8 results text-right results"><strong>TOTAL PRICE: {{f.totalPrice  | currency}}</strong></div>
                             </div>
 
                             <div class="row">

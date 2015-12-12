@@ -135,6 +135,13 @@ public class Facade {
         em.close();
         return reservations;
     }
+    
+    public List<Airport> getAirports() {
+        EntityManager em = emf.createEntityManager();
+        List airports = em.createNativeQuery("SELECT * FROM AIRPORT a", Airport.class).getResultList();
+        em.close();
+        return airports;
+    }
      
 /*****************************************************************
 *                           facade setters
