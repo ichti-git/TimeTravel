@@ -2,7 +2,6 @@ package deploy;
 
 import entity.Role;
 import entity.User;
-import facades.UserFacade;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Map;
@@ -15,7 +14,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import javax.ws.rs.core.Context;
 import security.PasswordHash;
 
 @WebListener

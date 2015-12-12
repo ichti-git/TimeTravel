@@ -72,7 +72,7 @@ public class Reservations {
  ]
 }
      */
-    /*
+    
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String setReservation(String content) throws ParseException{
@@ -88,8 +88,8 @@ public class Reservations {
         int FlightTime = json.get("FlightTime").getAsInt();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
-        JsonArray Passengers;// = json.get("Passengers").getAsJsonArray();
-        
+        JsonArray Passengers = json.get("Passengers").getAsJsonArray();
+        //Passengers.add();
         
         Reservation reservation = new Reservation();
         
@@ -97,10 +97,8 @@ public class Reservations {
         // Trying different things at the same time
         
         JsonObject jo = new JsonObject();
-        for (int i = 0; i < Passengers.size(); i++) {
-            jo = Passengers.getJsonObject(i);
             
-        }
+        
         
         
         
@@ -116,7 +114,7 @@ public class Reservations {
         
         return gson.toJson(jsonString);
     }
-    */
+    
     @GET
     @Produces("text/plain")
     public String getText() {
