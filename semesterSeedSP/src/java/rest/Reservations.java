@@ -14,7 +14,9 @@ import com.google.gson.JsonParser;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -26,8 +28,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 import net.minidev.json.JSONObject;
+import timeTravel.entities.Passenger;
 import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
+
 
 /**
  * REST Web Service
@@ -95,13 +99,29 @@ public class Reservations {
         int FlightTime = json.get("FlightTime").getAsInt();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
-        JsonArray Passengers = json.get("Passengers").getAsJsonArray();
+        JsonArray passengers = json.get("Passengers").getAsJsonArray();
         //Passengers.add();
-        for (int i = 0; i < Passengers.size(); i++) {
-            JsonElement fName = Passengers.getAsJsonObject().get("firstName");
+        
+        
+//        Iterator t = passengers.iterator();
+//        while (t.hasNext()){
+//            JsonObject fName = (JsonObject) passengers.getAsJsonObject().get("firstName");
+//            JsonObject lName = (JsonObject) passengers.getAsJsonObject().get("lastName");
+//            t.next();
+//        }
+        Iterator t = passengers.iterator();
+        while (t.hasNext()){
+            String fName = (String) t.next().getAsString()//..get("firstName");
+            JsonObject lName = (JsonObject) passengers.getAsJsonObject().get("lastName");
+            t.next();
+        }
+        
+        for (int i = 0; i < passengers.size(); i++) {
+            /*JsonElement*/JsonObject fName = (JsonObject) passengers.getAsJsonObject().get("firstName");
             String firstName = fName.toString();
-            
-            JsonElement lName = Passengers.getAsJsonObject().get("lastName");
+            JsonElement pass = passengers.get(i);
+         
+            JsonElement lName = passengers.getAsJsonArray();//.getAsJsonObject().get("lastName");
             String lastName = lName.toString();
 //            JSONObject ps = Passengers.getJSONObject(i);
             

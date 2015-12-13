@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,61 +54,28 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    
-    @ManyToOne
-    private User Reservee;
-    @ManyToOne
-    private FlightInstance flightInstance;
-//    @OneToMany(mappedBy = "Reservation", cascade = CascadeType.PERSIST)
-//    private List<Passenger> Passengers;
-    
-    @OneToMany(cascade = CascadeType.MERGE)
+    private String flightId;
+    private int numberOfSeats;
+    private String ReserveeName;
+    private String ReservePhone;
+    private String ReserveeEmail;
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Passenger> Passengers;
     
-    public Reservation(FlightInstance flightInstance,User reservee, int numberOfSeats,List<Passenger> passengers) {
-        this.flightInstance = flightInstance;
-        this.Reservee = reservee;
-        this.Passengers = passengers;
-    }
     
-    public Reservation(FlightInstance flightInstance,User reservee, int numberOfSeats) {
-        this.flightInstance = flightInstance;
-        this.Reservee = reservee;
-        
-    }
     
     public Reservation() {
     }
 
-    public User getReservee() {
-        return Reservee;
-    }
-
-    public void setReservee(User Reservee) {
-        this.Reservee = Reservee;
-    }
-
-//    public List<String> getPassengersAsStrings() {
-//        List<String> passengersAsStrings = new ArrayList();
-//        for (Passenger passenger : Passengers) {
-//            passengersAsStrings.add(passenger.getFirstName() + " " + passenger.getLastName());
-//        }
-//        return passengersAsStrings;
-//    }
-    
-    public void addPassenger(Passenger passenger) {
-        Passengers.add(passenger);
-    }
-
-    public List<Passenger> getPassengers() {
-        return Passengers;
-    }
-    
-    public void setPassengers(List<Passenger> Passengers) {
+    public Reservation(String flightId, int numberOfSeats, String ReserveeName, String ReservePhone, String ReserveeEmail, List<Passenger> Passengers) {
+        this.flightId = flightId;
+        this.numberOfSeats = numberOfSeats;
+        this.ReserveeName = ReserveeName;
+        this.ReservePhone = ReservePhone;
+        this.ReserveeEmail = ReserveeEmail;
         this.Passengers = Passengers;
     }
-    
-    
+
     public int getId() {
         return id;
     }
@@ -115,14 +83,56 @@ public class Reservation implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
-    public FlightInstance getFlightInstance() {
-        return flightInstance;
+    
+    public String getFlightId() {
+        return flightId;
     }
 
-    public void setFlightInstance(FlightInstance flightInstance) {
-        this.flightInstance = flightInstance;
+    public void setFlightId(String flightId) {
+        this.flightId = flightId;
     }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+    public String getReserveeName() {
+        return ReserveeName;
+    }
+
+    public void setReserveeName(String ReserveeName) {
+        this.ReserveeName = ReserveeName;
+    }
+
+    public String getReservePhone() {
+        return ReservePhone;
+    }
+
+    public void setReservePhone(String ReservePhone) {
+        this.ReservePhone = ReservePhone;
+    }
+
+    public String getReserveeEmail() {
+        return ReserveeEmail;
+    }
+
+    public void setReserveeEmail(String ReserveeEmail) {
+        this.ReserveeEmail = ReserveeEmail;
+    }
+
+    public List<Passenger> getPassengers() {
+        return Passengers;
+    }
+
+    public void setPassengers(List<Passenger> Passengers) {
+        this.Passengers = Passengers;
+    }
+
+    
 
    
 

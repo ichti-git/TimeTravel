@@ -1,6 +1,7 @@
 
 import deploy.DeploymentConfiguration;
 import entity.User;
+import facades.ReservationFacade;
 import facades.UserFacade;
 import timeTravel.facade.Facade;
 import java.util.ArrayList;
@@ -17,19 +18,22 @@ public class MainTester {
     
     public static void main(String[] args) {
         
+//        Persistence.generateSchema(DeploymentConfiguration.PU_NAME, null);
+
+        
         UserFacade uf = new UserFacade();
         
-        uf.createUser("testuser", "testpassword", "testfirstName",  "testlastName", "reserveeEmail@hotmail.com", "ReservePhone");
+        //uf.createUser("testuser", "testpassword", "testfirstName",  "testlastName", "reserveeEmail@hotmail.com", "ReservePhone");
         
-        List<Passenger> passengers = new ArrayList<>();
+        List<Passenger> passengers = new ArrayList<Passenger>();
         Passenger p = new Passenger("hans" ,"mogensen");
         Passenger p2 = new Passenger("morten" ,"horner");
         passengers.add( p );
         passengers.add( p2 );
-//        User user = new User("user2", "user2", "jakob", "bendtsen", "bedsten@haha.com", "33223322");
-        Facade facade = new Facade();
-        facade.setReservation( "flight1", 2,  "testuser", "ReservePhone",  "reserveeEmail@hotmail.com",  passengers);
-        
+
+        ReservationFacade facade = new ReservationFacade();
+        facade.setReservation("flight1",2,"testuser", "ReservePhone","reserveeEmail@hotmail.com",  passengers);
+                            
         
         
         

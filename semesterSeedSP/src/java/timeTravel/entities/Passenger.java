@@ -3,10 +3,12 @@ package timeTravel.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -20,33 +22,35 @@ public class Passenger implements Serializable {
     private String lastName;
     
    
-   
-    @ManyToOne
-    private Reservation reservation;
+//   
+//    
+//    @ManyToOne//(cascade = CascadeType.PERSIST)
+//    private Reservation reservation;
     
-    public Passenger(){}
+    public Passenger(){
+    }
     
     public Passenger(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Reservation getReservation() {
-        return reservation;
-    }
+//    public Reservation getReservation() {
+//        return reservation;
+//    }
 
     public void setReservation(Reservation reservation) {
        
     }
 
     
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;

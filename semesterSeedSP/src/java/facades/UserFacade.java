@@ -22,15 +22,17 @@ public class UserFacade {
 
     private EntityManagerFactory emf;
     
-    public UserFacade(EntityManagerFactory e) {
-        emf = e;
+    public UserFacade(){
     }
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-
+    public UserFacade(EntityManagerFactory e) {
+        emf = e;
+    }
+    
     public User getUserByUserId(String id) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -74,8 +76,9 @@ public class UserFacade {
     public void createUser(String userName, String password, String firstName, String lastName, String email, String phone) {
         try {
             User user = new User(userName, PasswordHash.createHash(password), firstName, lastName, email, phone);
-            EntityManager em;
-            em = emf.createEntityManager();
+            //EntityManager em = emf.createEntityManager();
+            emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+            EntityManager em = emf.createEntityManager();
             Role role = em.find(Role.class, "User");
             //Role role = new Role("User");
             if (role == null) {
@@ -102,28 +105,28 @@ public class UserFacade {
             }
         }
     
-    public void createReservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee, List<Passenger> Passengers) {
-        
-        Reservation reservation = new Reservation(airline, flightId, origin, destination, date, flightTime, numberOfSeats, price, Reservee);
-        Passenger pass = new Passenger();
-        for(int i = 0; i>Passengers.size(); i++){
-            //List<String> pass1 = pass.getFirstName() + " " + pass.getLastName();
-            
-        }
-        
-        EntityManager em = getEntityManager();
-        em = emf.createEntityManager();
-        try {
-
-            em.getTransaction().begin();
-            em.persist(reservation);
-            em.getTransaction().commit();
-
-        } finally {
-            em.close();
-        }
-
-    }
+//    public void createReservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee, List<Passenger> Passengers) {
+//        
+//        Reservation reservation = new Reservation(airline, flightId, origin, destination, date, flightTime, numberOfSeats, price, Reservee);
+//        Passenger pass = new Passenger();
+//        for(int i = 0; i>Passengers.size(); i++){
+//            //List<String> pass1 = pass.getFirstName() + " " + pass.getLastName();
+//            
+//        }
+//        
+//        EntityManager em = getEntityManager();
+//        em = emf.createEntityManager();
+//        try {
+//
+//            em.getTransaction().begin();
+//            em.persist(reservation);
+//            em.getTransaction().commit();
+//
+//        } finally {
+//            em.close();
+//        }
+//
+//    }
 
 
 }
