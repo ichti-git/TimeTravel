@@ -74,12 +74,13 @@ public class UserFacade {
     public void createUser(String userName, String password, String firstName, String lastName, String email, String phone) {
         try {
             User user = new User(userName, PasswordHash.createHash(password), firstName, lastName, email, phone);
-            EntityManager em = getEntityManager();
+            EntityManager em;
             em = emf.createEntityManager();
             Role role = em.find(Role.class, "User");
             //Role role = new Role("User");
-            
-            
+            if (role == null) {
+                role = new Role("User");
+            }
             user.AddRole(role);
             
             try {
@@ -100,12 +101,13 @@ public class UserFacade {
                 Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    
     public void createReservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee, List<Passenger> Passengers) {
         
         Reservation reservation = new Reservation(airline, flightId, origin, destination, date, flightTime, numberOfSeats, price, Reservee);
         Passenger pass = new Passenger();
         for(int i = 0; i>Passengers.size(); i++){
-            List<String> pass1 = pass.getFirstName().get(i) + " " + pass.getLastName();
+            //List<String> pass1 = pass.getFirstName() + " " + pass.getLastName();
             
         }
         

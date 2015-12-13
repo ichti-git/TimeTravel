@@ -119,7 +119,7 @@ public class Facade {
         }
     }
     
-    public List<Airline> getAirlinesUrl() {
+    public List<Airline> getAirlines() {
         EntityManager em = emf.createEntityManager();
         List urls = em.createNativeQuery("select * from AIRLINE a", Airline.class).getResultList();
         em.close();

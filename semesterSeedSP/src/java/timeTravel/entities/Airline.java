@@ -20,6 +20,11 @@ public class Airline implements Serializable {
 
     public Airline() {
     }
+    
+    public Airline(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
 
     public String getUrl() {
         return url;
