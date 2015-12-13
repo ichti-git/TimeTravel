@@ -8,6 +8,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.text.DateFormat;
@@ -24,7 +25,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import net.minidev.json.JSONObject;
 import timeTravel.entities.Reservation;
+import timeTravel.facade.Facade;
 
 /**
  * REST Web Service
@@ -37,10 +40,14 @@ public class Reservations {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonParser parser = new JsonParser();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+    Facade f = new Facade();
+    
+    
+    
     
     private String apiBase = "api/flightreservation/";
     
-    private static JsonArray list = new JsonArray();
+//    private static JsonArray list = new JsonArray();
     
     
     @Context
@@ -90,8 +97,17 @@ public class Reservations {
         String ReserveeName = json.get("ReserveeName").getAsString();
         JsonArray Passengers = json.get("Passengers").getAsJsonArray();
         //Passengers.add();
+        for (int i = 0; i < Passengers.size(); i++) {
+            JsonElement fName = Passengers.getAsJsonObject().get("firstName");
+            String firstName = fName.toString();
+            
+            JsonElement lName = Passengers.getAsJsonObject().get("lastName");
+            String lastName = lName.toString();
+//            JSONObject ps = Passengers.getJSONObject(i);
+            
+            
+        }
         
-        Reservation reservation = new Reservation();
         
         
         // Trying different things at the same time
