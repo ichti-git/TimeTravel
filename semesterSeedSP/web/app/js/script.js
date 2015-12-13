@@ -9,7 +9,7 @@ $('.clickable').on('click',function(){
 //Show/hide panel button 
 $('#searchResultsPanel').hide();
 $('#searchButton').click(function(){
-	$('#searchResultsPanel').toggle();
+	$('#searchResultsPanel').show();
 });
 
 // One page Smooth Scrolling
@@ -57,9 +57,10 @@ $(function() {
             });
         });
 
-//Wizard form		
-$(document).ready(function () {
+//Wizard form	
 
+//$(document).ready(function () {
+/*
     var navListItems = $('div.setup-panel div a'),
             allWells = $('.setup-content');
             //allNextBtn = $('.nextBtn');
@@ -79,6 +80,7 @@ $(document).ready(function () {
             $target.find('input:eq(0)').focus();
         }
     });
+    */
 /*
     allNextBtn.click(function(){
         var curStep = $(this).closest(".setup-content"),
@@ -100,14 +102,15 @@ $(document).ready(function () {
         if (isValid)
             nextStepWizard.removeAttr('disabled').trigger('click');
     });
-*/
+*//*
     $('div.setup-panel div a.btn-primary').trigger('click');
-});		
+});	
+*/
 
 //Move to result detail
 $('#accordion').on('shown.bs.collapse', function () {
   var panel = $(this).find('.in'); 
   $('html, body').animate({
-        scrollTop: panel.offset().top -150
+        scrollTop: panel.offset().top -165
   }, 500);
 });

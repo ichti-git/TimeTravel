@@ -3,6 +3,7 @@ package timeTravel.entities;
 
 import entity.User;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -50,6 +51,7 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private Airline airline; 
     private String flightId;
     private Airport origin;
     private Airport destination;
@@ -57,15 +59,22 @@ public class Reservation implements Serializable {
     private Date date;
     private int flightTime;
     private int numberOfSeats;
-    
     private User Reservee;
-    
     @OneToMany
     private List<Passenger> Passengers;
-    
-    
-    
-    
+
+    public Reservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee) {
+        this.airline = airline;
+        this.flightId = flightId;
+        this.origin = origin;
+        this.destination = destination;
+        this.date = date;
+        this.flightTime = flightTime;
+        this.numberOfSeats = numberOfSeats;
+        this.Reservee = Reservee;
+        
+    }
+     
     
     public Reservation() {
     }
@@ -126,8 +135,17 @@ public class Reservation implements Serializable {
         this.Reservee = Reservee;
     }
 
-    public List<Passenger> getPassengers() {
-        return Passengers;
+    public List<String> getPassengersAsStrings() {
+        List<String> passengersAsStrings = new ArrayList();
+        for (Passenger passenger : Passengers) {
+            passengersAsStrings.add(passenger.getFirstName() + " " + passenger.getLastName());
+        }
+        return passengersAsStrings;
+    }
+    
+    public void addPassenger(Passenger passenger) {
+        Passengers.add(passenger);
+        
     }
 
     public void setPassengers(List<Passenger> Passengers) {

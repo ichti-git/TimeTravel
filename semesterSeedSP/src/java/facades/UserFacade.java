@@ -5,6 +5,7 @@ import entity.Role;
 import entity.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,10 +13,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import security.PasswordHash;
+import timeTravel.entities.Airline;
+import timeTravel.entities.Airport;
+import timeTravel.entities.Passenger;
+import timeTravel.entities.Reservation;
 
 public class UserFacade {
 
-        private EntityManagerFactory emf;
+    private EntityManagerFactory emf;
     
     public UserFacade(EntityManagerFactory e) {
         emf = e;
@@ -71,7 +76,8 @@ public class UserFacade {
             User user = new User(userName, PasswordHash.createHash(password), firstName, lastName, email, phone);
             EntityManager em = getEntityManager();
             em = emf.createEntityManager();
-            Role role = new Role("User");
+            Role role = em.find(Role.class, "User");
+            //Role role = new Role("User");
             
             
             user.AddRole(role);
@@ -93,9 +99,28 @@ public class UserFacade {
             } catch (InvalidKeySpecException ex) {
                 Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    public void createReservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee, List<Passenger> Passengers) {
         
-    
-       
+        Reservation reservation = new Reservation(airline, flightId, origin, destination, date, flightTime, numberOfSeats, price, Reservee);
+        Passenger pass = new Passenger();
+        for(int i = 0; i>Passengers.size(); i++){
+            List<String> pass1 = pass.getFirstName().get(i) + " " + pass.getLastName();
+            
+        }
+        
+        EntityManager em = getEntityManager();
+        em = emf.createEntityManager();
+        try {
+
+            em.getTransaction().begin();
+            em.persist(reservation);
+            em.getTransaction().commit();
+
+        } finally {
+            em.close();
+        }
+
     }
 
 

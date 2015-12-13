@@ -65,7 +65,7 @@
 
                 <div class="form-group col-md-2">
                     <label>&nbsp;</label>
-                    <button ng-click="search()" type="button" id="searchButton" class="btn btn-default border-radius custom-button pull-right">
+                    <button scroll-to="searchResultsPanel" ng-click="search()" type="button" id="searchButton" class="btn btn-default border-radius custom-button pull-right">
                         Search
                     </button>
                 </div>
@@ -87,8 +87,12 @@
                 <h4>Search results</h4>
                 <!--<span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>-->
             </div>
+            
             <div class="panel list-group panel-group" id="accordion">
-               <div class="panel list-group panel-group" ng-repeat="f in flights track by $index"> 
+                <div class="list-group-item" ng-show="searchMessage">
+                    {{searchMessage}}
+                </div>
+                <div class="panel list-group panel-group" ng-repeat="f in flights track by $index"> 
                     <!-- Search result - main info for each result (data-target name on next line must be the same as for detail section - see below)) -->
                     <span href="#" class="list-group-item" data-toggle="collapse" data-target="#result-{{$index}}" data-parent="#menu">                             
                         <div class="row">
@@ -143,7 +147,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 results"><strong>1</strong></div>
-                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice/f.numberOfSeats}} EUR</strong></div>
+                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice / f.numberOfSeats}} EUR</strong></div>
                             </div>
 
                             <div class="row">
@@ -165,169 +169,169 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="col-md-3 col-sm-2 col-xs-1"></div>
     </div>
 </div>
-    <!-- ./Results Panel -->
+<!-- ./Results Panel -->
 
-    <!-- We are the best -->
-    <section class="offer section-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3 col-xs-6">
-                    <div class="offer-item">
-                        <div class="icon">
-                            <i class="ion-social-euro"></i>
-                        </div>
-                        <h3>
-                            Best price
-                        </h3>
-                        <p>
-                            Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
-                        </p>
+<!-- We are the best -->
+<section class="offer section-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <div class="offer-item">
+                    <div class="icon">
+                        <i class="ion-social-euro"></i>
                     </div>
-                </div>
-
-                <div class="col-sm-3 col-xs-6">
-                    <div class="offer-item">
-                        <div class="icon">
-                            <i class="ion-ios-telephone"></i>
-                        </div>
-                        <h3>
-                            Great support
-                        </h3>
-                        <p>
-                            Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
-                        </p>
-                    </div>
-                </div>
-                <!-- /.col-md-3 -->
-
-                <div class="col-sm-3 col-xs-6">
-                    <div class="offer-item">
-                        <div class="icon">
-                            <i class="ion-paper-airplane"></i>
-                        </div>
-                        <h3>
-                            Biggest database
-                        </h3>
-                        <p>
-                            Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
-                        </p>
-                    </div>
-                </div>
-                <!-- /.col-md-3 -->
-
-                <div class="col-sm-3 col-xs-6">
-                    <div class="offer-item">
-                        <div class="icon">
-                            <i class="ion-ios-locked"></i>
-                        </div>
-                        <h3>
-                            Highest Security
-                        </h3>
-                        <p>
-                            Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
-                        </p>
-                    </div>
+                    <h3>
+                        Best price
+                    </h3>
+                    <p>
+                        Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
+                    </p>
                 </div>
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container -->
-    </section>
-    <!-- /.offer -->
-    <!-- ./We are the best -->
 
-    <!-- Subscribe section -->
-    <div class="subscribe section-wrapper">
-        <a class="brand-logo" href="index.html" title="HOME"><i class="ion-paper-airplane"></i> Time<span>Travel</span></a>
-        <p class="subscribe-now">
-            Subscribe to our Newsletter
-        </p>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                    <div class="input-group">
-                        <input type="email" class="form-control border-radius" placeholder="Email address">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default border-radius custom-sub-btn" type="button">DONE</button>
-                        </span>
+            <div class="col-sm-3 col-xs-6">
+                <div class="offer-item">
+                    <div class="icon">
+                        <i class="ion-ios-telephone"></i>
                     </div>
+                    <h3>
+                        Great support
+                    </h3>
+                    <p>
+                        Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
+                    </p>
+                </div>
+            </div>
+            <!-- /.col-md-3 -->
+
+            <div class="col-sm-3 col-xs-6">
+                <div class="offer-item">
+                    <div class="icon">
+                        <i class="ion-paper-airplane"></i>
+                    </div>
+                    <h3>
+                        Biggest database
+                    </h3>
+                    <p>
+                        Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
+                    </p>
+                </div>
+            </div>
+            <!-- /.col-md-3 -->
+
+            <div class="col-sm-3 col-xs-6">
+                <div class="offer-item">
+                    <div class="icon">
+                        <i class="ion-ios-locked"></i>
+                    </div>
+                    <h3>
+                        Highest Security
+                    </h3>
+                    <p>
+                        Class aptent taciti sociosutn tora torquent conub nost reptos himenaeos.
+                    </p>
                 </div>
             </div>
         </div>
-
-        <ul class="social-icon">
-            <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-            <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-            <li><a href="#"><i class="ion-social-linkedin-outline"></i></a></li>
-            <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
-        </ul>
+        <!-- /.row -->
     </div>
-    <!-- /.subscribe -->
+    <!-- /.container -->
+</section>
+<!-- /.offer -->
+<!-- ./We are the best -->
 
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-4">
-                    <div class="text-left">
-                        &copy; Copyright TimeTravel
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="text-left">
-                        &nbsp;
-                    </div>
-                </div>
-                <div class="col-xs-4">
-                    <div class="top">
-                        <a href="#header">
-                            <i class="ion-arrow-up-b"></i>
-                        </a>
-                    </div>
+<!-- Subscribe section -->
+<div class="subscribe section-wrapper">
+    <a class="brand-logo" href="index.html" title="HOME"><i class="ion-paper-airplane"></i> Time<span>Travel</span></a>
+    <p class="subscribe-now">
+        Subscribe to our Newsletter
+    </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                <div class="input-group">
+                    <input type="email" class="form-control border-radius" placeholder="Email address">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default border-radius custom-sub-btn" type="button">DONE</button>
+                    </span>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <!-- Reservation Wizard -->
-    <div id="reservationWizard">
-        <div class="container">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Reservation wizard</h4>
-                    </div>
-                    <div class="row">
+    <ul class="social-icon">
+        <li><a href="#"><i class="ion-social-twitter"></i></a></li>
+        <li><a href="#"><i class="ion-social-facebook"></i></a></li>
+        <li><a href="#"><i class="ion-social-linkedin-outline"></i></a></li>
+        <li><a href="#"><i class="ion-social-googleplus"></i></a></li>
+    </ul>
+</div>
+<!-- /.subscribe -->
 
-                        <div class="col-md-2"></div>
-                        <div class="col-md-8">
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="text-left">
+                    &copy; Copyright TimeTravel
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="text-left">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="top">
+                    <a href="#header">
+                        <i class="ion-arrow-up-b"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
-                            <div class="row stepwizard">
-                                <div class="stepwizard-row setup-panel">
-                                    <div class="stepwizard-step">
-                                        <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-                                        <p><strong>Registration</strong></p>
-                                    </div>
-                                    <div class="stepwizard-step">
-                                        <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-                                        <p><strong>Passengers</strong></p>
-                                    </div>
+<!-- Reservation Wizard -->
+<div id="reservationWizard">
+    <div class="container">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Reservation wizard</h4>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+
+                        <div class="row stepwizard">
+                            <div class="stepwizard-row setup-panel">
+                                <div class="stepwizard-step">
+                                    <a ng-class="{'btn-primary': showStep1, 'btn-default': !showStep1}" ng-click="step1Button()" ng-disabled="!showStep1Visited" type="button" class="btn btn-circle">1</a>
+                                    <p><strong>Registration</strong></p>
+                                </div>
+                                <div class="stepwizard-step">
+                                    <a ng-class="{'btn-primary': showStep2, 'btn-default': !showStep2}" ng-click="step2Button()" ng-disabled="!showStep2Visited" type="button" class="btn btn-circle">2</a>
+                                    <p><strong>Passengers</strong></p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2"></div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form role="form">
-                                <div class="row setup-content col-md-12" id="step-1">
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form role="form">
+                            <div class="row setup-content col-md-12" id="step-1" ng-show="showStep1">
                                     <div class="col-md-12">
-                                        <div class="col-md-5" id="reservationRegisterForm" ng-show="!acceptUser">
+                                        <div class="col-md-5" id="reservationRegisterForm" ng-show="!isAuthenticated">
                                             New user? Register here.<br>
                                             <div class="form-group">
                                                 <label class="control-label" for="reservationUsername">Username</label>
@@ -363,9 +367,9 @@
                                                 <button ng-click="reservationRegister()" class="btn btn-primary" type="button">Register</button>
                                             </div>
                                         </div>
-                                        <div class="col-md-2"></div>
-                                        
-                                        <div class="col-md-5" id="reservationLoginForm" ng-show="!acceptUser">
+                                        <div class="col-md-2" ng-show="!isAuthenticated"></div>
+
+                                        <div class="col-md-5" id="reservationLoginForm" ng-show="!isAuthenticated">
                                             Already registered? Login here.<br>
                                             <div class="form-group">
                                                 <label class="control-label" for="reservationUsernameLogin">Username</label>
@@ -383,51 +387,57 @@
                                             <br><br><br>
                                             <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
                                         </div>
-                                        <div class="alert alert-success" role="alert" ng-show="reservationSucces">{{reservationSucces}}</div>
 
-                                        <div class="col-md-12"><hr /></div>
+
                                         <div class="col-md-12">
+                                            <div class="alert alert-success" role="alert" ng-show="isAuthenticated">{{reservationSucces}}</div>
+                                            
+                                            <hr />
+                                        </div>
+
+                                        <div class="col-md-12">
+
                                             <div class="pull-right">
                                                 <div class="col-md-10">
-                                                <input id="resevartionIsPassenger" type="checkbox"> I'm a passenger!
+                                                    <input id="reservationIsPassenger" type="checkbox" ng-model="reservationIsPassenger"> I'm a passenger!
                                                 </div>
                                                 <div class="col-md-2">
-                                                <button class="btn btn-primary" ng-click="nextStep()" type="button">Next</button>
+                                                    <button class="btn btn-primary" ng-click="nextStep()" type="button">Next</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                
-                                
-                                <div class="row setup-content col-md-12" id="step-2">
-                                    <div class="col-md-12">
-                                        <h4 class="pull-right"> Number of seats: {{passengerAmount}}</h4>
-                                        <!-- Passanger - This part repeat for each passanger -->
-                                        <div ng-repeat="n in getNumber(passengerAmount) track by $index">
-                                        <h5>Passenger #{{$index+1}}</h5>
+                            </div>
+
+
+
+                            <div class="row setup-content col-md-12" id="step-2" ng-show="showStep2">
+                                <div class="col-md-12">
+                                    <h4 class="pull-right"> Number of seats: {{passengerAmount}}</h4>
+                                    <!-- Passanger - This part repeat for each passanger -->
+                                    <div ng-repeat="p in reservationPassenger">
+                                        <h5>Passenger #{{$index + 1}}</h5>
                                         <div class="form-group">
-                                            <label class="control-label" for="passenger-name-{{$index+1}}">First Name</label>
-                                            <input maxlength="200" id="passenger-name-{{$index+1}}" type="text" required="required" class="form-control" placeholder="Enter First Name"
+                                            <label class="control-label" for="reservationPassengerFirstname[{{$index}}]">First Name</label>
+                                            <input maxlength="200" ng-model="p.firstname" type="text" required="required" class="form-control" placeholder="Enter First Name"
                                                    />
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label" for="passenger-lastname-{{$index+1}}">Last Name</label>
-                                            <input maxlength="200" id="passenger-lastname-{{$index+1}}" type="text" required="required" class="form-control" placeholder="Enter Last Name"
+                                            <label class="control-label" for="passengerLastname{{$index}}">Last Name</label>
+                                            <input maxlength="200" ng-model="p.lastname" type="text" required="required" class="form-control" placeholder="Enter Last Name"
                                                    />
                                         </div>
                                         <hr />
-                                        </div>
-                                        <!-- END - Passanger - This part repeat for each passanger -->
-                                        <button class="btn btn-success pull-right" type="submit">Finish!</button>
                                     </div>
-                            </form>
-                        </div>
+                                    <!-- END - Passanger - This part repeat for each passanger -->
+                                    <button ng-click="sendReservation()" class="btn btn-success pull-right" type="submit">Finish!</button>
+                                </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-2"></div>
         </div>
+        <div class="col-md-2"></div>
     </div>
+</div>
 </div>
