@@ -86,6 +86,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 $scope.search = function () {
                     $scope.searchMessage = "Searching for flights. Please wait"
                     var panel = $("#searchResultsPanel"); 
+                    panel.show();
                     $('html, body').animate({
                           scrollTop: panel.offset().top -75
                     }, 500);

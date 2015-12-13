@@ -18,13 +18,13 @@ public class Airport implements Serializable {
     private String name;
     private String city;
     private int timezone;
-
+/*
     @OneToMany(mappedBy = "fliesTo")
     private List<FlightInstance> FlightInstancesTo;
     
     @OneToMany(mappedBy = "fliesFrom")
     private List<FlightInstance> FlightInstancesFrom;
-    
+    */
     
     public Airport(){}
     
@@ -34,7 +34,7 @@ public class Airport implements Serializable {
         this.city = city;
         this.timezone = timezone;
     }
-
+/*
     public List<FlightInstance> getFlightInstancesTo() {
         return FlightInstancesTo;
     }
@@ -42,7 +42,7 @@ public class Airport implements Serializable {
     public List<FlightInstance> getFlightInstancesFrom() {
         return FlightInstancesFrom;
     }
-
+*/
 //    public void setFlightInstances(List<FlightInstance> FlightInstancesTo) {
 //        this.FlightInstances = FlightInstancesTo;
 //    }

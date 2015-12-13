@@ -131,7 +131,13 @@ public class Facade {
     }
     public List<Reservation> getReservationsByUsername(String userName){
         EntityManager em = emf.createEntityManager();
-        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEE='"+userName+"'",Reservation.class).getResultList();
+        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEE_USERNAME='"+userName+"'",Reservation.class).getResultList();
+        em.close();
+        return reservations;
+    }
+    public List<Reservation> getReservations(){
+        EntityManager em = emf.createEntityManager();
+        List reservations = em.createNativeQuery("select * from RESERVATION r",Reservation.class).getResultList();
         em.close();
         return reservations;
     }

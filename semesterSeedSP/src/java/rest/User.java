@@ -35,7 +35,7 @@ public class User {
     @GET
     @Produces("application/json")
     @Path("reservationlist")
-    @RolesAllowed("user")
+    @RolesAllowed("User")
     public String getReservations(@HeaderParam("Authorization") String token) throws ParseException, JOSEException {
         token = token.substring("Bearer ".length());
         String userName = getUsernameFromToken(token);
