@@ -119,7 +119,7 @@ public class Facade {
         }
     }
     
-    public List<Airline> getAirlinesUrl() {
+    public List<Airline> getAirlines() {
         EntityManager em = emf.createEntityManager();
         List urls = em.createNativeQuery("select * from AIRLINE a", Airline.class).getResultList();
         em.close();
@@ -131,9 +131,22 @@ public class Facade {
     }
     public List<Reservation> getReservationsByUsername(String userName){
         EntityManager em = emf.createEntityManager();
-        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEE='"+userName+"'",Reservation.class).getResultList();
+        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEE_USERNAME='"+userName+"'",Reservation.class).getResultList();
         em.close();
         return reservations;
+    }
+    public List<Reservation> getReservations(){
+        EntityManager em = emf.createEntityManager();
+        List reservations = em.createNativeQuery("select * from RESERVATION r",Reservation.class).getResultList();
+        em.close();
+        return reservations;
+    }
+    
+    public List<Airport> getAirports() {
+        EntityManager em = emf.createEntityManager();
+        List airports = em.createNativeQuery("SELECT * FROM AIRPORT a", Airport.class).getResultList();
+        em.close();
+        return airports;
     }
      
 /*****************************************************************

@@ -65,7 +65,7 @@ public class Flights {
      * Creates a new instance of Flights
      */
     public Flights() {
-        apiUrls = new Facade().getAirlinesUrl();
+        apiUrls = new Facade().getAirlines();
         //apiUrls.add("http://angularairline-plaul.rhcloud.com/");
         //apiUrls.add("http://wildfly-x.cloudapp.net/airline/");
     }

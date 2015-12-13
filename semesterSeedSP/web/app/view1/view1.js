@@ -1,6 +1,37 @@
 'use strict';
 var test;
 angular.module('myApp.view1', ['ngRoute'])
+        
+        .filter('traveltime', function () {
+            return function(input) {
+                var hours = Math.floor(input/60);
+                var minutes = input%60;
+                var h = hours + " Hour";
+                if (hours === 0) {
+                    h = "";
+                }
+                else if (hours !== 1) {
+                    h += "s";
+                }
+                
+                var m = minutes + " Minute";
+                if (minutes !== 1) {
+                    m += "s";
+                }
+                
+                return h + " " + m;
+            }
+        })
+        
+        .filter('airport', function () {
+            return function(IATA, airports) {
+                for (var a in airports) {
+                    if (airports[a].iatacode === IATA) {
+                        return airports[a].city;
+                    }
+                }
+            }
+        })
 
         .config(['$routeProvider', function ($routeProvider) {
                 $routeProvider.when('/view1', {
@@ -21,6 +52,12 @@ angular.module('myApp.view1', ['ngRoute'])
                 var Getuser = $resource(apiBase+"/user/getuser", {}, {get: {method: 'GET',
                                                                             responseType: 'json'}});
                 var Reserve= $resource(apiBase+"/xxxx/reserve", {});
+                
+                var Airports = $resource(apiBase+"/airports", {}, {get: {method: 'GET',
+                                                                         responseType: 'json'}});
+                Airports.query(function(response) {
+                    $scope.airports = response;
+                });
                 
                 $scope.searchForm = {from: "CPH", to: "NULL", date: "01.01.2016", tickets: 1};
                 
@@ -48,20 +85,26 @@ angular.module('myApp.view1', ['ngRoute'])
                 
                 $scope.search = function () {
                     $scope.searchMessage = "Searching for flights. Please wait"
+                    var panel = $("#searchResultsPanel"); 
+                    panel.show();
+                    $('html, body').animate({
+                          scrollTop: panel.offset().top -75
+                    }, 500);
                     var dateNums = $scope.searchForm.date.split(".");
                     var isodate = new Date(dateNums[2], dateNums[1]-1, dateNums[0], 1);
+                    var query;
                     if ($scope.searchForm.to === "NULL") {
                         var restArguments = {from: $scope.searchForm.from, 
                                              date: isodate.toISOString(), 
                                              tickets: $scope.searchForm.tickets};
-                        var query = From;
+                        query = From;
                     } 
                     else {
                         var restArguments = {from: $scope.searchForm.from, 
                                              to: $scope.searchForm.to,
                                              date: isodate.toISOString(), 
                                              tickets: $scope.searchForm.tickets};
-                        var query = FromTo;
+                        query = FromTo;
                     }
                     $scope.flights = query.query(restArguments, function(response) {
                         
@@ -177,6 +220,15 @@ angular.module('myApp.view1', ['ngRoute'])
                     }
                     else {
                         $scope.reservationError = "You need to register or login to proceed.";
+                    }
+                };
+                
+                $scope.gotoResult = function(event) {
+                    var panel = event.currentTarget;
+                    if ($(panel).hasClass("collapsed")) {
+                        $('html, body').animate({
+                              scrollTop: $(panel).offset().top -85
+                        }, 500);
                     }
                 };
                 

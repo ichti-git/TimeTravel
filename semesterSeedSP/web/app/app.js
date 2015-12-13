@@ -10,6 +10,8 @@ var test;
         'ui.bootstrap',
         'myApp.security',
         'myApp.loginView',
+        'myApp.adminView',
+        'myApp.reservationView',
         'myApp.view1',
         'myApp.view2',
         'myApp.view3',

@@ -12,6 +12,8 @@ import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import static com.jayway.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import com.jayway.restassured.parsing.Parser;
+import static com.jayway.restassured.path.json.JsonPath.from;
+import deploy.DeploymentConfiguration;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -55,6 +57,7 @@ public class RestTest {
         contextHandler.addServlet(servletHolder, "/api/*");
         server.setHandler(contextHandler);
         server.start();
+        //DeploymentConfiguration.PU_NAME = "Test_PU";
     }
 
     @AfterClass
@@ -397,6 +400,25 @@ public class RestTest {
                 body(matchesJsonSchema(flightsErrorSchemaFile));
     }
     
+    @Test
+    public void getReservationList() {
+        String json = given().
+                contentType("application/json").
+                body("{'username':'user','password':'test'}").
+                when().
+                post("/login").
+                then().
+                statusCode(200).extract().asString();
+        
+        given().
+                contentType("application/json").
+                header("Authorization", "Bearer " + from(json).get("token")).
+                when().
+                get("/user/reservationlist").
+                then().
+                statusCode(200);
+    }
+     
     //Login test TODO later sprints
     /*
     @Test

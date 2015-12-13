@@ -42,23 +42,6 @@ public class CreateUser {
      */
     public CreateUser() {
     }
-
-    /**
-     * Retrieves representation of an instance of rest.CreateUser
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public String getXml() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    
-    @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
-    }
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
