@@ -2,25 +2,59 @@
 import deploy.DeploymentConfiguration;
 import entity.User;
 import facades.UserFacade;
+import timeTravel.facade.Facade;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import timeTravel.entities.FlightInstance;
-import timeTravel.facade.Facade;
+import timeTravel.entities.Passenger;
+
 
 
 public class MainTester {
     
     public static void main(String[] args) {
         
-        UserFacade facade = new UserFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
-        String userName = "testting";
-        String password = "testting";
-        String firstName = "testting";
-        String lastName = "testting";
-        String email = "testting";
-        String phone = "testting";
+        UserFacade uf = new UserFacade();
+        
+        uf.createUser("testuser", "testpassword", "testfirstName",  "testlastName", "reserveeEmail@hotmail.com", "ReservePhone");
+        
+        List<Passenger> passengers = new ArrayList<>();
+        Passenger p = new Passenger("hans" ,"mogensen");
+        Passenger p2 = new Passenger("morten" ,"horner");
+        passengers.add( p );
+        passengers.add( p2 );
+//        User user = new User("user2", "user2", "jakob", "bendtsen", "bedsten@haha.com", "33223322");
+        Facade facade = new Facade();
+        facade.setReservation( "flight1", 2,  "testuser", "ReservePhone",  "reserveeEmail@hotmail.com",  passengers);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+//        UserFacade facade = new UserFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
+//        String userName = "testting";
+//        String password = "testting";
+//        String firstName = "testting";
+//        String lastName = "testting";
+//        String email = "testting";
+//        String phone = "testting";
 //        EntityManagerFactory emf;
 //        emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
 //        EntityManager em = emf.createEntityManager();
@@ -32,8 +66,8 @@ public class MainTester {
 //            System.out.println(f.getPrice());
 //            System.out.println(f.getDepartureDate());
 //        }
-        User user = new User();
-        facade.createUser(userName, password, firstName, lastName, email, phone);
-        System.out.println(""+user);
+//        User user = new User();
+//        facade.createUser(userName, password, firstName, lastName, email, phone);
+//        System.out.println(""+user);
     }
 }

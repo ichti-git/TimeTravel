@@ -1,4 +1,3 @@
-
 package timeTravel.entities;
 
 import java.io.Serializable;
@@ -9,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Passenger implements Serializable {
@@ -19,13 +19,27 @@ public class Passenger implements Serializable {
     private String firstName;
     private String lastName;
     
+   
+   
+    @ManyToOne
+    private Reservation reservation;
+    
     public Passenger(){}
     
     public Passenger(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
- 
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+       
+    }
+
+    
 //    public Long getId() {
 //        return id;
 //    }
@@ -49,7 +63,6 @@ public class Passenger implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
     
     @Override
     public int hashCode() {
@@ -75,5 +88,9 @@ public class Passenger implements Serializable {
     public String toString() {
         return "entities.Passenger[ id=" + id + " ]";
     }
+
+//    public void setReservation(Reservation reservation) {
+//         this.reservation = reservation;
+//    }
 
 }

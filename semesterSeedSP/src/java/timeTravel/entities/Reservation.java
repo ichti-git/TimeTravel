@@ -1,4 +1,4 @@
-
+    
 package timeTravel.entities;
 
 import entity.User;
@@ -6,12 +6,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 /*
 {
@@ -51,80 +53,30 @@ public class Reservation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private Airline airline; 
-    private String flightId;
-    private Airport origin;
-    private Airport destination;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date date;
-    private int flightTime;
-    private int numberOfSeats;
+    
+    @ManyToOne
     private User Reservee;
-    @OneToMany
+    @ManyToOne
+    private FlightInstance flightInstance;
+//    @OneToMany(mappedBy = "Reservation", cascade = CascadeType.PERSIST)
+//    private List<Passenger> Passengers;
+    
+    @OneToMany(cascade = CascadeType.MERGE)
     private List<Passenger> Passengers;
-
-    public Reservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee) {
-        this.airline = airline;
-        this.flightId = flightId;
-        this.origin = origin;
-        this.destination = destination;
-        this.date = date;
-        this.flightTime = flightTime;
-        this.numberOfSeats = numberOfSeats;
-        this.Reservee = Reservee;
+    
+    public Reservation(FlightInstance flightInstance,User reservee, int numberOfSeats,List<Passenger> passengers) {
+        this.flightInstance = flightInstance;
+        this.Reservee = reservee;
+        this.Passengers = passengers;
+    }
+    
+    public Reservation(FlightInstance flightInstance,User reservee, int numberOfSeats) {
+        this.flightInstance = flightInstance;
+        this.Reservee = reservee;
         
     }
-     
     
     public Reservation() {
-    }
-
-    public String getFlightId() {
-        return flightId;
-    }
-
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
-
-    public Airport getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(Airport origin) {
-        this.origin = origin;
-    }
-
-    public Airport getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Airport destination) {
-        this.destination = destination;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public int getFlightTime() {
-        return flightTime;
-    }
-
-    public void setFlightTime(int flightTime) {
-        this.flightTime = flightTime;
-    }
-
-    public int getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
     }
 
     public User getReservee() {
@@ -135,19 +87,22 @@ public class Reservation implements Serializable {
         this.Reservee = Reservee;
     }
 
-    public List<String> getPassengersAsStrings() {
-        List<String> passengersAsStrings = new ArrayList();
-        for (Passenger passenger : Passengers) {
-            passengersAsStrings.add(passenger.getFirstName() + " " + passenger.getLastName());
-        }
-        return passengersAsStrings;
-    }
+//    public List<String> getPassengersAsStrings() {
+//        List<String> passengersAsStrings = new ArrayList();
+//        for (Passenger passenger : Passengers) {
+//            passengersAsStrings.add(passenger.getFirstName() + " " + passenger.getLastName());
+//        }
+//        return passengersAsStrings;
+//    }
     
     public void addPassenger(Passenger passenger) {
         Passengers.add(passenger);
-        
     }
 
+    public List<Passenger> getPassengers() {
+        return Passengers;
+    }
+    
     public void setPassengers(List<Passenger> Passengers) {
         this.Passengers = Passengers;
     }
@@ -161,9 +116,14 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "entities.Reservation[ id=" + id + " ]";
+    public FlightInstance getFlightInstance() {
+        return flightInstance;
     }
+
+    public void setFlightInstance(FlightInstance flightInstance) {
+        this.flightInstance = flightInstance;
+    }
+
+   
 
 }
