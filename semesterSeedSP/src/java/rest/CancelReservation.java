@@ -46,7 +46,7 @@ public class CancelReservation {
         if (reservation.getReserveeUser() == user.getUserName() || sc.isUserInRole("Admin")) {
             rf.deleteReservation(id); //TODO, check if actually removed?
             jsonobj.addProperty("message", "Reservaiton succesfully canceled"); 
-            return Response.status(400).entity(gson.toJson(jsonobj)).type(MediaType.APPLICATION_JSON).build();
+            return Response.status(200).entity(gson.toJson(jsonobj)).type(MediaType.APPLICATION_JSON).build();
         }
         else {
         
@@ -56,7 +56,7 @@ public class CancelReservation {
         }
         */
 
-        return Response.status(400).entity(gson.toJson(user)).type(MediaType.APPLICATION_JSON).build();
+        return Response.status(200).entity(gson.toJson(user)).type(MediaType.APPLICATION_JSON).build();
     }
     
 }

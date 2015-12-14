@@ -1,11 +1,12 @@
 //Panel close button
+/*
 $(function(){
 $('.clickable').on('click',function(){
     var effect = $(this).data('effect');
         $(this).closest('.panel')[effect]();
 	})
 })
-
+*/
 //Show/hide panel button 
 
 $('#searchResultsPanel').hide();

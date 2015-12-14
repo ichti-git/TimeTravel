@@ -194,11 +194,12 @@ angular.module('myApp.view1', ['ngRoute'])
                 };
                 
                 $scope.sendReservation = function() {
-                    var sendRes = new sendReservation();
+                    var sendRes = new Reserve();
                     //TODO The right info
                     sendRes.flightId = $scope.flights[$scope.choosenFlightId].flightID;
                     sendRes.airline = $scope.flights[$scope.choosenFlightId].airline;
                     sendRes.passengers = $scope.reservationPassenger;
+                    //TODO error handling and user feedback, when reservation is done on backend
                 };
                 
                 $scope.nextStep = function() {
@@ -210,7 +211,7 @@ angular.module('myApp.view1', ['ngRoute'])
                             $scope.curUser = response;
                             if ($scope.reservationIsPassenger) {
                                 $scope.reservationPassenger[0].firstname = $scope.curUser.firstname;
-                                $scope.reservationPassenger[0].lastname = $scope.curUser.firstname;
+                                $scope.reservationPassenger[0].lastname = $scope.curUser.lastname;
                             }
                         });
                         for (var i = 0; i < $scope.passengerAmount; i++) {
@@ -230,6 +231,10 @@ angular.module('myApp.view1', ['ngRoute'])
                               scrollTop: $(panel).offset().top -85
                         }, 500);
                     }
+                };
+                
+                $scope.closeReservationWizard = function() {
+                    $("#reservationWizard").bPopup().close();
                 };
                 
                 //Ugly hardcoded shit below

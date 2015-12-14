@@ -28,3 +28,6 @@ ol.list > li:before {
     content: counter(li-counter);
     counter-increment: li-counter;
 }
+.modal-backdrop {
+  z-index: -1;
+}

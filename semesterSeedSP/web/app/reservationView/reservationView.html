@@ -20,9 +20,29 @@
                 <td>{{r.date}}</td>
                 <td>{{r.flightTime}}</td>
                 <td>{{r.numberOfSeats}}</td>
-                <td>{{r.Passengers | passengers}}</td>
-                <td><button class="btn btn-default">Cancel</button></td>
+                <td>{{r.Passengers| passengers}}</td>
+                <td><button class="btn btn-default" data-toggle="modal" data-target="#cancelModal" ng-click="chooseReservation(r.id)">Cancel</button></td>
             </tr>
         </tbody>
     </table>
+</div>
+
+
+<!-- Cancel modal -->
+<div id="cancelModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content ">
+            <div class="modal-body">
+                <p ng-show="!cancelSent">Are you sure you want to cancel this reservation?</p>
+                <button ng-show="!cancelSent" type="button" class="btn btn-default" data-dismiss="modal">No, take me back</button>
+                <button ng-show="!cancelSent" type="button" class="btn btn-default" ng-click="cancelReservation()">Yes, cancel the reservation</button>
+                <p ng-show="cancelSent && !cancelResponse">Waiting for server response.</p>
+                <p ng-class="{'alert': true, 'alert-success': cancelSucces, 'alert-warning': !cancelSucces}" role="alert" ng-show="cancelSent">{{cancelResponse.message}}</p>                
+                <button ng-show="cancelSent" type="button" class="btn btn-default" data-dismiss="modal">Thanks, take me back</button>
+            </div>
+        </div>
+
+    </div>
 </div>
