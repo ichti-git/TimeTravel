@@ -25,7 +25,6 @@ public class ReservationFacade {
         reservation.setReserveeName(reserveeName);
         
         em.getTransaction().begin();
-        
         for(Passenger p : passengers){
             passenger.setFirstName(p.getFirstName());
             passenger.setLastName(p.getLastName());
@@ -34,8 +33,9 @@ public class ReservationFacade {
         }em.flush();
         
         em.persist(reservation);
-        
         em.getTransaction().commit();
+        
+        
         em.close();
     }
 }

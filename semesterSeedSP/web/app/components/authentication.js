@@ -86,6 +86,7 @@ angular.module('myApp.security', [])
             $scope.isAdmin = false;
             $scope.isUser = false;
             delete $window.sessionStorage.token;
+            $window.location.reload();
             //$location.path("#/view1");
           };
 

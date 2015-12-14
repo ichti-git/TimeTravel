@@ -11,12 +11,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import facades.ReservationFacade;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
@@ -38,7 +40,7 @@ import timeTravel.facade.Facade;
  *
  * @author Silas
  */
-@Path("reservations")
+@Path("flightreservation")
 public class Reservations {
    
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -82,73 +84,50 @@ public class Reservations {
  }
  ]
 }
+* 
+* 
+* 
+*  "flightID": String,
+ "numberOfSeats": Integer,
+ "ReserveeName": String,
+ "ReservePhone": String,
+ "ReserveeEmail": String (valid email),
+ "Passengers":[
+ {
+ "firstName":String,
+ "lastName": String
+ }
+ ]
+}
      */
     
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public String setReservation(String content) throws ParseException{
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void setReservation(String content) throws ParseException{
         
         JsonObject json = parser.parse(content).getAsJsonObject();
         
         String flightID = json.get("flightID").getAsString();
-        String Origin = json.get("Origin").getAsString();
-        String Destination = json.get("Destination").getAsString();
-        //Date Date = df.parse(json.get("Date").getAsString()); - Keep as comment for now
-        String tempDate = gson.fromJson(json.get("Date").getAsString(),String.class);
-        
-        int FlightTime = json.get("FlightTime").getAsInt();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
-        JsonArray passengers = json.get("Passengers").getAsJsonArray();
-        //Passengers.add();
+        String ReservePhone = json.get("ReservePhone").getAsString();
+        String ReserveeEmail = json.get("ReserveeEmail").getAsString();
+        JsonArray passengersArray = (JsonArray)json.get("Passengers");
         
-        
-//        Iterator t = passengers.iterator();
-//        while (t.hasNext()){
-//            JsonObject fName = (JsonObject) passengers.getAsJsonObject().get("firstName");
-//            JsonObject lName = (JsonObject) passengers.getAsJsonObject().get("lastName");
-//            t.next();
-//        }
-        Iterator t = passengers.iterator();
-        while (t.hasNext()){
-            String fName = (String) t.next().getAsString()//..get("firstName");
-            JsonObject lName = (JsonObject) passengers.getAsJsonObject().get("lastName");
-            t.next();
-        }
-        
+        List<Passenger> passengers = new ArrayList<>();
         for (int i = 0; i < passengers.size(); i++) {
-            /*JsonElement*/JsonObject fName = (JsonObject) passengers.getAsJsonObject().get("firstName");
-            String firstName = fName.toString();
-            JsonElement pass = passengers.get(i);
-         
-            JsonElement lName = passengers.getAsJsonArray();//.getAsJsonObject().get("lastName");
-            String lastName = lName.toString();
-//            JSONObject ps = Passengers.getJSONObject(i);
-            
-            
+            JsonObject passengerJson = (JsonObject) passengersArray.get(i).getAsJsonObject();
+            String firstName = passengerJson.get("firstName").getAsString();
+            String lastName = passengerJson.get("lastName").getAsString();
+            Passenger newPassenger = new Passenger(firstName,lastName);
+            passengers.add(newPassenger);
         }
         
+        ReservationFacade rf = new ReservationFacade();
+        
+        rf.setReservation(flightID, numberOfSeats, ReserveeName, ReservePhone, ReserveeEmail, passengers);
         
         
-        // Trying different things at the same time
-        
-        JsonObject jo = new JsonObject();
-        
-        
-        
-        
-        
-        jo.addProperty("flightID", flightID);
-        jo.addProperty("Origin", Origin);
-        jo.addProperty("Destination", Destination);
-        jo.addProperty("Date", tempDate);
-        jo.addProperty("FlightTime", FlightTime);
-        jo.addProperty("numberOfSeats", numberOfSeats);
-        jo.addProperty("ReserveeName", ReserveeName);
-        
-        String jsonString = gson.toJson(jo);
-        
-        return gson.toJson(jsonString);
     }
     
     @GET
@@ -168,3 +147,23 @@ public class Reservations {
     public void putText(String content) {
     }
 }
+        //String Origin = json.get("Origin").getAsString();
+        //String Destination = json.get("Destination").getAsString();
+        //Date Date = df.parse(json.get("Date").getAsString()); - Keep as comment for now
+        //String tempDate = gson.fromJson(json.get("Date").getAsString(),String.class);
+        
+        //int FlightTime = json.get("FlightTime").getAsInt();
+
+
+
+//        jo.addProperty("flightID", flightID);
+//        jo.addProperty("Origin", Origin);
+//        jo.addProperty("Destination", Destination);
+//        jo.addProperty("Date", tempDate);
+//        jo.addProperty("FlightTime", FlightTime);
+//        jo.addProperty("numberOfSeats", numberOfSeats);
+//        jo.addProperty("ReserveeName", ReserveeName);
+//        
+//        String jsonString = gson.toJson(jo);
+//        
+//        return gson.toJson(jsonString);
