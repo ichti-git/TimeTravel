@@ -11,20 +11,13 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Airport implements Serializable {
-    //private static final long serialVersionUID = 1L;//??????????????????????? skal den så fjernes??????????????????????????
+    
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String iatacode;
     private String name;
     private String city;
     private int timezone;
-/*
-    @OneToMany(mappedBy = "fliesTo")
-    private List<FlightInstance> FlightInstancesTo;
-    
-    @OneToMany(mappedBy = "fliesFrom")
-    private List<FlightInstance> FlightInstancesFrom;
-    */
+
     
     public Airport(){}
     
@@ -34,22 +27,7 @@ public class Airport implements Serializable {
         this.city = city;
         this.timezone = timezone;
     }
-/*
-    public List<FlightInstance> getFlightInstancesTo() {
-        return FlightInstancesTo;
-    }
-    
-    public List<FlightInstance> getFlightInstancesFrom() {
-        return FlightInstancesFrom;
-    }
-*/
-//    public void setFlightInstances(List<FlightInstance> FlightInstancesTo) {
-//        this.FlightInstances = FlightInstancesTo;
-//    }
-    
-//    public void setFlightInstances(List<FlightInstance> FlightInstancesFrom) {
-//        this.FlightInstances = FlightInstancesFrom;
-//    }
+
     
     public String getIatacode() {
         return iatacode;

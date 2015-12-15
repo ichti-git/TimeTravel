@@ -20,12 +20,7 @@ public class Passenger implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    
-   
-//   
-//    
-//    @ManyToOne//(cascade = CascadeType.PERSIST)
-//    private Reservation reservation;
+
     
     public Passenger(){
     }
@@ -35,15 +30,6 @@ public class Passenger implements Serializable {
         this.lastName = lastName;
     }
 
-//    public Reservation getReservation() {
-//        return reservation;
-//    }
-
-    public void setReservation(Reservation reservation) {
-       
-    }
-
-    
     public Long getId() {
         return id;
     }

@@ -16,38 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-/*
-{
-"flightID":"MCA2345",
-"Origin":"Copenhagen (CPH)"
-"Destination": "Barcelona (BCN)",
-"Date":"2016-02-25T11:30:00.000Z",
-"FlightTime": 190,
-"numberOfSeats":2,
-"ReserveeName":" Peter Hansen ",
-"Passengers":[
-{ "firstName":"Peter",
-"lastName": "Peterson"
-},
-{ "firstName":"Jane",
-"lastName": "Peterson"
-}
-]
-"flightID":" String ",
-"Origin":"String (Friendly name + IATA)",
-"Destination":"String (Friendly name + IATA)",
-"Date":"ISO-8601-Date/time",
-"FlightTime":"Integer (minutes)",
-"numberOfSeats":"Integer",
-"ReserveeName":"String",
-"Passengers":[
-{
-"firstName":"String",
-"lastName":"String"
-}
-]
-}
-*/
+
 @Entity
 public class Reservation implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -56,9 +25,12 @@ public class Reservation implements Serializable {
     private int id;
     private String flightId;
     private int numberOfSeats;
+//    private User reserveeUser;
+    
     private String ReserveeName;
     private String ReservePhone;
     private String ReserveeEmail;
+    
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Passenger> Passengers;
     
@@ -67,13 +39,15 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(String flightId, int numberOfSeats, String ReserveeName, String ReservePhone, String ReserveeEmail, List<Passenger> Passengers) {
+    public Reservation(String flightId, int numberOfSeats, User user, List<Passenger> Passengers,String ReserveeEmail,String ReservePhone,String ReserveeName) {
         this.flightId = flightId;
         this.numberOfSeats = numberOfSeats;
-        this.ReserveeName = ReserveeName;
-        this.ReservePhone = ReservePhone;
-        this.ReserveeEmail = ReserveeEmail;
+//        this.reserveeUser = user;
         this.Passengers = Passengers;
+        this.ReserveeEmail = ReserveeEmail;
+        this.ReservePhone = ReservePhone;
+        this.ReserveeName = ReserveeName;
+        
     }
 
     public int getId() {
@@ -82,22 +56,6 @@ public class Reservation implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-    
-    public String getFlightId() {
-        return flightId;
-    }
-
-    public void setFlightId(String flightId) {
-        this.flightId = flightId;
-    }
-
-    public int getNumberOfSeats() {
-        return numberOfSeats;
-    }
-
-    public void setNumberOfSeats(int numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
     }
 
     public String getReserveeName() {
@@ -123,6 +81,30 @@ public class Reservation implements Serializable {
     public void setReserveeEmail(String ReserveeEmail) {
         this.ReserveeEmail = ReserveeEmail;
     }
+    
+    public String getFlightId() {
+        return flightId;
+    }
+
+    public void setFlightId(String flightId) {
+        this.flightId = flightId;
+    }
+
+    public int getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(int numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
+    }
+
+//    public User getReserveeUser() {
+//        return reserveeUser;
+//    }
+//
+//    public void setReserveeUser(User reserveeUser) {
+//        this.reserveeUser = reserveeUser;
+//    }
 
     public List<Passenger> getPassengers() {
         return Passengers;

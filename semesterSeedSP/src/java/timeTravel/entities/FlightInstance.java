@@ -23,14 +23,13 @@ public class FlightInstance implements Serializable {
     private int availableSeats;
     private int price;
     
-    @ManyToOne
-    private Flight flight;
+//    @ManyToOne
+//    private Flight flight;
     @ManyToOne
     private Airport fliesTo;
     @ManyToOne
     private Airport fliesFrom;
-    @OneToMany
-    private List <Reservation> reservations;
+    
     
     
     
@@ -115,20 +114,7 @@ public class FlightInstance implements Serializable {
         this.fliesFrom = fliesFrom;
     }
 
-    public Flight getFlight() {
-        return flight;
+    public int getNumberOfSeats() {
+        return availableSeats;
     }
-
-    public void setFlight(Flight flight) {
-        this.flight = flight;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-//    public void setReservations(List<Reservation> reservations) {
-//        this.reservations = reservations;
-//    }
-
 }

@@ -14,9 +14,8 @@ public class Airline implements Serializable {
     @Id
     private String name;
     private String url;
-//    
-//    @OneToMany(mappedBy = "airline")
-//    private List<Flight> flights;
+
+    
 
     public Airline() {
     }

@@ -25,14 +25,14 @@ public class MainTester {
         
         //uf.createUser("testuser", "testpassword", "testfirstName",  "testlastName", "reserveeEmail@hotmail.com", "ReservePhone");
         
-        List<Passenger> passengers = new ArrayList<Passenger>();
+        List<Passenger> passengers = new ArrayList();
         Passenger p = new Passenger("hans" ,"mogensen");
         Passenger p2 = new Passenger("morten" ,"horner");
         passengers.add( p );
         passengers.add( p2 );
 
         ReservationFacade facade = new ReservationFacade();
-        facade.setReservation("flight1",2,"testuser", "ReservePhone","reserveeEmail@hotmail.com",  passengers);
+        facade.setReservation("flight1",2,"testuser",  passengers);
                             
         
         
