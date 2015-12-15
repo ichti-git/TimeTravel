@@ -51,7 +51,8 @@ angular.module('myApp.view1', ['ngRoute'])
                 var Login = $resource(apiBase+"/login", {});
                 var Getuser = $resource(apiBase+"/user/getuser", {}, {get: {method: 'GET',
                                                                             responseType: 'json'}});
-                var Reserve= $resource(apiBase+"/xxxx/reserve", {});
+                var Reserve = $resource(apiBase+"/xxxx/reserve", {}, {save: {method: 'POST',
+                                                                             responseType: 'json'}});
                 
                 var Airports = $resource(apiBase+"/airports", {}, {get: {method: 'GET',
                                                                          responseType: 'json'}});
@@ -106,12 +107,18 @@ angular.module('myApp.view1', ['ngRoute'])
                                              tickets: $scope.searchForm.tickets};
                         query = FromTo;
                     }
-                    $scope.flights = query.query(restArguments, function(response) {
-                        
+                    
+                    $scope.flights = query.query(restArguments,
+                    function(response) {
+                        //succes
                         $scope.searchMessage = "";
+                    },
+                    function(response) {
+                        //fail
+                        $scope.searchMessage = "Error finding flights: "+ response.data.message;
                     });
                     
-                    };
+                };
                 
                 $scope.reserve = function(id) {
                     $scope.choosenFlightId = id;
@@ -124,7 +131,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     $scope.showStep2 = false;
                     $scope.showStep1Visited = true;
                     $scope.showStep2Visited = false;
-                    return null;
+                    $scope.reserveMessage = "";
                 };
                 
                 $scope.reservationLogin = function() {
@@ -194,12 +201,22 @@ angular.module('myApp.view1', ['ngRoute'])
                 };
                 
                 $scope.sendReservation = function() {
-                    var sendRes = new Reserve();
+                    var sendRes = new Reserve({});
                     //TODO The right info
                     sendRes.flightId = $scope.flights[$scope.choosenFlightId].flightID;
                     sendRes.airline = $scope.flights[$scope.choosenFlightId].airline;
                     sendRes.passengers = $scope.reservationPassenger;
-                    //TODO error handling and user feedback, when reservation is done on backend
+                    sendRes.$save(
+                    function(response) {
+                        //succes
+                        $scope.reserveMessage = "Reservation succesfully made";
+                        $scope.reserveSucces = true;
+                    },
+                    function(response) {
+                        //fail
+                        $scope.reserveMessage = "Error while making reservation: " +response.data.message;
+                        $scope.reserveSucces = false;
+                    });
                 };
                 
                 $scope.nextStep = function() {
