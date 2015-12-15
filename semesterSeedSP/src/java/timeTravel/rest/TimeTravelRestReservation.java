@@ -9,8 +9,11 @@ import exception.NoFlightsFoundException;
 import facades.ReservationFacade;
 import facades.UserFacade;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -59,6 +62,7 @@ public class TimeTravelRestReservation {
         
         JsonObject json = parser.parse(content).getAsJsonObject();
         
+        System.out.println(content+" this was content from timetravel");
         String flightID = json.get("flightID").getAsString();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
@@ -80,8 +84,7 @@ public class TimeTravelRestReservation {
             passengers.add(newPassenger);
         } 
         
-        ReservationFacade rf = new ReservationFacade();
-        rf.setReservation(flightID, numberOfSeats, ReserveeName, ReservePhone,ReserveeEmail, passengers);
+        
                 
         String responseflightID = flightID;
         String responseOrigin = flightinstance.getFliesFrom().getIatacode()+" : "+flightinstance.getFliesFrom().getCity();
@@ -103,6 +106,17 @@ public class TimeTravelRestReservation {
         responseObject.addProperty("numberOfSeats", responsenumberOfSeats);
         responseObject.addProperty("ReserveeName", responseReserveeName);
         String jsonResponse = new Gson().toJson(responseObject);
+        
+//        Date date =  SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(responseDate);
+//        Date d = responseDate.;
+        
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss"); 
+        Date date = df.parse(responseDate);
+                
+                
+                
+        ReservationFacade rf = new ReservationFacade();
+        rf.setReservation(responseflightID, responsenumberOfSeats, responseReserveeName, ReservePhone,ReserveeEmail, passengers,responseOrigin,responseDestination,date);
     
         return jsonResponse;
     }
