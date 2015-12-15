@@ -25,7 +25,8 @@ public class Reservation implements Serializable {
     private int id;
     private String flightId;
     private int numberOfSeats;
-//    private User reserveeUser;
+    @OneToOne
+    private User reserveeUser;
     
     private String ReserveeName;
     private String ReservePhone;

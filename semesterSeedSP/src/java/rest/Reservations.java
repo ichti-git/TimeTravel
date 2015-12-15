@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.swing.text.AbstractDocument.Content;
 import javax.ws.rs.core.Context;
@@ -41,6 +42,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import net.minidev.json.JSONObject;
 import timeTravel.entities.Airline;
 import timeTravel.entities.Passenger;
@@ -51,7 +54,7 @@ import us.monoid.web.Resty;
 
 
 
-@Path("flightreserv")
+@Path("reserv")
 public class Reservations {
    
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -67,16 +70,19 @@ public class Reservations {
     }
     
 @POST
+@RolesAllowed("User")
 @Consumes(MediaType.APPLICATION_JSON)
-public String setReservation(String content) throws ParseException, MalformedURLException, IOException{
+public Response setReservation(@Context SecurityContext sc, String content) throws ParseException, MalformedURLException, IOException{
 
     JsonObject json = parser.parse(content).getAsJsonObject();
     UserFacade uf = new UserFacade();
-
+    AirlineFacade af = new AirlineFacade();
+    String user = sc.getUserPrincipal().getName();
+    
+    
     String airline = json.get("airline").getAsString();
     String flightID = json.get("flightID").getAsString();
     int numberOfSeats = json.get("numberOfSeats").getAsInt();
-    String user = json.get("username").getAsString();
     String firstName = uf.getUserByUserId(user).getFirstName();
     String lastName = uf.getUserByUserId(user).getLastName();
     String mail = uf.getUserByUserId(user).getEmail();
@@ -92,7 +98,6 @@ public String setReservation(String content) throws ParseException, MalformedURL
     requestObject.addProperty("ReserveeEmail", mail);
     String jsonRequest = new Gson().toJson(requestObject);
 
-    AirlineFacade af = new AirlineFacade();
     Airline A = af.getAirline(airline);
     String url = A.getUrl()+apiBase;
 
@@ -142,7 +147,8 @@ public String setReservation(String content) throws ParseException, MalformedURL
 //    responseObject.addProperty("ReserveeName", responseReserveeName);
 //    String jsonResponse = new Gson().toJson(responseObject);
     
-      return response;
+    return Response.status(200).entity(gson.toJson(response)).type(MediaType.APPLICATION_JSON).build();
+    //  return response;
 //    return jsonResponse;
     
 }

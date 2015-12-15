@@ -20,21 +20,21 @@ insert into Airport(iatacode,name,city,timezone) values ('LAX','Los Angeles airp
 
 
 
-insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE,FLIGHT_FLIGTHNUMBER) values ('1990-01-01',1230,1300,1,250,180,'CPH','BCN',1);
-insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE,FLIGHT_FLIGTHNUMBER) values ('1990-01-01',0650,0700,2,100,230,'BCN','LAX',2);
-insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE,FLIGHT_FLIGTHNUMBER) values ('1990-01-01',1330,1400,3,150,340,'LAX','CPH',3);
+insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',1230,1300,1,250,180,'CPH','BCN');
+insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',0650,0700,2,100,230,'BCN','LAX');
+insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',1330,1400,3,150,340,'LAX','CPH');
  
 
 insert into airline(name) values ('timetravel');
-insert into Flight(fligthNumber,numberOfSeats,airline_name) values (1,200,'timetravel');
-insert into Flight(fligthNumber,numberOfSeats,airline_name) values (2,250,'timetravel');
-insert into Flight(fligthNumber,numberOfSeats,airline_name) values (3,80,'timetravel');
+-- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (1,200,'timetravel');
+-- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (2,250,'timetravel');
+-- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (3,80,'timetravel');
 
 
 insert into userrole(rolename) values ('User');
 insert into userrole(rolename) values ('Admin');
 
-insert into systemuser(USERNAME, EMAIL, FIRSTNAME, LASTNAME, PASSWORD, PHONE) VALUES ('testuser', 'reserveeEmail@hotmail.com', 'hans', 'jørgen', 'test', 'ReservePhone');
+/*insert into systemuser(USERNAME, EMAIL, FIRSTNAME, LASTNAME, PASSWORD, PHONE) VALUES ('testuser', 'reserveeEmail@hotmail.com', 'hans', 'jørgen', 'test', 'ReservePhone');*/
                                                                                 
 -- /*fliesTo fliesFrom de skal ikke være i airport, de bliver tilføjet gennem flightInstance..*/
  
