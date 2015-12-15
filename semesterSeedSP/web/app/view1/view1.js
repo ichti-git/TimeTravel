@@ -51,7 +51,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 var Login = $resource(apiBase+"/login", {});
                 var Getuser = $resource(apiBase+"/user/getuser", {}, {get: {method: 'GET',
                                                                             responseType: 'json'}});
-                var Reserve = $resource(apiBase+"/xxxx/reserve", {}, {save: {method: 'POST',
+                var Reserve = $resource(apiBase+"/reserve", {}, {save: {method: 'POST',//"/xxxx/reserve"
                                                                              responseType: 'json'}});
                 
                 var Airports = $resource(apiBase+"/airports", {}, {get: {method: 'GET',

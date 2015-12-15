@@ -31,6 +31,10 @@ public class Reservation implements Serializable {
     private String ReserveeName;
     private String ReservePhone;
     private String ReserveeEmail;
+    private String Destination;
+    private String Origin;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date reservationDate;
     
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Passenger> Passengers;
@@ -40,14 +44,17 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(String flightId, int numberOfSeats, User user, List<Passenger> Passengers,String ReserveeEmail,String ReservePhone,String ReserveeName) {
+    public Reservation(String flightId, int numberOfSeats, User user, List<Passenger> passengers,String reserveeEmail,String reservePhone,String reserveeName,String origin,String destination, Date date) {
         this.flightId = flightId;
         this.numberOfSeats = numberOfSeats;
 //        this.reserveeUser = user;
-        this.Passengers = Passengers;
-        this.ReserveeEmail = ReserveeEmail;
-        this.ReservePhone = ReservePhone;
-        this.ReserveeName = ReserveeName;
+        this.Passengers = passengers;
+        this.ReserveeEmail = reserveeEmail;
+        this.ReservePhone = reservePhone;
+        this.ReserveeName = reserveeName;
+        this.reservationDate = date;
+        this.Origin = origin;
+        this.Destination = destination;
         
     }
 
@@ -58,6 +65,41 @@ public class Reservation implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+
+    public Date getReservationDate() {
+        return reservationDate;
+    }
+
+    public void setReservationDate(Date date) {
+        this.reservationDate = date;
+    }
+    
+
+    public User getReserveeUser() {
+        return reserveeUser;
+    }
+
+    public void setReserveeUser(User reserveeUser) {
+        this.reserveeUser = reserveeUser;
+    }
+
+    public String getDestination() {
+        return Destination;
+    }
+
+    public void setDestination(String Destination) {
+        this.Destination = Destination;
+    }
+
+    public String getOrigin() {
+        return Origin;
+    }
+
+    public void setOrigin(String Origin) {
+        this.Origin = Origin;
+    }
+    
+    
 
     public String getReserveeName() {
         return ReserveeName;

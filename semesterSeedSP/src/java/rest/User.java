@@ -12,10 +12,12 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.Persistence;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import static security.JWTAuthenticationFilter.getUsernameFromToken;
 import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
@@ -38,9 +40,16 @@ public class User {
     @RolesAllowed("User")
     public String getReservations(@HeaderParam("Authorization") String token) throws ParseException, JOSEException {
         token = token.substring("Bearer ".length());
-        String userName = getUsernameFromToken(token);
+        String userName;
+        try{
+             userName = getUsernameFromToken(token);             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }catch (ParseException | JOSEException e) {     
+                throw new NotAuthorizedException("You are not authorized to perform this action", Response.Status.FORBIDDEN);
+            }
         Facade facade = new Facade();
+        
         List<Reservation> reservations = facade.getReservationsByUsername(userName);
+        
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.toJson(reservations);
     }

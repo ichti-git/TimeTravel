@@ -27,7 +27,7 @@ public class MainTester {
         EntityManager em = emf.createEntityManager();
         
         uf.createUser("testuser", "testpassword", "testfirstName",  "testlastName", "reserveeEmail@hotmail.com", "ReservePhone");
-//        
+        
 //        List<Passenger> passengers = new ArrayList();
 //        Passenger p = new Passenger("hans" ,"mogensen");
 //        Passenger p2 = new Passenger("morten" ,"horner");

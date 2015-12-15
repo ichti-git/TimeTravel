@@ -86,7 +86,7 @@ public class BackendTest {
         //Successful login
         given().
                 contentType("application/json").
-                body("{'username':'user','password':'test'}").
+                body("{'username':'testuser','password':'testpassword'}"). //body("{'username':'user','password':'test'}").
                 when().
                 post("/login").
                 then().
@@ -109,7 +109,7 @@ public class BackendTest {
         //First, make a login to get the token for the Authorization, saving the response body in String json
         String json = given().
                 contentType("application/json").
-                body("{'username':'user','password':'test'}").
+                body("{'username':'testuser','password':'testpassword'}").
                 when().
                 post("/login").
                 then().

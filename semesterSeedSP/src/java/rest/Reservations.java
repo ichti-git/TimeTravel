@@ -54,7 +54,7 @@ import us.monoid.web.Resty;
 
 
 
-@Path("reserv")
+@Path("reserve")
 public class Reservations {
    
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -79,9 +79,13 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     AirlineFacade af = new AirlineFacade();
     String user = sc.getUserPrincipal().getName();
     
+//    System.out.println(user+"this was user");
+//    System.out.println(content+" this was content");    
+//    System.out.println(airline+" this was airline");
+//     System.out.println(flightID+" this was flightID from airline");
     
     String airline = json.get("airline").getAsString();
-    String flightID = json.get("flightID").getAsString();
+    String flightID = json.get("flightId").getAsString();
     int numberOfSeats = json.get("numberOfSeats").getAsInt();
     String firstName = uf.getUserByUserId(user).getFirstName();
     String lastName = uf.getUserByUserId(user).getLastName();
@@ -155,33 +159,6 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
 
 
 
-
-// "flightID":" String ",
-// "Origin":"String (Friendly name + IATA)",
-// "Destination":"String (Friendly name + IATA)",
-// "Date":"ISO-8601-Date/time",
-// "FlightTime":"Integer (minutes)",
-// "numberOfSeats":"Integer",
-// "ReserveeName":"String",
-// "Passengers":[
-// {
-// "firstName":"String",
-// "lastName":
-        
-//    List<Passenger> passengers = new ArrayList<>();
-//    for (int i = 0; i < passengers.size(); i++) {
-//        JsonObject passengerJson = (JsonObject) passengersArray.get(i).getAsJsonObject();
-//        String firstName = passengerJson.get("firstName").getAsString();
-//        String lastName = passengerJson.get("lastName").getAsString();
-//        Passenger newPassenger = new Passenger(firstName,lastName);
-//        passengers.add(newPassenger);
-//        
-//    }
-
-
-//
-
-    
     
     @GET
     @Produces("text/plain")
@@ -200,23 +177,4 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     public void putText(String content) {
     }
 }
-        //String Origin = json.get("Origin").getAsString();
-        //String Destination = json.get("Destination").getAsString();
-        //Date Date = df.parse(json.get("Date").getAsString()); - Keep as comment for now
-        //String tempDate = gson.fromJson(json.get("Date").getAsString(),String.class);
         
-        //int FlightTime = json.get("FlightTime").getAsInt();
-
-
-
-//        jo.addProperty("flightID", flightID);
-//        jo.addProperty("Origin", Origin);
-//        jo.addProperty("Destination", Destination);
-//        jo.addProperty("Date", tempDate);
-//        jo.addProperty("FlightTime", FlightTime);
-//        jo.addProperty("numberOfSeats", numberOfSeats);
-//        jo.addProperty("ReserveeName", ReserveeName);
-//        
-//        String jsonString = gson.toJson(jo);
-//        
-//        return gson.toJson(jsonString);
