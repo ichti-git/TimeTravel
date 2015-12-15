@@ -56,8 +56,16 @@ angular.module('myApp.view1', ['ngRoute'])
                 
                 var Airports = $resource(apiBase+"/airports", {}, {get: {method: 'GET',
                                                                          responseType: 'json'}});
+                                                                 
+                                                                 
+                function airportSort(a, b) {
+                    return a.city < b.city ? -1 : a.city > b.city;
+                };
                 Airports.query(function(response) {
                     $scope.airports = response;
+                    delete($scope.airports.$promise);
+                    delete($scope.airports.$resolved);
+                    $scope.airports.sort(airportSort);
                 });
                 
                 $scope.searchForm = {from: "CPH", to: "NULL", date: "01.01.2016", tickets: 1};
@@ -83,7 +91,16 @@ angular.module('myApp.view1', ['ngRoute'])
                 
                 //Reservation passengers
                 $scope.reservationPassenger = [];
-                
+                $scope.airportSearch = function(query) {
+                    var result = [];
+                    var regexp = new RegExp(query, "i");
+                    for (var i in $scope.airports) {
+                        if (regexp.test($scope.airports[i].city)) {
+                            result.push($scope.airports[i]);
+                        }
+                    }
+                    return result;
+                };
                 $scope.search = function () {
                     $scope.searchMessage = "Searching for flights. Please wait"
                     var panel = $("#searchResultsPanel"); 
@@ -119,6 +136,8 @@ angular.module('myApp.view1', ['ngRoute'])
                     });
                     
                 };
+                
+                
                 
                 $scope.reserve = function(id) {
                     $scope.choosenFlightId = id;
