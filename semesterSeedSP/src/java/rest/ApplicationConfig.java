@@ -34,6 +34,8 @@ public class ApplicationConfig extends Application {
         resources.add(security.NotAuthorizedExceptionMapper.class);
         resources.add(security.RolesAllowedFilter.class);
         resources.add(timeTravel.rest.TimeTravelRESTApi.class);
+        resources.add(timeTravel.rest.TimeTravelRestReservation.class);
+        
     }
 
 }
