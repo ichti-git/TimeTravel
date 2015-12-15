@@ -129,7 +129,7 @@ angular.module('myApp.security', [])
               }
               $rootScope.error = "";
               return config;
-            },
+            }/*,
             responseError: function (rejection) {
               var err = rejection.data;
               if (typeof err.error === 'undefined' || typeof err.error.code === 'undefined') {
@@ -148,7 +148,7 @@ angular.module('myApp.security', [])
               }
 
               return $q.reject(rejection);
-            }
+            }*/
           };
         });
 

@@ -291,6 +291,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4>Reservation wizard</h4>
+                    <span class="pull-right clickable" ng-click="closeReservationWizard()"><i class="fa fa-times"></i></span>
                 </div>
                 <div class="row">
 
@@ -398,7 +399,7 @@
 
 
                             <div class="row setup-content col-md-12" id="step-2" ng-show="showStep2">
-                                <div class="col-md-12">
+                                <div class="col-md-12" ng-show="!reserveMessage">
                                     <h4 class="pull-right"> Number of seats: {{passengerAmount}}</h4>
                                     <!-- Passanger - This part repeat for each passanger -->
                                     <div ng-repeat="p in reservationPassenger">
@@ -417,6 +418,11 @@
                                     </div>
                                     <!-- END - Passanger - This part repeat for each passanger -->
                                     <button ng-click="sendReservation()" class="btn btn-success pull-right" type="submit">Finish!</button>
+                                </div>
+                                <div class="col-md-12" ng-show="reserveMessage">
+                                    <p class="alert" ng-class="{'alert-succes': reserveSucces, 'alert-danger': !reserveSucces}">{{reserveMessage}}</p>
+                                    <hr />
+                                    <button class="btn btn-success pull-right" ng-click="closeReservationWizard()">Thanks</button>
                                 </div>
                         </form>
                     </div>

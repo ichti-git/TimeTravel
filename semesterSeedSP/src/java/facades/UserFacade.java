@@ -20,7 +20,7 @@ import timeTravel.entities.Reservation;
 
 public class UserFacade {
 
-    private EntityManagerFactory emf;
+    private EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
     
     public UserFacade(){
     }
