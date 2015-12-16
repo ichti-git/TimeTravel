@@ -80,11 +80,6 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     AirlineFacade af = new AirlineFacade();
     String user = sc.getUserPrincipal().getName();
     
-//    System.out.println(user+"this was user");
-//    System.out.println(content+" this was content");    
-//    System.out.println(airline+" this was airline");
-//     System.out.println(flightID+" this was flightID from airline");
-    
     String airline = json.get("airline").getAsString();
     String flightID = json.get("flightId").getAsString();
     int numberOfSeats = json.get("numberOfSeats").getAsInt();
@@ -105,7 +100,6 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
 
     Airline A = af.getAirline(airline);
     String url = A.getUrl()+apiBase;
-    System.out.println(url+" THIS WAS THE AIRLINE URL!!!!!");
     HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
     con.setRequestProperty("Content-Type", "application/json;");
     con.setRequestProperty("Accept", "application/json");
@@ -113,7 +107,7 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     con.setDoOutput(true);
     PrintWriter pw = new PrintWriter(con.getOutputStream());
     try (OutputStream os = con.getOutputStream()) {
-    os.write(jsonRequest.getBytes("UTF-8"));
+        os.write(jsonRequest.getBytes("UTF-8"));
     }
     int HttpResult = con.getResponseCode();
     InputStreamReader is = HttpResult < 400 ? new InputStreamReader(con.getInputStream(), "utf-8") :
@@ -121,7 +115,7 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     Scanner responseReader = new Scanner(is);
     String response = "";
     while (responseReader.hasNext()) {
-    response += responseReader.nextLine()+System.getProperty("line.separator");
+        response += responseReader.nextLine()+System.getProperty("line.separator");
     }
     
     
@@ -151,57 +145,9 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
                         date,returnUser);
     
     
-    System.out.println(response+" THIS WAS rest.Reservation response .....");
-//    System.out.println(con.getResponseCode());
-//    System.out.println(con.getResponseMessage());
-    
-    
-
-//    JsonObject responseJson = parser.parse(response).getAsJsonObject();
-//    String responseFlightID = responseJson.get("FlightID").getAsString();
-//    String responseOrigin = responseJson.get("Origin").getAsString();
-//    String responseDate = responseJson.get("Date").getAsString();
-//    String responseDestination = responseJson.get("Destination").getAsString();
-//    String responseFlightTime = responseJson.get("FlightTime").getAsString();
-//    int responseNumberOfSeats = responseJson.get("numberOfSeats").getAsInt();
-//    String responseReserveeName = responseJson.get("ReserveeName").getAsString();
-//    JsonArray responsePassengersArray = (JsonArray)json.get("Passengers");
-//    
-//    JsonObject responseObject = new JsonObject();
-//    responseObject.add("Passengers", responsePassengersArray);
-//    responseObject.addProperty("flightID", flightID);
-//    responseObject.addProperty("Origin", responseOrigin);
-//    responseObject.addProperty("Date", responseDate);
-//    responseObject.addProperty("Destination", responseDestination);
-//    responseObject.addProperty("FlightTime", responseFlightTime);
-//    responseObject.addProperty("numberOfSeats", responseNumberOfSeats);
-//    responseObject.addProperty("ReserveeName", responseReserveeName);
-//    String jsonResponse = new Gson().toJson(responseObject);
-    
     return Response.status(200).entity(gson.toJson(response)).type(MediaType.APPLICATION_JSON).build();
-    //  return response;
-//    return jsonResponse;
     
-}
-
-
-
-    
-    @GET
-    @Produces("text/plain")
-    public String getText() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
     }
 
-    /**
-     * PUT method for updating or creating an instance of Reservations
-     * @param content representation for the resource
-     * @return an HTTP response with content of the updated or created resource.
-     */
-    @PUT
-    @Consumes("text/plain")
-    public void putText(String content) {
-    }
 }
         

@@ -3,7 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import facades.ExtraReservationFacade;
+import facades.ReservationFacade;
 import facades.UserFacade;
 import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.core.Context;
@@ -38,7 +38,7 @@ public class CancelReservation {
     public Response cancelReservation(@Context SecurityContext sc, @PathParam("id") int id) {
         String userName = sc.getUserPrincipal().getName();
         UserFacade uf = new UserFacade();
-        ExtraReservationFacade rf = new ExtraReservationFacade(); //Change to actual ReservationFacade
+        ReservationFacade rf = new ReservationFacade(); //Change to actual ReservationFacade
         entity.User user = uf.getUserByUserId(userName);
         JsonObject jsonobj = new JsonObject();
         
@@ -49,7 +49,7 @@ public class CancelReservation {
             return Response.status(400).entity(gson.toJson(jsonobj)).type(MediaType.APPLICATION_JSON).build();
 
         }
-        if (/*reservation.getReserveeUser().equals(user) || */sc.isUserInRole("Admin")) {
+        if (reservation.getReserveeUser().equals(user) || sc.isUserInRole("Admin")) {
             rf.deleteReservation(id); //TODO, check if actually removed?
             jsonobj.addProperty("message", "Reservation succesfully canceled"); 
             return Response.status(200).entity(gson.toJson(jsonobj)).type(MediaType.APPLICATION_JSON).build();

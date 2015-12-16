@@ -141,14 +141,6 @@ public class Reservation implements Serializable {
         this.numberOfSeats = numberOfSeats;
     }
 
-//    public User getReserveeUser() {
-//        return reserveeUser;
-//    }
-//
-//    public void setReserveeUser(User reserveeUser) {
-//        this.reserveeUser = reserveeUser;
-//    }
-
     public List<Passenger> getPassengers() {
         return Passengers;
     }

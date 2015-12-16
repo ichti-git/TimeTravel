@@ -35,4 +35,20 @@ public class ReservationFacade {
         em.getTransaction().commit();
         em.close();
     }
+    public Reservation getReservationById(int id) {
+        EntityManager em = emf.createEntityManager();
+        Reservation reservation = em.find(Reservation.class, id);
+        return reservation;
+    }
+
+    public void deleteReservation(int id) {
+        EntityManager em = emf.createEntityManager();
+        Reservation reservation = em.find(Reservation.class, id);
+        if (reservation != null) {
+            em.getTransaction().begin();
+            em.remove(reservation);
+            em.getTransaction().commit();
+        }
+        em.close();
+    }
 }

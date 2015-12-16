@@ -1,8 +1,5 @@
 package timeTravel.rest;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import data.GenerateFlights;
 import exception.ApiException;
 import exception.NoFlightsFoundException;
@@ -12,12 +9,9 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import help.FlightHelper;
-import static help.FlightHelper.*;
 import timeTravel.entities.FlightInstance;
 import timeTravel.facade.Facade;
 
@@ -79,8 +73,6 @@ public class TimeTravelRESTApi {
         }
         String jsonFlights = fh.convertFlightInstanceListToJson(flights, numTickets);
         return jsonFlights;
-        
-        //return "";
     }
     
     
