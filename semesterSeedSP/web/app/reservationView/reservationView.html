@@ -15,12 +15,12 @@
         <tbody>
             <tr ng-repeat="r in reservations">
                 <td>{{r.flightId}}</td>
-                <td>{{r.origin.city}}</td>
-                <td>{{r.destination.city}}</td>
-                <td>{{r.date}}</td>
+                <td>{{r.Origin}}</td>
+                <td>{{r.Destination}}</td>
+                <td>{{r.reservationDate}}</td>
                 <td>{{r.flightTime}}</td>
                 <td>{{r.numberOfSeats}}</td>
-                <td>{{r.Passengers| passengers}}</td>
+                <td>{{r.Passengers | passengers}}</td>
                 <td><button class="btn btn-default" data-toggle="modal" data-target="#cancelModal" ng-click="chooseReservation(r.id)">Cancel</button></td>
             </tr>
         </tbody>
