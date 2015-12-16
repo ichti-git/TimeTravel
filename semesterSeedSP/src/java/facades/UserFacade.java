@@ -105,32 +105,20 @@ public class UserFacade {
             }
         }
     
-    public User editUser(String userName, String password, String firstName, String lastName, String email, String phone){
+    public User editUser(User user){
         
             EntityManager em = emf.createEntityManager();
             em.getTransaction().begin();
-            User user = em.find(User.class, userName);
-        try {    
-            user.setUserName(userName);
-            user.setPassword(PasswordHash.createHash(password));
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            user.setPhone(phone);
             
             try{
-                em.persist(user);
+                em.merge(user);
                 em.getTransaction().commit();
                 
             }finally{
                 em.close();
                 
             }
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         return user;
     }
 

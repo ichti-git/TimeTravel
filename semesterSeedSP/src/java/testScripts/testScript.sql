@@ -31,8 +31,11 @@ insert into airline(name) values ('timetravel');
 -- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (3,80,'timetravel');
 
 
-insert into userrole(rolename) values ('User');
-insert into userrole(rolename) values ('Admin');
+insert into USERROLE(ROLENAME) values ('User');
+insert into USERROLE(ROLENAME) values ('Admin');
+
+insert into SystemUser_USERROLE(userName, roleName) values ('user', 'User');
+insert into SystemUser_USERROLE(userName, roleName) values ('user_admin', 'User');
 
 /*insert into systemuser(USERNAME, EMAIL, FIRSTNAME, LASTNAME, PASSWORD, PHONE) VALUES ('testuser', 'reserveeEmail@hotmail.com', 'hans', 'jørgen', 'test', 'ReservePhone');*/
                                                                                 

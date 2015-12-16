@@ -74,7 +74,7 @@
                             <li class="active"><a href="#/view1">Home</a></li>
                             <li><a href="#/view2">about</a></li>
                             <li><a href="#/view3">how we work</a></li>
-                            <li><a href="#/view4">contact</a></li>
+                            <li type="button" ng-show="isUser"><a href="#/view4">Edit info</a></li>
                             <li type="button" ng-show="isAdmin"><a href="#/adminView">Admin</a></li>
                             <li type="button" ng-show="isUser"><a href="#/reservationView">Reservations</a></li>
                             <li type="button" ng-show="!isAuthenticated"><a href="#/loginView">login</a></li><!--login -->
