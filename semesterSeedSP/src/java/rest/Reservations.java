@@ -14,6 +14,7 @@ import com.google.gson.JsonParser;
 import facades.AirlineFacade;
 import facades.ReservationFacade;
 import facades.UserFacade;
+import static help.DateHelp.getDateFromDateString;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -61,7 +62,7 @@ public class Reservations {
     JsonParser parser = new JsonParser();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     //Facade f = new Facade();
-    private String apiBase = "api/flightreservation/";
+    private String apiBase = "api/flightreservation/";// "api/flightreservation/"
   
     @Context
     private UriInfo context;
@@ -104,7 +105,7 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
 
     Airline A = af.getAirline(airline);
     String url = A.getUrl()+apiBase;
-
+    System.out.println(url+" THIS WAS THE AIRLINE URL!!!!!");
     HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
     con.setRequestProperty("Content-Type", "application/json;");
     con.setRequestProperty("Accept", "application/json");
@@ -124,9 +125,35 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     }
     
     
-    System.out.println(response);
-    System.out.println(con.getResponseCode());
-    System.out.println(con.getResponseMessage());
+    
+    JsonObject returnJson = parser.parse(response).getAsJsonObject();
+    JsonArray passengersArrayList = (JsonArray)returnJson.get("Passengers");
+    List<Passenger> passengers = new ArrayList<>();
+    for (int i = 0; i < passengers.size(); i++) {
+        JsonObject passengerJson = (JsonObject) passengersArrayList.get(i).getAsJsonObject();
+        String responseFirstName = passengerJson.get("firstName").getAsString();
+        String responseLastName = passengerJson.get("lastName").getAsString();
+        Passenger newPassenger = new Passenger(responseFirstName,responseLastName);
+        passengers.add(newPassenger);
+    }
+    
+    String strDate = returnJson.get("Date").getAsString();
+    Date date = getDateFromDateString(strDate);
+    entity.User returnUser = uf.getUserByUserId(user);
+    ReservationFacade rf = new ReservationFacade();
+   
+    rf.setReservation(  returnJson.get("flightID").getAsString(),
+                        returnJson.get("numberOfSeats").getAsInt(),
+                        returnJson.get("ReserveeName").getAsString(),
+                        phone,mail, passengers,
+                        returnJson.get("Origin").getAsString(),
+                        returnJson.get("Destination").getAsString(),
+                        date,returnUser);
+    
+    
+    System.out.println(response+" THIS WAS rest.Reservation response .....");
+//    System.out.println(con.getResponseCode());
+//    System.out.println(con.getResponseMessage());
     
     
 

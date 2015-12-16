@@ -8,6 +8,8 @@ import exception.ApiException;
 import exception.NoFlightsFoundException;
 import facades.ReservationFacade;
 import facades.UserFacade;
+import static help.DateHelp.getDateFromDateString;
+import static help.DateHelp.getDateStringFromDate;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -60,7 +62,9 @@ public class TimeTravelRestReservation {
         
         JsonObject json = parser.parse(content).getAsJsonObject();
         
-        System.out.println(content+" this was content from timetravel");
+        System.out.println(content+" THIS WAS content FROM timeTravel.rest.TimeTravelReservation..");
+        
+        
         String flightID = json.get("flightID").getAsString();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
@@ -72,6 +76,7 @@ public class TimeTravelRestReservation {
         Facade facade = new Facade();
         FlightInstance flightinstance = facade.getFlightInstance(flightID);
 
+        System.out.println(flightinstance.toString()+" this was flight instance timeTravel.rest.TimeTravelReservation");
         
         List<Passenger> passengers = new ArrayList<>();
         for (int i = 0; i < passengers.size(); i++) {
@@ -86,10 +91,10 @@ public class TimeTravelRestReservation {
                 
         String responseflightID = flightID;
         String responseOrigin = flightinstance.getFliesFrom().getIatacode()+" : "+flightinstance.getFliesFrom().getCity();
-        String responseDate = flightinstance.getDepartureDate().toString();
+        String responseDate = getDateStringFromDate(flightinstance.getDepartureDate());
         String responseDestination = flightinstance.getFliesTo().getIatacode()+" : "+flightinstance.getFliesTo().getCity();
         int responseFlightTime = flightinstance.getDeparturetime();
-        int responsenumberOfSeats = flightinstance.getNumberOfSeats();
+        int responsenumberOfSeats = numberOfSeats;
         String responseReserveeName = ReserveeName;
         JsonArray responsePassengersArray = passengersArray;
         
@@ -104,18 +109,8 @@ public class TimeTravelRestReservation {
         responseObject.addProperty("numberOfSeats", responsenumberOfSeats);
         responseObject.addProperty("ReserveeName", responseReserveeName);
         String jsonResponse = new Gson().toJson(responseObject);
+                
         
-//        Date date =  SimpleDateFormat("MM-dd-yyyy HH:mm:ss").format(responseDate);
-//        Date d = responseDate.;
-        
-        DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss"); 
-        Date date = df.parse(responseDate);
-                
-                
-                
-        ReservationFacade rf = new ReservationFacade();
-        rf.setReservation(responseflightID, responsenumberOfSeats, responseReserveeName, ReservePhone,ReserveeEmail, passengers,responseOrigin,responseDestination,date);
-    
         return jsonResponse;
     }
 

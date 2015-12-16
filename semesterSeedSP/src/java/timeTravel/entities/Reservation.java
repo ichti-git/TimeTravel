@@ -44,10 +44,9 @@ public class Reservation implements Serializable {
     public Reservation() {
     }
 
-    public Reservation(String flightId, int numberOfSeats, User user, List<Passenger> passengers,String reserveeEmail,String reservePhone,String reserveeName,String origin,String destination, Date date) {
+    public Reservation(String flightId, int numberOfSeats, List<Passenger> passengers,String reserveeEmail,String reservePhone,String reserveeName,String origin,String destination, Date date,User user) {
         this.flightId = flightId;
         this.numberOfSeats = numberOfSeats;
-//        this.reserveeUser = user;
         this.Passengers = passengers;
         this.ReserveeEmail = reserveeEmail;
         this.ReservePhone = reservePhone;
@@ -55,6 +54,7 @@ public class Reservation implements Serializable {
         this.reservationDate = date;
         this.Origin = origin;
         this.Destination = destination;
+        this.reserveeUser = user;
         
     }
 
