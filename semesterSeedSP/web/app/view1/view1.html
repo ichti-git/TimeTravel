@@ -1,5 +1,5 @@
 <script src="app/js/script.js" type="text/javascript"></script>
-    
+
 
 <div id="header">
     <div class="intro container">
@@ -29,7 +29,7 @@
 
                 <div class="form-group col-md-3">
                     <label for="searchDestination">Destination</label>
-                    
+
                     <select class="form-control border-radius" name="searchDestination" ng-model="searchForm.to">
                         <option value="NULL">Select your Destination</option>
                         <option ng-repeat="a in airports" value="{{a.iatacode}}">{{a.city}}</option>
@@ -97,7 +97,7 @@
                 <h4>Search results</h4>
                 <!--<span class="pull-right clickable" data-effect="hide"><i class="fa fa-times"></i></span>-->
             </div>
-            
+
             <div class="panel list-group panel-group" id="accordion">
                 <div class="list-group-item" ng-show="searchMessage">
                     {{searchMessage}}
@@ -108,17 +108,17 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-12">{{f.airline}}</div>
                             <div class="col-md-4 col-sm-12 results text-center">Number of seats</div>
-                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.date | date: 'dd-MM-yyyy'}}</strong></div>
+                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.date| date: 'dd-MM-yyyy'}}</strong></div>
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-sm-12 results">Destination</div>
                             <div class="col-md-4 col-sm-12 text-center"><strong>{{f.numberOfSeats}}</strong></div>
-                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.traveltime | traveltime}}</strong></div>
+                            <div class="col-md-4 col-sm-12 text-right"><strong>{{f.traveltime| traveltime}}</strong></div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 col-sm-12"><strong>{{f.destination | airport:airports}}</strong></div>
+                            <div class="col-md-4 col-sm-12"><strong>{{f.destination| airport:airports}}</strong></div>
                             <div class="col-md-4 col-sm-12 text-center"></div>
-                            <div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: {{f.totalPrice | currency}}</strong></div>
+                            <div class="col-md-4 col-sm-12 results text-right"><strong>PRICE: {{f.totalPrice| currency}}</strong></div>
                         </div>
                     </span>
                     <!-- End of main info section -->
@@ -133,21 +133,21 @@
 
                             <div class="row">
                                 <div class="col-md-6 results">City of Origin</div>
-                                <div class="col-md-6 text-right results"><strong>{{f.date | date: 'dd-MM-yyyy'}}</strong></div>
+                                <div class="col-md-6 text-right results"><strong>{{f.date| date: 'dd-MM-yyyy'}}</strong></div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-6"><strong>{{f.origin | airport:airports}}</strong></div>
+                                <div class="col-md-6"><strong>{{f.origin| airport:airports}}</strong></div>
                                 <div class="col-md-6 results text-right results">Travel time</div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 results">Destination</div>
-                                <div class="col-md-6 text-right"><strong>{{f.traveltime | traveltime}}</strong></div>
+                                <div class="col-md-6 text-right"><strong>{{f.traveltime| traveltime}}</strong></div>
                             </div>
 
                             <div class="row">
-                                <div class="col-md-12"><strong>{{f.destination | airport:airports}}</strong></div>
+                                <div class="col-md-12"><strong>{{f.destination| airport:airports}}</strong></div>
                             </div>
 
                             <div class="row">
@@ -157,7 +157,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 results"><strong>1</strong></div>
-                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice / f.numberOfSeats | currency}}</strong></div>
+                                <div class="col-md-6 results text-right results"><strong>{{f.totalPrice / f.numberOfSeats| currency}}</strong></div>
                             </div>
 
                             <div class="row">
@@ -166,7 +166,7 @@
 
                             <div class="row">
                                 <div class="col-md-4 results"></div>
-                                <div class="col-md-8 results text-right results"><strong>TOTAL PRICE: {{f.totalPrice  | currency}}</strong></div>
+                                <div class="col-md-8 results text-right results"><strong>TOTAL PRICE: {{f.totalPrice| currency}}</strong></div>
                             </div>
 
                             <div class="row">
@@ -339,85 +339,92 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <form role="form">
+                        <form name="regForm" role="form">
                             <div class="row setup-content col-md-12" id="step-1" ng-show="showStep1">
+                                <div class="col-md-12">
+                                    <div class="col-md-5" id="reservationRegisterForm" ng-show="!isAuthenticated">
+                                        New user? Register here.<br>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationUsername">Username</label>
+                                            <input maxlength="100" ng-model="reservationUsername" type="text" required="required" class="form-control" placeholder="Username"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationPassword1">Password</label>
+                                            <input id="password1" name="password1" maxlength="100" ng-model="reservationPassword1" type="password" required="required" class="form-control" placeholder="*****"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationPassword2">Confirm Password</label>
+                                            <input id="password2" name="password2" maxlength="100" ng-model="reservationPassword2" type="password" required="required" class="form-control" placeholder="*****"
+                                                   pw-check="password1"/>
+                                        </div>
+                                        <div class="msg-block" ng-show=".regForm.$error"> <span class="msg-error" ng-show="regForm.password2.$error.pwmatch">Passwords don't match.</span> 
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationFirstname">First Name</label>
+                                            <input maxlength="100" ng-model="reservationFirstname" type="text" required="required" class="form-control" placeholder="First Name"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationLastname">Last Name</label>
+                                            <input maxlength="100" ng-model="reservationLastname" type="text" required="required" class="form-control" placeholder="Last Name"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationEmail">Email</label>
+                                            <input maxlength="100" ng-model="reservationEmail" type="text" required="required" class="form-control" placeholder="Email"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationPhone">Phone number</label>
+                                            <input maxlength="100" ng-model="reservationPhone" type="text" required="required" class="form-control" placeholder="Phonenumber"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <button ng-click="reservationRegister()" class="btn btn-primary" type="button" ng-disabled="regForm.password2.$error.pwmatch">Register</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" ng-show="!isAuthenticated"></div>
+
+                                    <div class="col-md-5" id="reservationLoginForm" ng-show="!isAuthenticated">
+                                        Already registered? Login here.<br>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationUsernameLogin">Username</label>
+                                            <input maxlength="100" ng-model="reservationUsernameLogin" id="reservationUsernameLogin" type="text" required="required" class="form-control" placeholder="Username"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="reservationPasswordLogin">Password</label>
+                                            <input maxlength="100" ng-model="reservationPasswordLogin" id="reservationPasswordLogin" type="password" required="required" class="form-control" placeholder="*****"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <button ng-click="reservationLogin()" class="btn btn-primary" type="button">Login</button>
+                                        </div>
+                                        <br><br><br>
+                                        <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
+                                    </div>
+
+
                                     <div class="col-md-12">
-                                        <div class="col-md-5" id="reservationRegisterForm" ng-show="!isAuthenticated">
-                                            New user? Register here.<br>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationUsername">Username</label>
-                                                <input maxlength="100" ng-model="reservationUsername" type="text" required="required" class="form-control" placeholder="Username"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationPassword">Password</label>
-                                                <input maxlength="100" ng-model="reservationPassword" type="password" required="required" class="form-control" placeholder="*****"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationFirstname">First Name</label>
-                                                <input maxlength="100" ng-model="reservationFirstname" type="text" required="required" class="form-control" placeholder="First Name"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationLastname">Last Name</label>
-                                                <input maxlength="100" ng-model="reservationLastname" type="text" required="required" class="form-control" placeholder="Last Name"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationEmail">Email</label>
-                                                <input maxlength="100" ng-model="reservationEmail" type="text" required="required" class="form-control" placeholder="Email"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationPhone">Phonenumber</label>
-                                                <input maxlength="100" ng-model="reservationPhone" type="text" required="required" class="form-control" placeholder="Phonenumber"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <button ng-click="reservationRegister()" class="btn btn-primary" type="button">Register</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2" ng-show="!isAuthenticated"></div>
+                                        <div class="alert alert-success" role="alert" ng-show="isAuthenticated">{{reservationSucces}}</div>
 
-                                        <div class="col-md-5" id="reservationLoginForm" ng-show="!isAuthenticated">
-                                            Already registered? Login here.<br>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationUsernameLogin">Username</label>
-                                                <input maxlength="100" ng-model="reservationUsernameLogin" id="reservationUsernameLogin" type="text" required="required" class="form-control" placeholder="Username"
-                                                       />
+                                        <hr />
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="pull-right">
+                                            <div class="col-md-10">
+                                                <input id="reservationIsPassenger" type="checkbox" ng-model="reservationIsPassenger"> I'm a passenger!
                                             </div>
-                                            <div class="form-group">
-                                                <label class="control-label" for="reservationPasswordLogin">Password</label>
-                                                <input maxlength="100" ng-model="reservationPasswordLogin" id="reservationPasswordLogin" type="password" required="required" class="form-control" placeholder="*****"
-                                                       />
-                                            </div>
-                                            <div class="form-group">
-                                                <button ng-click="reservationLogin()" class="btn btn-primary" type="button">Login</button>
-                                            </div>
-                                            <br><br><br>
-                                            <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
-                                        </div>
-
-
-                                        <div class="col-md-12">
-                                            <div class="alert alert-success" role="alert" ng-show="isAuthenticated">{{reservationSucces}}</div>
-                                            
-                                            <hr />
-                                        </div>
-
-                                        <div class="col-md-12">
-
-                                            <div class="pull-right">
-                                                <div class="col-md-10">
-                                                    <input id="reservationIsPassenger" type="checkbox" ng-model="reservationIsPassenger"> I'm a passenger!
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button class="btn btn-primary" ng-click="nextStep()" type="button">Next</button>
-                                                </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary" ng-click="nextStep()" type="button">Next</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
 
 
