@@ -463,3 +463,15 @@ color: #0998EA;
     background-color: #fff;
     color: #808080;
 }
+
+/*=================================================
+			MSG-Block
+=================================================*/
+
+.msg-block {
+    margin-top:5px;
+}
+.msg-error {
+    color:#F00;
+    font-size:14px;
+}
