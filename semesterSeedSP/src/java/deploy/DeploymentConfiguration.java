@@ -28,43 +28,43 @@ public class DeploymentConfiguration implements ServletContextListener {
         if (env.keySet().contains("OPENSHIFT_MYSQL_DB_HOST")) {
             PU_NAME = "PU_OPENSHIFT";
         }
-//        try {
-//            ServletContext context = sce.getServletContext();
-//            EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-//            EntityManager em = emf.createEntityManager();
-//
-//            //This flag is set in Web.xml -- Make sure to disable for a REAL system
-//            boolean makeTestUsers = context.getInitParameter("makeTestUsers").toLowerCase().equals("true");
-//            if (!makeTestUsers
-//                    || (em.find(User.class, "user") != null && em.find(User.class, "admin") != null && em.find(User.class, "user_admin") != null)) {
-//                return;
-//            }
-//            Role userRole = new Role("User");
-//            Role adminRole = new Role("Admin");
-//
-//            User user = new User("user", PasswordHash.createHash("test"), "testUserFirst", "testUserLast", "testUserEmail", "testUserPhone");
-//            User admin = new User("admin", PasswordHash.createHash("test"), "testAdminFirst", "testAdminLast", "testAdminEmail", "testAdminPhone");
-//            User both = new User("user_admin", PasswordHash.createHash("test"), "testBothFirst", "testBothLast", "testBothEmail", "testBothPhone");
-//            user.AddRole(userRole);
-//            admin.AddRole(adminRole);
-//            both.AddRole(userRole);
-//            both.AddRole(adminRole);
-//
-//            try {
-//                em.getTransaction().begin();
-//                em.persist(userRole);
-//                em.persist(adminRole);
-//
-//                em.persist(user);
-//                em.persist(admin);
-//                em.persist(both);
-//                em.getTransaction().commit();
-//            } finally {
-//                em.close();
-//            }
-//        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
-//            Logger.getLogger(DeploymentConfiguration.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            ServletContext context = sce.getServletContext();
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+            EntityManager em = emf.createEntityManager();
+
+            //This flag is set in Web.xml -- Make sure to disable for a REAL system
+            boolean makeTestUsers = context.getInitParameter("makeTestUsers").toLowerCase().equals("true");
+            if (!makeTestUsers
+                    || (em.find(User.class, "user") != null && em.find(User.class, "admin") != null && em.find(User.class, "user_admin") != null)) {
+                return;
+            }
+            Role userRole = new Role("User");
+            Role adminRole = new Role("Admin");
+
+            User user = new User("user", PasswordHash.createHash("test"), "testUserFirst", "testUserLast", "testUserEmail", "testUserPhone");
+            User admin = new User("admin", PasswordHash.createHash("test"), "testAdminFirst", "testAdminLast", "testAdminEmail", "testAdminPhone");
+            User both = new User("user_admin", PasswordHash.createHash("test"), "testBothFirst", "testBothLast", "testBothEmail", "testBothPhone");
+            user.AddRole(userRole);
+            admin.AddRole(adminRole);
+            both.AddRole(userRole);
+            both.AddRole(adminRole);
+
+            try {
+                em.getTransaction().begin();
+                em.persist(userRole);
+                em.persist(adminRole);
+
+                em.persist(user);
+                em.persist(admin);
+                em.persist(both);
+                em.getTransaction().commit();
+            } finally {
+                em.close();
+            }
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            Logger.getLogger(DeploymentConfiguration.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
