@@ -105,28 +105,34 @@ public class UserFacade {
             }
         }
     
-//    public void createReservation(Airline airline, String flightId, Airport origin, Airport destination, Date date, int flightTime, int numberOfSeats, int price, User Reservee, List<Passenger> Passengers) {
-//        
-//        Reservation reservation = new Reservation(airline, flightId, origin, destination, date, flightTime, numberOfSeats, price, Reservee);
-//        Passenger pass = new Passenger();
-//        for(int i = 0; i>Passengers.size(); i++){
-//            //List<String> pass1 = pass.getFirstName() + " " + pass.getLastName();
-//            
-//        }
-//        
-//        EntityManager em = getEntityManager();
-//        em = emf.createEntityManager();
-//        try {
-//
-//            em.getTransaction().begin();
-//            em.persist(reservation);
-//            em.getTransaction().commit();
-//
-//        } finally {
-//            em.close();
-//        }
-//
-//    }
+    public User editUser(String userName, String password, String firstName, String lastName, String email, String phone){
+        
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            User user = em.find(User.class, userName);
+        try {    
+            user.setUserName(userName);
+            user.setPassword(PasswordHash.createHash(password));
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPhone(phone);
+            
+            try{
+                em.persist(user);
+                em.getTransaction().commit();
+                
+            }finally{
+                em.close();
+                
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeySpecException ex) {
+            Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 
 
 }
