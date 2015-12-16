@@ -1,7 +1,9 @@
 package timeTravel.rest;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import exception.ApiException;
@@ -15,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import timeTravel.entities.FlightInstance;
 import timeTravel.entities.Passenger;
 import timeTravel.facade.Facade;
@@ -27,6 +30,8 @@ import timeTravel.facade.Facade;
 @Path("flightreservation")
 public class TimeTravelRestReservation {
 
+    
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     JsonParser parser = new JsonParser();
     
     public TimeTravelRestReservation() {
@@ -45,8 +50,7 @@ public class TimeTravelRestReservation {
         String ReserveeName = json.get("ReserveeName").getAsString();
         String ReservePhone = json.get("ReservePhone").getAsString();
         String ReserveeEmail = json.get("ReserveeEmail").getAsString();
-        JsonArray passengersArray = (JsonArray)json.get("Passengers");
-        
+        JsonArray passengersArray = (JsonArray)json.get("passengers");
         
         Facade facade = new Facade();
         FlightInstance flightinstance = facade.getFlightInstance(flightID);
@@ -60,8 +64,17 @@ public class TimeTravelRestReservation {
             passengers.add(newPassenger);
         } 
         
+        for(JsonElement p : passengersArray){
+        JsonObject jo = p.getAsJsonObject();
+        String f = jo.get("firstname").getAsString();
+        String l = jo.get("lastname").getAsString();
+        System.out.println("THIS WAS ALL THE NAVN TIMETRAVEL!!!!!!!!!!!!!!!!!!!!"+f+" "+l+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       
+    }
         
-                
+        
+        //System.out.println("THIS WAS TIMETRAVEL RESTAPI1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+passengers.get(0).toString());
+        
         String responseflightID = flightID;
         String responseOrigin = flightinstance.getFliesFrom().getIatacode()+" : "+flightinstance.getFliesFrom().getCity();
         String responseDate = getDateStringFromDate(flightinstance.getDepartureDate());
@@ -69,11 +82,11 @@ public class TimeTravelRestReservation {
         int responseFlightTime = flightinstance.getDeparturetime();
         int responsenumberOfSeats = numberOfSeats;
         String responseReserveeName = ReserveeName;
-        JsonArray responsePassengersArray = passengersArray;
+        
         
         JsonObject responseObject = new JsonObject();
         
-        responseObject.add("Passengers", responsePassengersArray);
+        responseObject.add("passengers", passengersArray); //responsePassengersArray
         responseObject.addProperty("flightID", responseflightID);
         responseObject.addProperty("Origin", responseOrigin);
         responseObject.addProperty("Date", responseDate);
@@ -82,7 +95,12 @@ public class TimeTravelRestReservation {
         responseObject.addProperty("numberOfSeats", responsenumberOfSeats);
         responseObject.addProperty("ReserveeName", responseReserveeName);
         String jsonResponse = new Gson().toJson(responseObject);
+        
+        System.out.println("THIS WAS FROM TIMETRAVEL JSONRESPONSE "+jsonResponse);
                 
+        
+        
+        
         
         return jsonResponse;
     }

@@ -11,14 +11,17 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import facades.AirlineFacade;
 import facades.ReservationFacade;
 import facades.UserFacade;
 import static help.DateHelp.getDateFromDateString;
+import help.PassengerIdGenerator;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,12 +53,11 @@ import timeTravel.entities.Airline;
 import timeTravel.entities.Passenger;
 import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
-//import us.monoid.web.Resty;
-//import static us.monoid.web.Resty.*;
 
 
 
-@Path("reserve")
+
+    @Path("reserve")
 public class Reservations {
    
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -72,6 +74,7 @@ public class Reservations {
     
 @POST
 @RolesAllowed("User")
+@Produces("application/json")
 @Consumes(MediaType.APPLICATION_JSON)
 public Response setReservation(@Context SecurityContext sc, String content) throws ParseException, MalformedURLException, IOException{
 
@@ -79,6 +82,8 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     UserFacade uf = new UserFacade();
     AirlineFacade af = new AirlineFacade();
     String user = sc.getUserPrincipal().getName();
+    
+    
     
     String airline = json.get("airline").getAsString();
     String flightID = json.get("flightId").getAsString();
@@ -88,9 +93,32 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     String mail = uf.getUserByUserId(user).getEmail();
     String phone = uf.getUserByUserId(user).getPhone();
     JsonArray passengersArray = (JsonArray)json.get("passengers");
-
+    
+    
+    for(JsonElement p : passengersArray){
+        JsonObject jo = p.getAsJsonObject();
+        String first = jo.get("firstname").getAsString();
+        String last = jo.get("lastname").getAsString();
+        Passenger pas = new Passenger();
+        pas.setFirstName(first);
+        pas.setLastName(last);
+        PassengerIdGenerator pasIdGen = new PassengerIdGenerator();
+        long newId = pasIdGen.getRandomId();
+        pas.setId(newId);
+        
+        
+        System.out.println("THIS WAS ALL THE NAVN RESERVE!!!!!!!!!!!!!!!!!!!!"+pas.toString()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
+    
+    
+    
+    
+     //System.out.println("THIS WAS JSON ARRAY REST.RESERVATION1!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+passengersArray.getAsString());
+    
+    
     JsonObject requestObject = new JsonObject();
-    requestObject.add("Passengers", passengersArray);
+    
+    requestObject.add("passengers", passengersArray);
     requestObject.addProperty("flightID", flightID);
     requestObject.addProperty("numberOfSeats", numberOfSeats);
     requestObject.addProperty("ReserveeName", firstName+" "+lastName);
@@ -98,6 +126,8 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     requestObject.addProperty("ReserveeEmail", mail);
     String jsonRequest = new Gson().toJson(requestObject);
 
+   // System.out.println("THIS WAS JSON ARRAY REST.RESERVATION2!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+requestObject.get("Passengers").getAsString());
+    
     Airline A = af.getAirline(airline);
     String url = A.getUrl()+apiBase;
     HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
@@ -117,18 +147,45 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     while (responseReader.hasNext()) {
         response += responseReader.nextLine()+System.getProperty("line.separator");
     }
+
+    System.out.println("¨THIS WAS RESPONSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+response);
+    
+    
     
     
     
     JsonObject returnJson = parser.parse(response).getAsJsonObject();
-    JsonArray passengersArrayList = (JsonArray)returnJson.get("Passengers");
-    List<Passenger> passengers = new ArrayList<>();
+    
+    JsonArray pas = (JsonArray)returnJson.get("passengers");
+    
+    for(JsonElement p : pas){
+        JsonObject jo = p.getAsJsonObject();
+        String f = jo.get("firstname").getAsString();
+        String l = jo.get("lastname").getAsString();
+        System.out.println("THIS WAS ALL THE NAVN RETURN FROM TIME!!!!!!!!!!!!!!!!!!!!"+f+" "+l+"HAHAHAHAHAHAHAAHHAHAHJAJJAHAHA!!");
+       
+    }
+    
+    
+    
+    
+    
+    JsonArray passengersArrayList = (JsonArray)returnJson.get("passengers");
+    List<Passenger> passengers = new ArrayList();
     for (int i = 0; i < passengers.size(); i++) {
         JsonObject passengerJson = (JsonObject) passengersArrayList.get(i).getAsJsonObject();
         String responseFirstName = passengerJson.get("firstName").getAsString();
         String responseLastName = passengerJson.get("lastName").getAsString();
         Passenger newPassenger = new Passenger(responseFirstName,responseLastName);
         passengers.add(newPassenger);
+    }
+    
+        for(JsonElement p : passengersArrayList){
+        JsonObject jo = p.getAsJsonObject();
+        String f = jo.get("firstname").getAsString();
+        String l = jo.get("lastname").getAsString();
+        System.out.println("THIS WAS ALL THE NAVN RETURN FROM TIME!!!!!!!!!!!!!!!!!!!!"+f+" "+l+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+       
     }
     
     String strDate = returnJson.get("Date").getAsString();

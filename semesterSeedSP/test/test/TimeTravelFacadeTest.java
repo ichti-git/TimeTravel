@@ -53,7 +53,7 @@ public class TimeTravelFacadeTest {
         em.getTransaction().begin();
         Airline airline1 = new Airline("Test Airline", "www.TestAirline.com");
         em.persist(airline1);
-        Airline airline2 = new Airline("NotSoRealAirline", "www.RealAirline.com");;
+        Airline airline2 = new Airline("NotSoRealAirline", "www.RealAirline.com");
         em.persist(airline2);
         em.getTransaction().commit();
         em.close();

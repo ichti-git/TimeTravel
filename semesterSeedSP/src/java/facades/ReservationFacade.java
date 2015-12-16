@@ -32,6 +32,13 @@ public class ReservationFacade {
         reservation.setReservationDate(date);
         reservation.setReserveeUser(user);        
         em.persist(reservation);
+        
+        for(Passenger p : passengers){
+            p.setReservation(reservation);
+            em.persist(p);
+        }
+        
+        
         em.getTransaction().commit();
         em.close();
     }

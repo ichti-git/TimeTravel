@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -20,7 +21,11 @@ public class Passenger implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-
+    
+    //test this!!!!!!!!!!!!!!!!!!!!!!
+    @ManyToOne
+    @JoinTable(name="reservation_pas")
+    private Reservation reservation;
     
     public Passenger(){
     }
@@ -30,6 +35,14 @@ public class Passenger implements Serializable {
         this.lastName = lastName;
     }
 
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+    
     public Long getId() {
         return id;
     }

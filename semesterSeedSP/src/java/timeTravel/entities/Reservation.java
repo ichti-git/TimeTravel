@@ -39,7 +39,8 @@ public class Reservation implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Passenger> Passengers;
     
-    
+//    @OneToMany(mappedBy = "reservation")
+//    private List<Passenger> Passengers;
     
     public Reservation() {
     }

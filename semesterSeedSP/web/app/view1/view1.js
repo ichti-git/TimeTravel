@@ -253,8 +253,9 @@ angular.module('myApp.view1', ['ngRoute'])
                                 $scope.reservationPassenger[0].lastname = $scope.curUser.lastname;
                             }
                         });
+                        
                         for (var i = 0; i < $scope.passengerAmount; i++) {
-                            $scope.reservationPassenger[i] = {id: 1, firstname: "", lastname: ""};
+                            $scope.reservationPassenger[i] = { firstname: "", lastname: ""};// HER HAR JEG FJERNET HARDCODED id:1  ->{id: 1, firstname: "", lastname: ""}
                         }
                         $scope.step2Button();
                     }
