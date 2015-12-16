@@ -91,7 +91,7 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     String lastName = uf.getUserByUserId(user).getLastName();
     String mail = uf.getUserByUserId(user).getEmail();
     String phone = uf.getUserByUserId(user).getPhone();
-    JsonArray passengersArray = (JsonArray)json.get("Passengers");
+    JsonArray passengersArray = (JsonArray)json.get("passengers");
 
     JsonObject requestObject = new JsonObject();
     requestObject.add("Passengers", passengersArray);

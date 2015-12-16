@@ -9,7 +9,7 @@ body
 {
 	font-family: 'Seguoa UI','Roboto', 'Open-Sans', sans-serif;
 	overflow-x: hidden;
-	color: #fff;
+	color: #555;
 }
 
 .section-title{
@@ -130,6 +130,7 @@ ul.nav.navbar-nav.navbar-right{
 	padding: 0;
 	border: 0;
 	overflow-x: hidden;
+	overflow-y: visible;
 	background: transparent;
 	background-image: url('../images/header.png');
 	background-repeat: no-repeat;

@@ -16,6 +16,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
+import rest.FlightHelper;
 import static rest.FlightHelper.*;
 import timeTravel.entities.FlightInstance;
 import timeTravel.facade.Facade;
@@ -50,14 +51,15 @@ public class TimeTravelRESTApi {
     public String getFlightsFrom(@PathParam("from") String from, 
                                  @PathParam("date") String date, 
                                  @PathParam("tickets") int numTickets) throws IOException, ApiException {
-        flightInputChecker(from, null, date, numTickets);
+        FlightHelper fh = new FlightHelper(from, date, numTickets);
+        fh.checkInput();
         Facade facade = new Facade();
         List<FlightInstance> flights = facade.getFlightInstances(from, date, numTickets);
         
         if (flights.size() < 1) {
             throw new NoFlightsFoundException("No flights found");
         }
-        String jsonFlights = convertFlightInstanceListToJson(flights, numTickets);
+        String jsonFlights = fh.convertFlightInstanceListToJson(flights, numTickets);
         return jsonFlights;
     }
     
@@ -68,13 +70,14 @@ public class TimeTravelRESTApi {
                                    @PathParam("to") String to,
                                    @PathParam("date") String date, 
                                    @PathParam("tickets") int numTickets) throws IOException, ApiException {
-        flightInputChecker(from, to, date, numTickets);
+        FlightHelper fh = new FlightHelper(from, date, numTickets);
+        fh.checkInput();
         Facade facade = new Facade();
         List<FlightInstance> flights = facade.getFlightInstances(from, to, date, numTickets);
         if (flights.size() < 1) {
             throw new NoFlightsFoundException("No flights found");
         }
-        String jsonFlights = convertFlightInstanceListToJson(flights, numTickets);
+        String jsonFlights = fh.convertFlightInstanceListToJson(flights, numTickets);
         return jsonFlights;
         
         //return "";

@@ -42,7 +42,6 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
-import static rest.FlightHelper.flightInputChecker;
 import timeTravel.entities.Airline;
 import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
@@ -56,7 +55,6 @@ import timeTravel.facade.Facade;
 @Path("flights")
 public class Flights {
     private List<Airline> apiUrls = new ArrayList();
-    private String apiBase = "api/flightinfo/";
     
     @Context
     private UriInfo context;
@@ -66,8 +64,6 @@ public class Flights {
      */
     public Flights() {
         apiUrls = new Facade().getAirlines();
-        //apiUrls.add("http://angularairline-plaul.rhcloud.com/");
-        //apiUrls.add("http://wildfly-x.cloudapp.net/airline/");
     }
 
     //api/flightinfo/:from/:date/:numTickets
@@ -76,83 +72,7 @@ public class Flights {
      * If url does not respond with a http code 200, it will return null
      * 
      */
-    private JsonObject getFlightsFromAirline(URL url) throws IOException {
-        HttpURLConnection request = (HttpURLConnection) url.openConnection();
-        request.connect();
-        if (request.getResponseCode() != 200) {
-            return null;
-        }
-        
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
-        JsonObject object = element.getAsJsonObject();
-        return object;
-    }
     
-    private JsonArray getFlights(String from, String date, int numTickets) throws IOException {
-        return getFlights(from, null, date, numTickets);
-    }
-    private JsonArray getFlights(final String from, final String to, final String date, final int numTickets) {
-        
-        List<Future<JsonArray>> list = new ArrayList<>();
-        ExecutorService executor = Executors.newFixedThreadPool(8);
-        Iterator ite = apiUrls.iterator();
-        while (ite.hasNext()) {
-            final Airline next = (Airline)ite.next();
-            Callable<JsonArray> task = new Callable<JsonArray>() {
-                @Override
-                public JsonArray call() throws MalformedURLException {
-                    JsonArray flights = new JsonArray();
-                    //Build the urlString
-                    StringBuilder urlString = new StringBuilder(next.getUrl());
-                    urlString.append(apiBase);
-                    urlString.append(from);
-                    urlString.append("/");
-                    if (to != null) {
-                        urlString.append(to);
-                        urlString.append("/");
-                    }
-                    urlString.append(date);
-                    urlString.append("/");
-                    urlString.append(numTickets);
-                    URL url = new URL(urlString.toString());
-                    try {
-                        //Get the flights from the airline
-                        JsonObject airlineFlights = getFlightsFromAirline(url);
-                        if (airlineFlights != null) {
-                            JsonElement jsonAirline = airlineFlights.get("airline");
-                            JsonElement jsonFlightsElement = airlineFlights.get("flights");
-                            if (jsonFlightsElement != null) {
-                                JsonArray jsonFlights = jsonFlightsElement.getAsJsonArray();
-                                Iterator jsonIte = jsonFlights.iterator();
-                                //Add the flights from the airline to combined flights
-                                while (jsonIte.hasNext()) {
-                                    JsonObject newFlight = ((JsonObject)jsonIte.next());
-                                    newFlight.add("airline", jsonAirline);
-                                    flights.add(newFlight);
-                                }
-                            }
-                        }
-                    } catch (IOException ex) {
-                        //URL not found or error in response, skip it!
-                        Logger.getLogger(Flights.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    return flights;
-                }
-            };
-            list.add(executor.submit(task));
-        }
-        executor.shutdown();
-        JsonArray allFlights = new JsonArray();
-        for (Future<JsonArray> array : list) {
-            try {
-                allFlights.addAll(array.get());
-            } catch (InterruptedException | ExecutionException ex) {
-                Logger.getLogger(Flights.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-       return allFlights;
-    }
     
     @GET
     @Produces("application/json")
@@ -160,8 +80,9 @@ public class Flights {
     public String getFlightsFrom(@PathParam("from") String from, 
                                  @PathParam("date") String date, 
                                  @PathParam("tickets") int numTickets) throws IOException, ApiException {
-        flightInputChecker(from, null, date, numTickets);
-        JsonArray flights = getFlights(from, date, numTickets);
+        FlightHelper fh = new FlightHelper(from, date, numTickets);
+        fh.checkInput();
+        JsonArray flights = fh.searchFlights();
         
         if (flights.size() < 1) {
             throw new NoFlightsFoundException("No flights found");
@@ -177,8 +98,9 @@ public class Flights {
                                    @PathParam("to") String to,
                                    @PathParam("date") String date, 
                                    @PathParam("tickets") int numTickets) throws IOException, ApiException {
-        flightInputChecker(from, to, date, numTickets);
-        JsonArray flights = getFlights(from, to, date, numTickets);
+        FlightHelper fh = new FlightHelper(from, to, date, numTickets);
+        fh.checkInput();
+        JsonArray flights = fh.searchFlights();
         if (flights.size() < 1) {
             throw new NoFlightsFoundException("No flights found");
         }

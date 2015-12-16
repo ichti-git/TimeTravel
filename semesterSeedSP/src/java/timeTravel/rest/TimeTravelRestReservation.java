@@ -25,8 +25,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
-import static rest.FlightHelper.convertFlightInstanceListToJson;
-import static rest.FlightHelper.flightInputChecker;
 import timeTravel.entities.FlightInstance;
 import timeTravel.entities.Passenger;
 import timeTravel.facade.Facade;

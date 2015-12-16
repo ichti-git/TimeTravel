@@ -225,6 +225,7 @@ angular.module('myApp.view1', ['ngRoute'])
                     sendRes.flightId = $scope.flights[$scope.choosenFlightId].flightID;
                     sendRes.airline = $scope.flights[$scope.choosenFlightId].airline;
                     sendRes.passengers = $scope.reservationPassenger;
+                    sendRes.numberOfSeats = $scope.passengerAmount;
                     sendRes.$save(
                     function(response) {
                         //succes
