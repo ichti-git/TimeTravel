@@ -49,7 +49,7 @@ public class CancelReservation {
             return Response.status(400).entity(gson.toJson(jsonobj)).type(MediaType.APPLICATION_JSON).build();
 
         }
-        if (reservation.getReserveeUser().equals(user) || sc.isUserInRole("Admin")) {
+        if (reservation.getReserveeUser().getUserName() == user.getUserName() || sc.isUserInRole("Admin")) {
             rf.deleteReservation(id); //TODO, check if actually removed?
             jsonobj.addProperty("message", "Reservation succesfully canceled"); 
             return Response.status(200).entity(gson.toJson(jsonobj)).type(MediaType.APPLICATION_JSON).build();

@@ -39,7 +39,7 @@ public class BackendTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        server = new Server(8082);
+        server = new Server(8084);
         ServletHolder servletHolder = new ServletHolder(org.glassfish.jersey.servlet.ServletContainer.class);
         servletHolder.setInitParameter("javax.ws.rs.Application", ApplicationConfig.class.getName());
         ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
