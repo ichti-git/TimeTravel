@@ -33,7 +33,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import rest.FlightGetterCallable;
 import rest.Flights;
 import timeTravel.entities.Airline;
 import timeTravel.entities.FlightInstance;
