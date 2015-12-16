@@ -16,8 +16,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
-import rest.FlightHelper;
-import static rest.FlightHelper.*;
+import help.FlightHelper;
+import static help.FlightHelper.*;
 import timeTravel.entities.FlightInstance;
 import timeTravel.facade.Facade;
 

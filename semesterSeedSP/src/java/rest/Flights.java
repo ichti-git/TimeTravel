@@ -5,6 +5,7 @@
  */
 package rest;
 
+import help.FlightHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -82,6 +83,7 @@ public class Flights {
                                  @PathParam("tickets") int numTickets) throws IOException, ApiException {
         FlightHelper fh = new FlightHelper(from, date, numTickets);
         fh.checkInput();
+        fh.logFlightSearch();
         JsonArray flights = fh.searchFlights();
         
         if (flights.size() < 1) {
@@ -100,6 +102,7 @@ public class Flights {
                                    @PathParam("tickets") int numTickets) throws IOException, ApiException {
         FlightHelper fh = new FlightHelper(from, to, date, numTickets);
         fh.checkInput();
+        fh.logFlightSearch();
         JsonArray flights = fh.searchFlights();
         if (flights.size() < 1) {
             throw new NoFlightsFoundException("No flights found");

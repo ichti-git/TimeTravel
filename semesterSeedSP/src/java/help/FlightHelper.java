@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest;
+package help;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import exception.ApiException;
 import exception.IllegalInputException;
+import facades.SearchLogFacade;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -32,6 +33,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import rest.FlightGetterCallable;
+import rest.Flights;
 import timeTravel.entities.Airline;
 import timeTravel.entities.FlightInstance;
 import timeTravel.facade.Facade;
@@ -68,6 +71,10 @@ public class FlightHelper {
         
     }
     
+    public void logFlightSearch() {
+        SearchLogFacade slf = new SearchLogFacade();
+        slf.saveSearch(origin, destination, date, tickets);
+    }
     
     public String convertFlightInstanceListToJson(List<FlightInstance> flights, int numTickets) {
         JsonObject json = new JsonObject();
