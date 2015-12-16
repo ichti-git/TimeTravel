@@ -17,6 +17,7 @@ $('#searchButton').click(function(){
 */
 
 // One page Smooth Scrolling
+/*
 $('a[href*=#]:not([href=#])').click(function() {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
         var target = $(this.hash);
@@ -29,6 +30,7 @@ $('a[href*=#]:not([href=#])').click(function() {
         }
     }
 });
+*/
 
 //Google maps display//
 $(document).ready(function(){
