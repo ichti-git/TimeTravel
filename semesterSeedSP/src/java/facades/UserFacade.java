@@ -76,7 +76,6 @@ public class UserFacade {
     public void createUser(String userName, String password, String firstName, String lastName, String email, String phone) {
         try {
             User user = new User(userName, PasswordHash.createHash(password), firstName, lastName, email, phone);
-            //EntityManager em = emf.createEntityManager();
             emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
             EntityManager em = emf.createEntityManager();
             Role role = em.find(Role.class, "User");

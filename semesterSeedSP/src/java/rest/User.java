@@ -28,7 +28,7 @@ import timeTravel.entities.Reservation;
 import timeTravel.facade.Facade;
 
 @Path("user")
-//@RolesAllowed("User")
+
 public class User {
     
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -37,7 +37,7 @@ public class User {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-//    @RolesAllowed("user")
+
     @Path("test")
     public String getSomething() {
         return "{\"message\" : \"This message was delivered via a REST call accesible by only authenticated USERS\"}";

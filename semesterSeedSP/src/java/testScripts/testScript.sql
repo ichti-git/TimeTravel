@@ -36,6 +36,8 @@ insert into USERROLE(ROLENAME) values ('Admin');
 
 insert into SystemUser_USERROLE(userName, roleName) values ('user', 'User');
 insert into SystemUser_USERROLE(userName, roleName) values ('user_admin', 'User');
+insert into SystemUser_USERROLE(userName, roleName) values ('user_admin', 'Admin');
+insert into SystemUser_USERROLE(userName, roleName) values ('admin', 'Admin');
 
 /*insert into systemuser(USERNAME, EMAIL, FIRSTNAME, LASTNAME, PASSWORD, PHONE) VALUES ('testuser', 'reserveeEmail@hotmail.com', 'hans', 'jørgen', 'test', 'ReservePhone');*/
                                                                                 
