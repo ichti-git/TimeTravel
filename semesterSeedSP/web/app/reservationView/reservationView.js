@@ -37,18 +37,16 @@ angular.module('myApp.reservationView', ['ngRoute'])
             
             $scope.cancelReservation = function() {
                 $scope.cancelSent = true;
+                $scope.cancelResponse = "Canceling. Please wait.";
                 Cancel.remove({id: $scope.reservationId}, function(response) {
                     //succes
-                    console.log("SUCCES");
-                    console.log(response);
                     $scope.cancelResponse = response;
                     $scope.cancelSucces = true;
+                    $scope.reservations = Airports.query();
                 }, function(response) {
                     //failure
-                    console.log("FAIL");
-                    console.log(response);
-                    $scope.cancelResponse = response;
-                    $scope.cancelSucces = true;
+                    $scope.cancelResponse = response.data;
+                    $scope.cancelSucces = false;
                 });
             }
 ///var FromTo = $resource(apiBase+"/flights/:from/:to/:date/:tickets", {from: "@from", to: "@to", date: "@date", tickets: "@tickets"}, {});
