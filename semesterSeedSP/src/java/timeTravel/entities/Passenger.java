@@ -21,26 +21,13 @@ public class Passenger implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
-    
-    //test this!!!!!!!!!!!!!!!!!!!!!!
-    @ManyToOne
-    @JoinTable(name="reservation_pas")
-    private Reservation reservation;
-    
+ 
     public Passenger(){
     }
     
     public Passenger(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
     
     public Long getId() {
@@ -91,9 +78,5 @@ public class Passenger implements Serializable {
     public String toString() {
         return "entities.Passenger[ id=" + id + " ]";
     }
-
-//    public void setReservation(Reservation reservation) {
-//         this.reservation = reservation;
-//    }
 
 }

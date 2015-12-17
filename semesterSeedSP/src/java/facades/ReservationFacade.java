@@ -14,12 +14,16 @@ public class ReservationFacade {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
      
-    public void setReservation(String flightId, int numberOfSeats, String ReserveeName, String ReservePhone, String ReserveeEmail, List<Passenger> passengers,String origin,String destination,Date date,User user){
+    public void setReservation(String flightId, int numberOfSeats, String ReserveeName, String ReservePhone, String ReserveeEmail, List<Passenger> passengers,String origin,String destination,Date date,User user,int flightTime){
     
         EntityManager em = emf.createEntityManager();
         Reservation reservation = new Reservation(); 
         Passenger passenger = new Passenger();
-      
+
+        for(Passenger p : passengers){
+            em.persist(p);
+        }
+        
         em.getTransaction().begin();
         reservation.setFlightId(flightId);
         reservation.setNumberOfSeats(numberOfSeats);
@@ -30,15 +34,11 @@ public class ReservationFacade {
         reservation.setOrigin(origin);
         reservation.setDestination(destination);
         reservation.setReservationDate(date);
-        reservation.setReserveeUser(user);        
+        reservation.setReserveeUser(user);    
+        reservation.setFlightTime(flightTime);
         em.persist(reservation);
-        
-        for(Passenger p : passengers){
-            p.setReservation(reservation);
-            em.persist(p);
-        }
-        
-        
+        em.flush();
+            
         em.getTransaction().commit();
         em.close();
     }

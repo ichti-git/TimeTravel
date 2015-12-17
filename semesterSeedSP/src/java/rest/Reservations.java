@@ -64,7 +64,7 @@ public class Reservations {
     JsonParser parser = new JsonParser();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     //Facade f = new Facade();
-    private String apiBase = "api/flightreservation/";// "api/flightreservation/"
+    private String apiBase = "api/flightreservation/";
   
     @Context
     private UriInfo context;
@@ -82,9 +82,7 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     UserFacade uf = new UserFacade();
     AirlineFacade af = new AirlineFacade();
     String user = sc.getUserPrincipal().getName();
-    
-    
-    
+   
     String airline = json.get("airline").getAsString();
     String flightID = json.get("flightId").getAsString();
     int numberOfSeats = json.get("numberOfSeats").getAsInt();
@@ -93,7 +91,6 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     String mail = uf.getUserByUserId(user).getEmail();
     String phone = uf.getUserByUserId(user).getPhone();
     JsonArray passengersArray = (JsonArray)json.get("passengers");
-    
     
     for(JsonElement p : passengersArray){
         JsonObject jo = p.getAsJsonObject();
@@ -105,19 +102,8 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
         PassengerIdGenerator pasIdGen = new PassengerIdGenerator();
         long newId = pasIdGen.getRandomId();
         pas.setId(newId);
-        
-        
-        System.out.println("THIS WAS ALL THE NAVN RESERVE!!!!!!!!!!!!!!!!!!!!"+pas.toString()+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
-    
-    
-    
-    
-     //System.out.println("THIS WAS JSON ARRAY REST.RESERVATION1!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+passengersArray.getAsString());
-    
-    
     JsonObject requestObject = new JsonObject();
-    
     requestObject.add("passengers", passengersArray);
     requestObject.addProperty("flightID", flightID);
     requestObject.addProperty("numberOfSeats", numberOfSeats);
@@ -126,8 +112,6 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     requestObject.addProperty("ReserveeEmail", mail);
     String jsonRequest = new Gson().toJson(requestObject);
 
-   // System.out.println("THIS WAS JSON ARRAY REST.RESERVATION2!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+requestObject.get("Passengers").getAsString());
-    
     Airline A = af.getAirline(airline);
     String url = A.getUrl()+apiBase;
     HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
@@ -148,46 +132,17 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
         response += responseReader.nextLine()+System.getProperty("line.separator");
     }
 
-    System.out.println("¨THIS WAS RESPONSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+response);
-    
-    
-    
-    
-    
     JsonObject returnJson = parser.parse(response).getAsJsonObject();
-    
-    JsonArray pas = (JsonArray)returnJson.get("passengers");
-    
-    for(JsonElement p : pas){
-        JsonObject jo = p.getAsJsonObject();
-        String f = jo.get("firstname").getAsString();
-        String l = jo.get("lastname").getAsString();
-        System.out.println("THIS WAS ALL THE NAVN RETURN FROM TIME!!!!!!!!!!!!!!!!!!!!"+f+" "+l+"HAHAHAHAHAHAHAAHHAHAHJAJJAHAHA!!");
-       
-    }
-    
-    
-    
-    
-    
     JsonArray passengersArrayList = (JsonArray)returnJson.get("passengers");
     List<Passenger> passengers = new ArrayList();
-    for (int i = 0; i < passengers.size(); i++) {
-        JsonObject passengerJson = (JsonObject) passengersArrayList.get(i).getAsJsonObject();
-        String responseFirstName = passengerJson.get("firstName").getAsString();
-        String responseLastName = passengerJson.get("lastName").getAsString();
-        Passenger newPassenger = new Passenger(responseFirstName,responseLastName);
-        passengers.add(newPassenger);
-    }
-    
+
         for(JsonElement p : passengersArrayList){
         JsonObject jo = p.getAsJsonObject();
-        String f = jo.get("firstname").getAsString();
-        String l = jo.get("lastname").getAsString();
-        System.out.println("THIS WAS ALL THE NAVN RETURN FROM TIME!!!!!!!!!!!!!!!!!!!!"+f+" "+l+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-       
+        String first = jo.get("firstname").getAsString();
+        String last = jo.get("lastname").getAsString();
+        Passenger newPassenger = new Passenger(first,last);
+        passengers.add(newPassenger);
     }
-    
     String strDate = returnJson.get("Date").getAsString();
     Date date = getDateFromDateString(strDate);
     entity.User returnUser = uf.getUserByUserId(user);
@@ -196,15 +151,16 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     rf.setReservation(  returnJson.get("flightID").getAsString(),
                         returnJson.get("numberOfSeats").getAsInt(),
                         returnJson.get("ReserveeName").getAsString(),
-                        phone,mail, passengers,
+                                        phone,
+                                        mail,
+                                        passengers,
                         returnJson.get("Origin").getAsString(),
                         returnJson.get("Destination").getAsString(),
-                        date,returnUser);
-    
+                                        date,
+                                        returnUser,
+                        returnJson.get("flightTime").getAsInt());
     
     return Response.status(200).entity(gson.toJson(response)).type(MediaType.APPLICATION_JSON).build();
-    
     }
-
 }
         

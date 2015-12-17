@@ -64,17 +64,6 @@ public class TimeTravelRestReservation {
             passengers.add(newPassenger);
         } 
         
-        for(JsonElement p : passengersArray){
-        JsonObject jo = p.getAsJsonObject();
-        String f = jo.get("firstname").getAsString();
-        String l = jo.get("lastname").getAsString();
-        System.out.println("THIS WAS ALL THE NAVN TIMETRAVEL!!!!!!!!!!!!!!!!!!!!"+f+" "+l+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-       
-    }
-        
-        
-        //System.out.println("THIS WAS TIMETRAVEL RESTAPI1!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+passengers.get(0).toString());
-        
         String responseflightID = flightID;
         String responseOrigin = flightinstance.getFliesFrom().getIatacode()+" : "+flightinstance.getFliesFrom().getCity();
         String responseDate = getDateStringFromDate(flightinstance.getDepartureDate());
