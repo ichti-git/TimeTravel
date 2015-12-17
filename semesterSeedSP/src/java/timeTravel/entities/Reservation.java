@@ -36,12 +36,6 @@ public class Reservation implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date reservationDate;
     private int FlightTime;
-    
-    
-//    @OneToMany(cascade = CascadeType.MERGE)
-//    private List<Passenger> Passengers;
-    
-    //@OneToMany(mappedBy = "reservation")
     @OneToMany
     private List<Passenger> Passengers;
     
@@ -60,8 +54,6 @@ public class Reservation implements Serializable {
         this.Destination = destination;
         this.reserveeUser = user;
         this.FlightTime = flightTime;
-       
-        
     }
 
     public int getId() {
@@ -88,9 +80,6 @@ public class Reservation implements Serializable {
         this.FlightTime = FlightTime;
     }
     
-    
-    
-
     public User getReserveeUser() {
         return reserveeUser;
     }
@@ -115,8 +104,6 @@ public class Reservation implements Serializable {
         this.Origin = Origin;
     }
     
-    
-
     public String getReserveeName() {
         return ReserveeName;
     }
