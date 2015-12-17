@@ -37,6 +37,7 @@ public class Reservation implements Serializable {
     private Date reservationDate;
     private int FlightTime;
     
+    
 //    @OneToMany(cascade = CascadeType.MERGE)
 //    private List<Passenger> Passengers;
     

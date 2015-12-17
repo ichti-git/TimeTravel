@@ -23,7 +23,7 @@ public class ReservationFacade {
         for(Passenger p : passengers){
             em.persist(p);
         }
-        
+        System.out.println("FLIHTTIME FROM RESRV FACADE!!!!! "+flightTime);
         em.getTransaction().begin();
         reservation.setFlightId(flightId);
         reservation.setNumberOfSeats(numberOfSeats);

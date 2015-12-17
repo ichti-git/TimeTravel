@@ -147,7 +147,11 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
     Date date = getDateFromDateString(strDate);
     entity.User returnUser = uf.getUserByUserId(user);
     ReservationFacade rf = new ReservationFacade();
-   
+     
+    int x = returnJson.get("FlightTime").getAsInt();
+    System.out.println("THIS WAS RESPONSO!!!!!!!  FROM TIMETRAVEL REST !!!!!!!!!!!!!!!!!!!!!!!!!!!"+x);
+    
+    
     rf.setReservation(  returnJson.get("flightID").getAsString(),
                         returnJson.get("numberOfSeats").getAsInt(),
                         returnJson.get("ReserveeName").getAsString(),
@@ -158,7 +162,8 @@ public Response setReservation(@Context SecurityContext sc, String content) thro
                         returnJson.get("Destination").getAsString(),
                                         date,
                                         returnUser,
-                        returnJson.get("flightTime").getAsInt());
+                        returnJson.get("FlightTime").getAsInt()
+                    );
     
     return Response.status(200).entity(gson.toJson(response)).type(MediaType.APPLICATION_JSON).build();
     }

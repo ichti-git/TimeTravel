@@ -72,6 +72,7 @@ public class TimeTravelRestReservation {
         int responsenumberOfSeats = numberOfSeats;
         String responseReserveeName = ReserveeName;
         
+        System.out.println("THIS WAS FLIGHTTIME RESONSE  FROM TIMETRAVEL REST !!!!!!!!!!!!!!!!!!!!!!!!!!!"+responseFlightTime);
         
         JsonObject responseObject = new JsonObject();
         
@@ -87,10 +88,6 @@ public class TimeTravelRestReservation {
         
         System.out.println("THIS WAS FROM TIMETRAVEL JSONRESPONSE "+jsonResponse);
                 
-        
-        
-        
-        
         return jsonResponse;
     }
 
