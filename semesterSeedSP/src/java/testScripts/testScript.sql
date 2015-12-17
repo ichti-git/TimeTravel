@@ -16,7 +16,7 @@ INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('TimeTravel', 'http://timetravel-t
 INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('Norwegian', 'http://sargardon-001-site1.atempurl.com/');
 INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('MPJ Air', 'http://semesterproject-martamiszczyk.rhcloud.com/semesterProject/');
 INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('JST Airlines', 'http://jstairline-hardboilr.rhcloud.com/');
-INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('Infamous Lines', 'http://infamouslines-baniproductions.rhcloud.com');
+INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('Infamous Lines', 'http://infamouslines-baniproductions.rhcloud.com/');
 INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('Frenchy Airlines', 'http://frenchyairlines-zerosource.rhcloud.com/');
 
 

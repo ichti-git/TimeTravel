@@ -20,7 +20,7 @@ angular.module('myApp.view1', ['ngRoute'])
                 }
 
                 return h + " " + m;
-            }
+            };
         })
 
         .filter('airport', function () {
@@ -30,7 +30,8 @@ angular.module('myApp.view1', ['ngRoute'])
                         return airports[a].city;
                     }
                 }
-            }
+                return IATA + " (Unknown airport)";
+            };
         })
 
         .config(['$routeProvider', function ($routeProvider) {
@@ -56,12 +57,12 @@ angular.module('myApp.view1', ['ngRoute'])
 
                 var Airports = $resource(apiBase + "/airports", {}, {get: {method: 'GET',
                         responseType: 'json'}});
-
-
+                
+                
                 function airportSort(a, b) {
                     return a.city < b.city ? -1 : a.city > b.city;
-                }
-                ;
+                };
+                
                 Airports.query(function (response) {
                     $scope.airports = response;
                     delete($scope.airports.$promise);
@@ -237,6 +238,7 @@ angular.module('myApp.view1', ['ngRoute'])
                             function (response) {
                                 //fail
                                 $scope.reserveMessage = "Error while making reservation: " + response.data.message;
+                                $scope.reserveMessage += ". Please try again later";
                                 $scope.reserveSucces = false;
                             });
                 };

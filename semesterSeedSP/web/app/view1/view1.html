@@ -448,6 +448,7 @@
                                         <hr />
                                     </div>
                                     <!-- END - Passanger - This part repeat for each passanger -->
+                                    <p ng-show="reserveError">{{reserveError}}</p>
                                     <button ng-click="sendReservation()" class="btn btn-success pull-right" type="submit">Finish!</button>
                                 </div>
                                 <div class="col-md-12" ng-show="reserveMessage">

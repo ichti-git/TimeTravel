@@ -122,6 +122,11 @@ public class Reservations {
             os.write(jsonRequest.getBytes("UTF-8"));
         }
         int HttpResult = con.getResponseCode();
+        if (HttpResult > 299) {
+            JsonObject errorObject = new JsonObject();
+            errorObject.addProperty("message", "Error reserving from airline");
+            return Response.status(401).entity(gson.toJson(errorObject)).type(MediaType.APPLICATION_JSON).build();
+        }
         InputStreamReader is = HttpResult < 400 ? new InputStreamReader(con.getInputStream(), "utf-8")
                 : new InputStreamReader(con.getErrorStream(), "utf-8");
         Scanner responseReader = new Scanner(is);
