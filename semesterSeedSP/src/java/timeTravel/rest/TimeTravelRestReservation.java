@@ -43,13 +43,13 @@ public class TimeTravelRestReservation {
     public String setReservation(String content) throws  ParseException,IOException, ApiException {
         
         JsonObject json = parser.parse(content).getAsJsonObject();
-               
         
         String flightID = json.get("flightID").getAsString();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
-        String ReservePhone = json.get("ReservePhone").getAsString();
-        String ReserveeEmail = json.get("ReserveeEmail").getAsString();
+//        String ReservePhone = json.get("ReservePhone").getAsString();
+//        String ReserveeEmail = json.get("ReserveeEmail").getAsString();
+//  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  lige nu logger vi ikke data på vores momondo site...!!!!!!!!!!!!!!!!
         JsonArray passengersArray = (JsonArray)json.get("passengers");
         
         Facade facade = new Facade();
@@ -70,13 +70,11 @@ public class TimeTravelRestReservation {
         String responseDestination = flightinstance.getFliesTo().getIatacode()+" : "+flightinstance.getFliesTo().getCity();
         int responseFlightTime = flightinstance.getDeparturetime();
         int responsenumberOfSeats = numberOfSeats;
-        String responseReserveeName = ReserveeName;
-        
-        System.out.println("THIS WAS FLIGHTTIME RESONSE  FROM TIMETRAVEL REST !!!!!!!!!!!!!!!!!!!!!!!!!!!"+responseFlightTime);
+        String responseReserveeName = ReserveeName; 
         
         JsonObject responseObject = new JsonObject();
         
-        responseObject.add("passengers", passengersArray); //responsePassengersArray
+        responseObject.add("passengers", passengersArray);
         responseObject.addProperty("flightID", responseflightID);
         responseObject.addProperty("Origin", responseOrigin);
         responseObject.addProperty("Date", responseDate);
@@ -86,9 +84,6 @@ public class TimeTravelRestReservation {
         responseObject.addProperty("ReserveeName", responseReserveeName);
         String jsonResponse = new Gson().toJson(responseObject);
         
-        System.out.println("THIS WAS FROM TIMETRAVEL JSONRESPONSE "+jsonResponse);
-                
         return jsonResponse;
     }
-
 }

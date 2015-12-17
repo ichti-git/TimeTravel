@@ -36,7 +36,7 @@ public class Reservation implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date reservationDate;
     private int FlightTime;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Passenger> Passengers;
     
     public Reservation() {

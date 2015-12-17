@@ -18,12 +18,7 @@ public class ReservationFacade {
     
         EntityManager em = emf.createEntityManager();
         Reservation reservation = new Reservation(); 
-        Passenger passenger = new Passenger();
 
-        for(Passenger p : passengers){
-            em.persist(p);
-        }
-        System.out.println("FLIHTTIME FROM RESRV FACADE!!!!! "+flightTime);
         em.getTransaction().begin();
         reservation.setFlightId(flightId);
         reservation.setNumberOfSeats(numberOfSeats);
@@ -37,7 +32,6 @@ public class ReservationFacade {
         reservation.setReserveeUser(user);    
         reservation.setFlightTime(flightTime);
         em.persist(reservation);
-        em.flush();
             
         em.getTransaction().commit();
         em.close();
