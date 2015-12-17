@@ -9,6 +9,7 @@ var test;
         'ngResource',
         'ui.bootstrap',
         'myApp.security',
+        'myApp.controllers',
         'myApp.loginView',
         'myApp.adminView',
         'myApp.reservationView',

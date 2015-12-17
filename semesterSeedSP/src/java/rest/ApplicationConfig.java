@@ -27,12 +27,12 @@ public class ApplicationConfig extends Application {
         resources.add(rest.CreateUser.class);
         resources.add(rest.Flights.class);
         resources.add(rest.Reservations.class);
-        resources.add(rest.Test.class);
         resources.add(rest.User.class);
         resources.add(security.JWTAuthenticationFilter.class);
         resources.add(security.Login.class);
         resources.add(security.NotAuthorizedExceptionMapper.class);
         resources.add(security.RolesAllowedFilter.class);
+        resources.add(timeTravel.rest.TimeTravelGenerateFlights.class);
         resources.add(timeTravel.rest.TimeTravelRESTApi.class);
         resources.add(timeTravel.rest.TimeTravelRestReservation.class);
         

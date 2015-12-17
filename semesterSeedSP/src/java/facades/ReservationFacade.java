@@ -52,4 +52,24 @@ public class ReservationFacade {
         }
         em.close();
     }
+    
+    public List<Reservation> getReservationsByUser(User user){
+        return getReservationsByUsername(user.getUserName());
+    }
+    
+    public List<Reservation> getReservationsByUsername(String userName){
+        EntityManager em = emf.createEntityManager();    
+        
+        
+        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEEUSER_USERNAME='"+userName+"';",Reservation.class).getResultList();
+        em.close();                               
+        return reservations;
+    }
+    
+    public List<Reservation> getReservations(){
+        EntityManager em = emf.createEntityManager();
+        List reservations = em.createNativeQuery("select * from RESERVATION r",Reservation.class).getResultList();
+        em.close();
+        return reservations;
+    }
 }

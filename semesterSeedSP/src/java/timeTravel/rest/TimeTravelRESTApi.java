@@ -1,6 +1,5 @@
 package timeTravel.rest;
 
-import data.GenerateFlights;
 import exception.ApiException;
 import exception.NoFlightsFoundException;
 import java.io.IOException;
@@ -22,14 +21,7 @@ import timeTravel.facade.Facade;
  */
 @Path("flightinfo")
 public class TimeTravelRESTApi {
-    @GET
-    @Produces("application/json")
-    @Path("generate/{n}")
-    public String generateFlights(@PathParam("n") int n) {
-        GenerateFlights gen = new GenerateFlights();
-        gen.generateFlights(n);
-        return "{\"msg\":\"ok\"}";
-    }
+    
     @Context
     private UriInfo context;
 

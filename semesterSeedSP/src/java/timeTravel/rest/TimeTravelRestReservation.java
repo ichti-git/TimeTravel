@@ -3,23 +3,18 @@ package timeTravel.rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import exception.ApiException;
 import static help.DateHelp.getDateStringFromDate;
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import timeTravel.entities.FlightInstance;
-import timeTravel.entities.Passenger;
 import timeTravel.facade.Facade;
 
 /**
@@ -47,14 +42,16 @@ public class TimeTravelRestReservation {
         String flightID = json.get("flightID").getAsString();
         int numberOfSeats = json.get("numberOfSeats").getAsInt();
         String ReserveeName = json.get("ReserveeName").getAsString();
+        // We're not saving the reservation on the Airline (TimeTravel) server, so we do not need phone/email
 //        String ReservePhone = json.get("ReservePhone").getAsString();
 //        String ReserveeEmail = json.get("ReserveeEmail").getAsString();
-//  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  lige nu logger vi ikke data på vores momondo site...!!!!!!!!!!!!!!!!
-        JsonArray passengersArray = (JsonArray)json.get("passengers");
+        JsonArray passengersArray = (JsonArray)json.get("Passengers");
         
         Facade facade = new Facade();
         FlightInstance flightinstance = facade.getFlightInstance(flightID);
         
+        /*
+         * We're not saving the reservation on the Airline (TimeTravel) server, so we do not need this
         List<Passenger> passengers = new ArrayList<>();
         for (int i = 0; i < passengers.size(); i++) {
             JsonObject passengerJson = (JsonObject) passengersArray.get(i).getAsJsonObject();
@@ -63,6 +60,7 @@ public class TimeTravelRestReservation {
             Passenger newPassenger = new Passenger(responseFirstName,responseLastName);
             passengers.add(newPassenger);
         } 
+        * */
         
         String responseflightID = flightID;
         String responseOrigin = flightinstance.getFliesFrom().getIatacode()+" : "+flightinstance.getFliesFrom().getCity();
@@ -74,7 +72,7 @@ public class TimeTravelRestReservation {
         
         JsonObject responseObject = new JsonObject();
         
-        responseObject.add("passengers", passengersArray);
+        responseObject.add("Passengers", passengersArray);
         responseObject.addProperty("flightID", responseflightID);
         responseObject.addProperty("Origin", responseOrigin);
         responseObject.addProperty("Date", responseDate);

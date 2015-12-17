@@ -70,32 +70,9 @@ public class Facade {
         return FlightInstances;
     }  
    
-    public List<Airline> getAirlines() {
-        EntityManager em = emf.createEntityManager();
-        List urls = em.createNativeQuery("select * from AIRLINE a", Airline.class).getResultList();
-        em.close();
-        return urls;
-    }
     
-    public List<Reservation> getReservationsByUser(User user){
-        return getReservationsByUsername(user.getUserName());
-    }
     
-    public List<Reservation> getReservationsByUsername(String userName){
-        EntityManager em = emf.createEntityManager();    
-        
-        
-        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEEUSER_USERNAME='"+userName+"';",Reservation.class).getResultList();
-        em.close();                               
-        return reservations;
-    }
     
-    public List<Reservation> getReservations(){
-        EntityManager em = emf.createEntityManager();
-        List reservations = em.createNativeQuery("select * from RESERVATION r",Reservation.class).getResultList();
-        em.close();
-        return reservations;
-    }
     
     public List<Airport> getAirports() {
         EntityManager em = emf.createEntityManager();
@@ -137,66 +114,7 @@ public class Facade {
         catch (Exception ex) {
             Logger.getLogger(Facade.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-  
-     
-
- 
-    
-    
-//     public void setFlight(Flight flight){
-//         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-//         EntityManager em = emf.createEntityManager();
-//         Flight newFlight = flight;
-//         em.getTransaction().begin();
-//         em.persist(newFlight);
-//         em.getTransaction().commit();
-//         em.close();
-//     }
-//     
-//      public void setFlightInstance(FlightInstance flightInstance){
-//         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-//         EntityManager em = emf.createEntityManager();
-//         FlightInstance newFlightInstance = flightInstance;
-//         em.getTransaction().begin();
-//         em.persist(newFlightInstance);
-//         em.getTransaction().commit();
-//         em.close();
-//     }
-//      
-//      public void setPassenger(Passenger passenger){
-//         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-//         EntityManager em = emf.createEntityManager();
-//         Passenger newPassenger = passenger;
-//         em.getTransaction().begin();
-//         em.persist(newPassenger);
-//         em.getTransaction().commit();
-//         em.close();
-//     }
-      
-//      public void setReservation(Reservation reservation){
-//         emf = Persistence.createEntityManagerFactory("PU-Local");
-//         EntityManager em = emf.createEntityManager();
-//         Reservation newReservation = reservation;
-//         em.getTransaction().begin();
-//         em.persist(newReservation);
-//         em.getTransaction().commit();
-//         em.close();
-//     }
-      
-//      public void setAirport(Airport airport){
-//         emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-//         EntityManager em = emf.createEntityManager();
-//         Airport newAirport = airport;
-//         em.getTransaction().begin();
-//         em.persist(newAirport);
-//         em.getTransaction().commit();
-//         em.close();
-//     }
-
-  
-     
+    }    
      
 
 }
