@@ -14,21 +14,21 @@ INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('AngularJS Airline', 'http://angul
 INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('COSGrp2 Airline', 'http://wildfly-x.cloudapp.net/airline/');
 INSERT INTO `AIRLINE` (`NAME`, `URL`) VALUES ('TimeTravel', 'http://timetravel-tocvfan.rhcloud.com/');
 
-insert into Airport(iatacode,name,city,timezone) values ('CPH','copenhagen airport','Copenhagen','+1');
-insert into Airport(iatacode,name,city,timezone) values ('BCN','Barcelona airport','Barcelona','-1');
-insert into Airport(iatacode,name,city,timezone) values ('LAX','Los Angeles airport','Los Angeles ROX','+10');
+insert into AIRPORT(iatacode,name,city,timezone) values ('CPH','copenhagen airport','Copenhagen','+1');
+insert into AIRPORT(iatacode,name,city,timezone) values ('BCN','Barcelona airport','Barcelona','-1');
+insert into AIRPORT(iatacode,name,city,timezone) values ('LAX','Los Angeles airport','Los Angeles ROX','+10');
 
 
 
-insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',1230,1300,1,250,180,'CPH','BCN');
-insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',0650,0700,2,100,230,'BCN','LAX');
-insert into FlightInstance(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',1330,1400,3,150,340,'LAX','CPH');
+insert into FLIGHTINSTANCE(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',1230,1300,1,250,180,'CPH','BCN');
+insert into FLIGHTINSTANCE(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',0650,0700,2,100,230,'BCN','LAX');
+insert into FLIGHTINSTANCE(departureDate,departuretime,flightTime,flightNumber,availableSeats,price,FLIESTO_IATACODE,FLIESFROM_IATACODE) values ('1990-01-01',1330,1400,3,150,340,'LAX','CPH');
  
 
-insert into airline(name) values ('timetravel');
--- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (1,200,'timetravel');
--- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (2,250,'timetravel');
--- insert into Flight(fligthNumber,numberOfSeats,airline_name) values (3,80,'timetravel');
+insert into AIRLINE(name) values ('timetravel');
+insert into FLIGHT(fligthNumber,numberOfSeats,airline_name) values (1,200,'timetravel');
+insert into FLIGHT(fligthNumber,numberOfSeats,airline_name) values (2,250,'timetravel');
+insert into FLIGHT(fligthNumber,numberOfSeats,airline_name) values (3,80,'timetravel');
 
 
 insert into USERROLE(ROLENAME) values ('User');

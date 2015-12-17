@@ -13,16 +13,15 @@ angular.module('myApp.view4', ['ngRoute'])
                 var editUser = $resource(apiBase+"/user/edituser", {}, {put: {method: 'PUT', responseType: 'json'}});
                 var Getuser = $resource(apiBase+"/user/getuser", {}, {get: {method: 'GET', responseType: 'json'}});
                 
-                $scope.userName = "";
                 $scope.password = "";
-                $scope.firstName = "";
-                $scope.lastName = "";
+                $scope.firstname = "";
+                $scope.lastname = "";
                 $scope.phone = "";
                 $scope.email = "";
                 
                 Getuser.get(function(response) {
                     $scope.user6 = response;
-                    console.log($scope.user6);
+                    
                 });
                 
                 $scope.userLoggedIn = "";
@@ -39,23 +38,21 @@ angular.module('myApp.view4', ['ngRoute'])
                     }
                     if (editIsValid) {
                         var rs = new editUser({});
-                        rs.userName = $scope.user6.userName;
-                        rs.password =  $scope.user6.password;
-                        rs.first = $scope.user6.firstname; 
-                        rs.last = $scope.user6.lastname;
+                        rs.firstname = $scope.user6.firstname; 
+                        rs.lastname = $scope.user6.lastname;
                         rs.phone = $scope.user6.phone;
                         rs.email = $scope.user6.email;
                         rs.$put(function(response) {
                             if (response.userName) {
-                                                                
-                                $scope.editSucces = "Your settings has been saved.";
+                                $scope.editError = "Error edditing user.";                                
+                                
                             }
                             else {
-                                $scope.editError = "Error edditing user.";
+                                $scope.editSucces = "Your settings has been saved.";
                             }
                         },
-                        function() {
-                            $scope.editError = "Error edditing user.";
+                        function(response) {
+                            $scope.editError = response.data.error;
                         });
                     }
                     
@@ -66,13 +63,13 @@ angular.module('myApp.view4', ['ngRoute'])
                         Getuser.get(function(response) {
                             $scope.curUser = response;
                             
-                                $scope.userLoggedIn.userName = $scope.curUser.userName;
+                                $scope.userLoggedIn.userName = $scope.curUser.username;
                                 $scope.userLoggedIn.password = $scope.curUser.password;
-                                $scope.userLoggedIn.firstName = $scope.curUser.firstname;
-                                $scope.userLoggedIn.lastName = $scope.curUser.lastname;
+                                $scope.userLoggedIn.firstname = $scope.curUser.firstname;
+                                $scope.userLoggedIn.lastname = $scope.curUser.lastname;
                                 $scope.userLoggedIn.email = $scope.curUser.email;
                                 $scope.userLoggedIn.phone = $scope.curUser.phone;
-                            //console.log(response);
+                            
                         });
                         
                         
@@ -81,5 +78,55 @@ angular.module('myApp.view4', ['ngRoute'])
                         $scope.editError = "You need to login to proceed.";
                     }
                 };
-                //$scope.user();
+                $scope.password = function () {
+                    
+                    $('#reservationWizard').bPopup(
+                            {
+                                position: ['auto', 'auto']
+                            });
+                    
+                };
+                $scope.changePassword = function () {
+                
+                };
+                
+                $scope.showStep1 = true;
+                $scope.showStep2 = false;
+                $scope.showStep1Visited = true;
+                $scope.showStep2Visited = false;
+                $scope.checkPassword = function () {
+                    $scope.showStep1 = true;
+                    $scope.showStep2 = false;
+                };
+                $scope.changePassword = function () {
+                    $scope.showStep1 = false;
+                    $scope.showStep2 = true;
+                    $scope.showStep2Visited = true;
+                    $scope.editError = "";
+                    $("#editPasswordForm .form-group").removeClass("has-error");
+                    var editIsValid = true;
+                    var inputs = $("#editPasswordForm .form-group input");
+                    for(var i=0; i<inputs.length; i++){
+                        if (!inputs[i].validity.valid){
+                            editIsValid = false;
+                            $(inputs[i]).closest(".form-group").addClass("has-error");
+                        }
+                    }
+                    if (editIsValid) {
+                        var rs = new editUser({});
+                        rs.password = $scope.user6.password;
+                        rs.$put(function(response) {
+                            if (response.userName) {
+                                $scope.editError = "Error edditing user.";                                
+                                
+                            }
+                            else {
+                                $scope.editSucces = "Your settings has been saved.";
+                            }
+                        },
+                        function(response) {
+                            $scope.editError = response.data.error;
+                        });
+                    }
+                };
 }]);

@@ -1,29 +1,119 @@
 <div class="container">
-<div id="editForm" ng-show="isAuthenticated">
-    
-    <div class="form-group">
-        <label class="control-label" for="firstName">First Name</label>
-        <input maxlength="100" ng-model="user6.firstname" type="text" required="required" class="form-control" />
+    <div id="editForm" ng-show="isAuthenticated">
+        <div class="form-group">
+            <label class="control-label" for="firstName">First Name</label>
+            <input maxlength="100" ng-model="user6.firstname" type="text" required="required" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="lastName">Last Name</label>
+            <input maxlength="100" ng-model="user6.lastname" type="text" required="required" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="email">Email</label>
+            <input maxlength="100" ng-model="user6.email" type="text" required="required" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="phone">Phonenumber</label>
+            <input maxlength="100" ng-model="user6.phone" type="text" required="required" class="form-control"/>
+            <br>
+            <div class="form-group">
+                <button ng-click="edit()" class="btn btn-primary" type="button">Save</button>
+            </div>
+        </div>
+        <div class="col-md-8 results"></div>
+                                <div class="col-md-4 results text-right results">
+                                    <button ng-click="password()" id="reservationButton" type="button" class="btn btn-default border-radius button-modal">password</button>
+                                </div>
     </div>
-    <div class="form-group">
-        <label class="control-label" for="lastName">Last Name</label>
-        <input maxlength="100" ng-model="user6.lastname" type="text" required="required" class="form-control"/>
+    <div class="col-md-12">
+        <div class="alert alert-danger" role="alert" ng-show="editError">{{editError}}</div>
+        <div class="alert alert-success" role="alert" ng-show="editSucces">{{editSucces}}</div>
     </div>
-    <div class="form-group">
-        <label class="control-label" for="email">Email</label>
-        <input maxlength="100" ng-model="user6.email" type="text" required="required" class="form-control"/>
-    </div>
-    <div class="form-group">
-        <label class="control-label" for="phone">Phonenumber</label>
-        <input maxlength="100" ng-model="user6.phone" type="text" required="required" class="form-control"/>
-    </div>
-    <div class="alert alert-danger" role="alert" ng-show="editError">{{editError}}</div>
 </div>
-<div class="form-group">
-    <button ng-click="edit()" class="btn btn-primary" type="button">Save</button>
-</div>
+<div id="reservationWizard">
+    <div class="container"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>Change your Password</h4>
+                    <span class="pull-right clickable" ng-click="closeReservationWizard()"><i class="fa fa-times"></i></span>
+                </div>
+                <div class="row">
 
-<div class="col-md-12">
-    <div class="alert alert-success" role="alert" ng-show="isAuthenticated">{{editSucces}}</div>
-</div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+
+                        <div class="row stepwizard">
+                            <div class="stepwizard-row setup-panel">
+                                <div class="stepwizard-step">
+                                    <a type="button" class="btn btn-circle">2</a>
+                                    <p><strong>Passengers</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form name="checkForm" role="form" ng-submit="login()">
+                            <div class="row setup-content col-md-12" id="step-1" ng-show="showStep1">
+                                <div class="col-md-12">
+                                    <div class="col-md-5" id="reservationRegisterForm">
+                                        <br>
+                                        
+                                        <div class="form-group">
+                                            <label class="control-label" for="Username">{{user6.username}}</label>
+                                            <label class="control-label" for="oldPassword">Password</label>
+                                            <input maxlength="100" type="password" class="form-control"/>
+                                        </div>
+                                        
+                                        <br><br><br>
+                                        <div class="alert alert-danger" role="alert" ng-show="reservationError">{{reservationError}}</div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="alert alert-success" role="alert" ng-show="isAuthenticated">{{reservationSucces}}</div>
+
+                                        <hr />
+                                    </div>
+
+                                    <div class="col-md-12">
+
+                                        <div class="pull-right">
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary" ng-click="changePassword()" type="button">Save Password</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                                <div class="row setup-content col-md-12" id="step-2" ng-show="showStep2">
+                                <div class="col-md-12" ng-show="!reserveMessage">
+                                    <form name="editPasswordForm" role="form" ng-submit="login()">
+                                        <div class="form-group">
+                                            <label class="control-label" for="Password1">Password</label>
+                                            <input id="password1" name="password1" maxlength="100" ng-model="Password1" type="password" required="required" class="form-control" placeholder="*****"
+                                                   />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="Password">Confirm Password</label>
+                                            <input id="password2" name="password2" maxlength="100" ng-model="Password" type="password" required="required" class="form-control" placeholder="*****"
+                                                   pw-check="password1"/>
+                                        </div>
+                                        <div class="msg-block" ng-show="regForm.$error"> <span class="msg-error" ng-show="regForm.password.$error.pwmatch">Passwords don't match.</span> 
+                                            
+                                        </div>
+                        </form>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
 </div>

@@ -64,9 +64,11 @@ public class User {
     @RolesAllowed("User")
     public String getUser(@Context SecurityContext sc) throws ParseException, JOSEException {
         String userName = sc.getUserPrincipal().getName();
-        UserFacade facade = new UserFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
+        //UserFacade facade = new UserFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
         entity.User user = facade.getUserByUserId(userName);
         JsonObject json = new JsonObject();
+        
+        json.addProperty("password", user.getPassword());
         json.addProperty("firstname", user.getFirstName());
         json.addProperty("lastname", user.getLastName());
         json.addProperty("phone", user.getPhone());
@@ -86,19 +88,19 @@ public class User {
         JsonObject json = parser.parse(content).getAsJsonObject();
         JsonElement password = json.get("password");
         if (password != null){
-            user.setPassword(password.getAsString());
-        }
-        JsonElement firstName = json.get("first");
-        if (firstName != null){
             try {
-                user.setFirstName(PasswordHash.createHash(firstName.getAsString()));
+                user.setPassword(PasswordHash.createHash(password.getAsString()));
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InvalidKeySpecException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        JsonElement lastName = json.get("last");
+        JsonElement firstName = json.get("firstname");
+        if (firstName != null){
+            user.setFirstName(firstName.getAsString());
+        }
+        JsonElement lastName = json.get("lastname");
         if (lastName != null){
             user.setLastName(lastName.getAsString());
         }
