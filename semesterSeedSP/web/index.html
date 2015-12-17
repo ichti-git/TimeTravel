@@ -78,7 +78,7 @@
                             <li ng-click="clickMenu('adminView')" ng-class="{'active': activeMenu === 'adminView'}" type="button" ng-show="isAdmin"><a href="#/adminView">Admin</a></li>
                             <li ng-click="clickMenu('reservationView')" ng-class="{'active': activeMenu === 'reservationView'}" type="button" ng-show="isUser"><a href="#/reservationView">Reservations</a></li>
                             <li ng-click="clickMenu('loginView')" ng-class="{'active': activeMenu === 'loginView'}" type="button" ng-show="!isAuthenticated"><a href="#/loginView">login</a></li><!--login -->
-                            <li ng-click="clickMenu('view1')" ng-class="{'active': activeMenu === 'view1'}" type="button" ng-show="isAuthenticated"><a href="#/view1" ng-click="logout()">logout</a></li><!--logout -->
+                            <li ng-click="clickMenu('view1')" type="button" ng-show="isAuthenticated"><a href="#/view1" ng-click="logout()">logout</a></li><!--logout -->
 
                         </ul>
 

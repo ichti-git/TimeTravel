@@ -9,25 +9,4 @@ angular.module('myApp.loginView',['ngRoute'])
         }])
     
         .controller('loginCtrl',["InfoFactory","InfoService","$scope","$http",function(InfoFactory,InfoService,$scope,$http){
-                
-                        $scope.data;
-        
-                  $http.get('api/demouser/test')
-            .success(function (data, status, headers, config) {
-              $scope.data = data.message;
-            })
-            .error(function (data, status, headers, config) {
-              
-             });
-     
-     
-     
-//      $http({
-//            method: 'GET',
-//            url: 'api/demouser/test'
-//          }).then(function successCallback(res) {
-//            $scope.data = res.data;
-//          }, function errorCallback(res) {
-//            $scope.error = res.status + ": "+ res.data.statusText;
-//          });
         }]);

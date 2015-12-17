@@ -14,12 +14,12 @@
         <tbody>
             <tr ng-repeat="r in reservations">
                 <td>{{r.flightId}}</td>
-                <td>{{r.origin.city}}</td>
-                <td>{{r.destination.city}}</td>
-                <td>{{r.date}}</td>
+                <td>{{r.Origin}}</td>
+                <td>{{r.Destination}}</td>
+                <td>{{r.reservationDate}}</td>
                 <td>{{r.flightTime}}</td>
                 <td>{{r.numberOfSeats}}</td>
-                <td>{{r.Reservee.userName}}</td>
+                <td>{{r.reserveeUser.userName}}</td>
             </tr>
         </tbody>
     </table>

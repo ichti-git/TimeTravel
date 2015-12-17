@@ -10,21 +10,8 @@
                  </div>
                  <button type="submit" class="btn btn-success">Sign in</button>
    </form>
-<!--<form class="navbar-form navbar-default" role="form" ng-show="!isAuthenticated" >
-                 <div class="form-group">
-                   <input type="text" style="width:10em;" placeholder="User name" class="form-control"
-                          ng-model="user.username">
-                     </div>
-                 <div class="form-group">
-                   <input type="password" style="width:10em;" placeholder="Password" class="form-control"
-                          ng-model="user.password">
-                 </div>
-                 <button type="submit" ng-submit="login()" class="btn btn-success">Sign in</button>
-   </form>-->
-
 
 </div>
-   <p>HAHAHA {{data}}</p>
-   <div ng-controller="AppLoginCtrl">
-       <p>if you are logged in you should see : </p> <p ng-show="isAuthenticated" > {{data}}</p>
+<div ng-controller="AppLoginCtrl">
+    <p ng-show="isAuthenticated">Welcome</p>
 </div>

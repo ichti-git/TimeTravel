@@ -9,7 +9,7 @@ angular.module('myApp.view4', ['ngRoute'])
   });
 }]).controller('View4Ctrl', ["$resource", "$scope", function ($resource, $scope) {
                 
-                var apiBase = "/semesterSeedSP/api";
+                var apiBase = "/api";
                 var editUser = $resource(apiBase+"/user/edituser", {}, {put: {method: 'PUT', responseType: 'json'}});
                 var Getuser = $resource(apiBase+"/user/getuser", {}, {get: {method: 'GET', responseType: 'json'}});
                 

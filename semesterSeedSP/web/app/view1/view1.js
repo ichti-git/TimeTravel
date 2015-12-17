@@ -43,7 +43,7 @@ angular.module('myApp.view1', ['ngRoute'])
 
         .controller('View1Ctrl', ["$resource", "$scope", function ($resource, $scope) {
                 // Define flights resource
-                var apiBase = "/semesterSeedSP/api";
+                var apiBase = "/api";
                 var From = $resource(apiBase + "/flights/:from/:date/:tickets", {from: "@from", date: "@date", tickets: "@tickets"}, {});
                 var FromTo = $resource(apiBase + "/flights/:from/:to/:date/:tickets", {from: "@from", to: "@to", date: "@date", tickets: "@tickets"}, {});
                 var RegisterUser = $resource(apiBase + "/createUser", {}, {save: {method: 'POST',

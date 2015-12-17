@@ -32,7 +32,6 @@ angular.module('myApp.reservationView', ['ngRoute'])
                 $scope.cancelSent = false;
                 $scope.cancelResponse;
                 //$('#cancelModal').appendTo("body").modal('show');
-                
             }
             
             $scope.cancelReservation = function() {
@@ -49,7 +48,6 @@ angular.module('myApp.reservationView', ['ngRoute'])
                     $scope.cancelSucces = false;
                 });
             }
-///var FromTo = $resource(apiBase+"/flights/:from/:to/:date/:tickets", {from: "@from", to: "@to", date: "@date", tickets: "@tickets"}, {});
 
             
         });
