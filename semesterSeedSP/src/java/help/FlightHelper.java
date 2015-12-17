@@ -7,24 +7,16 @@ package help;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import exception.ApiException;
 import exception.IllegalInputException;
+import facades.AirlineFacade;
 import facades.SearchLogFacade;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -36,7 +28,6 @@ import java.util.logging.Logger;
 import rest.Flights;
 import timeTravel.entities.Airline;
 import timeTravel.entities.FlightInstance;
-import timeTravel.facade.Facade;
 
 /**
  *
@@ -136,7 +127,7 @@ public class FlightHelper {
         
         List<Future<JsonArray>> list = new ArrayList<>();
         ExecutorService executor = Executors.newFixedThreadPool(8);
-        List<Airline> apiUrls = new Facade().getAirlines();
+        List<Airline> apiUrls = new AirlineFacade().getAirlines();
         
         for (final Airline airline : apiUrls) {
             Callable<JsonArray> task = new FlightGetterCallable(from, to, date, numTickets, airline.getUrl());

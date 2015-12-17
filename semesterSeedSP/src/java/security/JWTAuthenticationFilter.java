@@ -123,7 +123,7 @@ public class JWTAuthenticationFilter implements ContainerRequestFilter {
         return false;
     }
 
-    public static String getUsernameFromToken(String token) throws ParseException, JOSEException {
+    private static String getUsernameFromToken(String token) throws ParseException, JOSEException {
 
         SignedJWT signedJWT = SignedJWT.parse(token);
         JWSVerifier verifier = new MACVerifier(Secrets.ADMIN);

@@ -42,6 +42,8 @@
         <script src="app/bower_components/angular-animate/angular-animate.min.js" type="text/javascript"></script>
         <script src="app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>       
         <script src="app/bower_components/angular-resource/angular-resource.min.js" type="text/javascript"></script>
+        
+        <script src="app/components/controllers.js"></script>
         <script src="app/app.js"></script>
         <script src="app/view1/view1.js"></script>
         <script src="app/view2/view2.js"></script>
@@ -70,15 +72,15 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#/view1">Home</a></li>
-                            <li><a href="#/view2">about</a></li>
-                            <li><a href="#/view3">how we work</a></li>
-                            <li type="button" ng-show="isUser"><a href="#/view4">Edit info</a></li>
-                            <li type="button" ng-show="isAdmin"><a href="#/adminView">Admin</a></li>
-                            <li type="button" ng-show="isUser"><a href="#/reservationView">Reservations</a></li>
-                            <li type="button" ng-show="!isAuthenticated"><a href="#/loginView">login</a></li><!--login -->
-                            <li type="button" ng-show="isAuthenticated"><a href="#/view1" ng-click="logout()">logout</a></li><!--logout -->
+                        <ul class="nav navbar-nav navbar-right" ng-controller="MenuCtrl">
+                            <li ng-click="clickMenu('view1')" ng-class="{'active': activeMenu == 'view1'}"><a href="#/view1">Home</a></li>
+                            <li ng-click="clickMenu('view2')" ng-class="{'active': activeMenu === 'view2'}"><a href="#/view2">about</a></li>
+                            <li ng-click="clickMenu('view3')" ng-class="{'active': activeMenu === 'view3'}"><a href="#/view3">how we work</a></li>
+                            <li ng-click="clickMenu('view4')" ng-class="{'active': activeMenu === 'view4'}" type="button" ng-show="isUser"><a href="#/view4">Edit info</a></li>
+                            <li ng-click="clickMenu('adminView')" ng-class="{'active': activeMenu === 'adminView'}" type="button" ng-show="isAdmin"><a href="#/adminView">Admin</a></li>
+                            <li ng-click="clickMenu('reservationView')" ng-class="{'active': activeMenu === 'reservationView'}" type="button" ng-show="isUser"><a href="#/reservationView">Reservations</a></li>
+                            <li ng-click="clickMenu('loginView')" ng-class="{'active': activeMenu === 'loginView'}" type="button" ng-show="!isAuthenticated"><a href="#/loginView">login</a></li><!--login -->
+                            <li ng-click="clickMenu('view1')" ng-class="{'active': activeMenu === 'view1'}" type="button" ng-show="isAuthenticated"><a href="#/view1" ng-click="logout()">logout</a></li><!--logout -->
 
                         </ul>
 

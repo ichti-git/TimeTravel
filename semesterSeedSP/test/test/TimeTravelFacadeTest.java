@@ -6,6 +6,7 @@
 package test;
 
 import deploy.DeploymentConfiguration;
+import facades.AirlineFacade;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -58,7 +59,7 @@ public class TimeTravelFacadeTest {
         em.getTransaction().commit();
         em.close();
         
-        Facade facade = new Facade();
+        AirlineFacade facade = new AirlineFacade();
         List<Airline> airlines = facade.getAirlines();
         assertThat(airlines.get(0).getName(), anyOf(is(airline1.getName()), is(airline2.getName())));
         assertThat(airlines.get(1).getName(), anyOf(is(airline1.getName()), is(airline2.getName())));

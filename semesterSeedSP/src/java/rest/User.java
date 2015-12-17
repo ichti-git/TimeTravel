@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nimbusds.jose.JOSEException;
 import deploy.DeploymentConfiguration;
+import facades.ReservationFacade;
 import facades.UserFacade;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -25,7 +26,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
 import security.PasswordHash;
 import timeTravel.entities.Reservation;
-import timeTravel.facade.Facade;
 
 @Path("user")
 
@@ -50,7 +50,7 @@ public class User {
     public String getReservations(@Context SecurityContext sc) throws ParseException, JOSEException {
         String userName;
         userName = sc.getUserPrincipal().getName();
-        Facade facade = new Facade();
+        ReservationFacade facade = new ReservationFacade();
         
         List<Reservation> reservations = facade.getReservationsByUsername(userName);
         

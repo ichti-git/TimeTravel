@@ -1,10 +1,8 @@
 package timeTravel.facade;
 
 import deploy.DeploymentConfiguration;
-import entity.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,11 +10,8 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import timeTravel.entities.Airline;
 import timeTravel.entities.Airport;
 import timeTravel.entities.FlightInstance;
-import timeTravel.entities.Passenger;
-import timeTravel.entities.Reservation;
 
 
 public class Facade {
@@ -70,32 +65,9 @@ public class Facade {
         return FlightInstances;
     }  
    
-    public List<Airline> getAirlines() {
-        EntityManager em = emf.createEntityManager();
-        List urls = em.createNativeQuery("select * from AIRLINE a", Airline.class).getResultList();
-        em.close();
-        return urls;
-    }
     
-    public List<Reservation> getReservationsByUser(User user){
-        return getReservationsByUsername(user.getUserName());
-    }
     
-    public List<Reservation> getReservationsByUsername(String userName){
-        EntityManager em = emf.createEntityManager();    
-        
-        
-        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEEUSER_USERNAME='"+userName+"';",Reservation.class).getResultList();
-        em.close();                               
-        return reservations;
-    }
     
-    public List<Reservation> getReservations(){
-        EntityManager em = emf.createEntityManager();
-        List reservations = em.createNativeQuery("select * from RESERVATION r",Reservation.class).getResultList();
-        em.close();
-        return reservations;
-    }
     
     public List<Airport> getAirports() {
         EntityManager em = emf.createEntityManager();

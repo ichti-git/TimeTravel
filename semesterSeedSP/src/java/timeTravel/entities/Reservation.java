@@ -27,7 +27,7 @@ public class Reservation implements Serializable {
     private int numberOfSeats;
     @OneToOne
     private User reserveeUser;
-    
+    private int flightTime;
     private String ReserveeName;
     private String ReservePhone;
     private String ReserveeEmail;
@@ -39,13 +39,10 @@ public class Reservation implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Passenger> Passengers;
     
-//    @OneToMany(mappedBy = "reservation")
-//    private List<Passenger> Passengers;
-    
     public Reservation() {
     }
 
-    public Reservation(String flightId, int numberOfSeats, List<Passenger> passengers,String reserveeEmail,String reservePhone,String reserveeName,String origin,String destination, Date date,User user) {
+    public Reservation(String flightId, int numberOfSeats, List<Passenger> passengers, String reserveeEmail, String reservePhone, String reserveeName,String origin, String destination, Date date, User user, int flightTime) {
         this.flightId = flightId;
         this.numberOfSeats = numberOfSeats;
         this.Passengers = passengers;
@@ -56,6 +53,7 @@ public class Reservation implements Serializable {
         this.Origin = origin;
         this.Destination = destination;
         this.reserveeUser = user;
+        this.flightTime = flightTime;
         
     }
 
@@ -148,6 +146,14 @@ public class Reservation implements Serializable {
 
     public void setPassengers(List<Passenger> Passengers) {
         this.Passengers = Passengers;
+    }
+
+    public int getFlightTime() {
+        return flightTime;
+    }
+
+    public void setFlightTime(int flightTime) {
+        this.flightTime = flightTime;
     }
 
     

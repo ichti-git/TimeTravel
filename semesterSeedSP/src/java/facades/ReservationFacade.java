@@ -14,13 +14,12 @@ public class ReservationFacade {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
      
-    public void setReservation(String flightId, int numberOfSeats, String ReserveeName, String ReservePhone, String ReserveeEmail, List<Passenger> passengers,String origin,String destination,Date date,User user){
+    public void setReservation(String flightId, int numberOfSeats, String ReserveeName, String ReservePhone, String ReserveeEmail, List<Passenger> passengers, String origin, String destination,Date date,  User user, int flightTime){
     
         EntityManager em = emf.createEntityManager();
-        Reservation reservation = new Reservation(); 
-        Passenger passenger = new Passenger();
+        Reservation reservation = new Reservation();
       
-        em.getTransaction().begin();
+        
         reservation.setFlightId(flightId);
         reservation.setNumberOfSeats(numberOfSeats);
         reservation.setPassengers(passengers);
@@ -30,15 +29,11 @@ public class ReservationFacade {
         reservation.setOrigin(origin);
         reservation.setDestination(destination);
         reservation.setReservationDate(date);
-        reservation.setReserveeUser(user);        
+        reservation.setReserveeUser(user);   
+        reservation.setFlightTime(flightTime);
+        
+        em.getTransaction().begin();
         em.persist(reservation);
-        
-        for(Passenger p : passengers){
-            p.setReservation(reservation);
-            em.persist(p);
-        }
-        
-        
         em.getTransaction().commit();
         em.close();
     }
@@ -57,5 +52,24 @@ public class ReservationFacade {
             em.getTransaction().commit();
         }
         em.close();
+    }
+    public List<Reservation> getReservationsByUser(User user){
+        return getReservationsByUsername(user.getUserName());
+    }
+    
+    public List<Reservation> getReservationsByUsername(String userName){
+        EntityManager em = emf.createEntityManager();    
+        
+        
+        List reservations = em.createNativeQuery("select * from RESERVATION r where r.RESERVEEUSER_USERNAME='"+userName+"';",Reservation.class).getResultList();
+        em.close();                               
+        return reservations;
+    }
+    
+    public List<Reservation> getReservations(){
+        EntityManager em = emf.createEntityManager();
+        List reservations = em.createNativeQuery("select * from RESERVATION r",Reservation.class).getResultList();
+        em.close();
+        return reservations;
     }
 }

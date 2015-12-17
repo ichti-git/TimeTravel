@@ -9,43 +9,19 @@ import help.FlightHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import exception.ApiException;
-import exception.IllegalInputException;
 import exception.NoFlightsFoundException;
+import facades.AirlineFacade;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import timeTravel.entities.Airline;
-import timeTravel.entities.Reservation;
-import timeTravel.facade.Facade;
 
 /**
  * REST Web Service
@@ -64,7 +40,7 @@ public class Flights {
      * Creates a new instance of Flights
      */
     public Flights() {
-        apiUrls = new Facade().getAirlines();
+        apiUrls = new AirlineFacade().getAirlines();
     }
 
     //api/flightinfo/:from/:date/:numTickets

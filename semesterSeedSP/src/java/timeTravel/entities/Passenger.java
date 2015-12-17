@@ -22,10 +22,6 @@ public class Passenger implements Serializable {
     private String firstName;
     private String lastName;
     
-    //test this!!!!!!!!!!!!!!!!!!!!!!
-    @ManyToOne
-    @JoinTable(name="reservation_pas")
-    private Reservation reservation;
     
     public Passenger(){
     }
@@ -33,14 +29,6 @@ public class Passenger implements Serializable {
     public Passenger(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
     
     public Long getId() {
@@ -92,8 +80,5 @@ public class Passenger implements Serializable {
         return "entities.Passenger[ id=" + id + " ]";
     }
 
-//    public void setReservation(Reservation reservation) {
-//         this.reservation = reservation;
-//    }
 
 }
