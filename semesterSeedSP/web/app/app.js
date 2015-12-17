@@ -14,8 +14,6 @@ var test;
         'myApp.adminView',
         'myApp.reservationView',
         'myApp.view1',
-        'myApp.view2',
-        'myApp.view3',
         'myApp.view4',
         'myApp.filters',
         'myApp.directives',
